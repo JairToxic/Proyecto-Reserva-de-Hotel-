@@ -61,7 +61,7 @@ $habitaciones = $resultado->fetch_all(MYSQLI_ASSOC);
             <p class="card-title">Precio: $<?php echo $habitacion['PRECIOPORNOCHE']; ?></p>
 
             <!-- Botón de Pago PayPal para cada Habitación -->
-            <form action="pago.php" method="post">
+            <form action="../Backend/API Paypal/pago.php" method="post">
                 <input type="hidden" name="producto_id" value="<?php echo $habitacion['ID_HABITACION']; ?>">
                 <input type="submit" value="Pagar con PayPal" class="btn btn-success">
             </form>
