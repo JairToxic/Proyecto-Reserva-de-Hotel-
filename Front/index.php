@@ -60,11 +60,20 @@ $habitaciones = $resultado->fetch_all(MYSQLI_ASSOC);
             <h5><?php echo $habitacion['DESCRIPCION']; ?></h5>
             <p class="card-title">Precio: $<?php echo $habitacion['PRECIOPORNOCHE']; ?></p>
 
-            <!-- Botón de Pago PayPal para cada Habitación -->
             <form action="../Backend/API Paypal/pago.php" method="post">
-                <input type="hidden" name="producto_id" value="<?php echo $habitacion['ID_HABITACION']; ?>">
-                <input type="submit" value="Pagar con PayPal" class="btn btn-success">
+            <input type="hidden" name="producto_id" value="<?php echo $habitacion['ID_HABITACION']; ?>">
+
+                <!-- Botón Estilo Cubo -->
+                <div class="button-container">
+                    <div class="scene">
+                        <div class="cube">
+                            <button type="submit" class="side top">RESERVA YA</button>
+                            <div class="side front">Reservar</div>
+                        </div>
+                    </div>
+                </div>
             </form>
+
         </div>
     <?php endforeach; ?>
 
