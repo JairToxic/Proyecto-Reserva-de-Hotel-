@@ -1,5 +1,5 @@
 <?php
-include 'basedatos/basedatos.php';
+include '../basedatos/basedatos.php';
 
 // Se usa la variable $mysqli para realizar consultas
 $resultado = $mysqli->query("SELECT * FROM habitaciones");
@@ -11,17 +11,13 @@ if (!$resultado) {
 $habitaciones = $resultado->fetch_all(MYSQLI_ASSOC);
 
 ?>
-
-
   <!-- Archivo principal HTML para mostrar datos de la base de datos -->
-
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tienda Online</title>
-
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="styles/style.css" rel="stylesheet">
@@ -57,10 +53,11 @@ $habitaciones = $resultado->fetch_all(MYSQLI_ASSOC);
 
 <!-- Mostrar todas las habitaciones -->
 <?php foreach ($habitaciones as $habitacion) : ?>
-        <div class="producto">
-            <!-- Asume que todas las imágenes son .jpg. Modifica según tus necesidades -->
+        <div class="habitacion_">
+            <!-- Asume que todas las imágenes son .jpg. -->
             <img src="imagenes/<?php echo $habitacion['ID_HABITACION']; ?>.jpg" alt="Imagen de la habitación">
             <h2><?php echo $habitacion['TIPO']; ?></h2>
+            <h5><?php echo $habitacion['DESCRIPCION']; ?></h5>
             <p class="card-title">Precio: $<?php echo $habitacion['PRECIOPORNOCHE']; ?></p>
 
             <!-- Botón de Pago PayPal para cada Habitación -->
