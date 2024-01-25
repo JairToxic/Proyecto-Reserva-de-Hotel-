@@ -3,3 +3,4 @@ para dotras funcionaldiades, ademas se trabajara para el diseño con css y boost
 Ademas se documentara todo el proceso de codigo para seguir normas de calidad.
 Trabajaremos con bastante seguridad escencialmente encriptando datoas importantes para evitar ataques comunes.
 Este modulo se trabajara la base de datos y verificaremos conecciones exitosas.
+Integrantes
