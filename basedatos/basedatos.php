@@ -1,4 +1,4 @@
 <?php
 // basedatos.php
-$mysqli = new mysqli("localhost", "root", "", "hotel");
+$mysqli = new mysqli("localhost", "root", "", "prueba_hotel");
 ?>
