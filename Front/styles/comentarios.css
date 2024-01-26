@@ -1,0 +1,371 @@
+/*Fuentes personalizadas*/
+@font-face{
+    font-family:"TrebuchetMS" ;
+    src: url('fonts/TrebuchetMS.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face{
+    font-family:"BebasNeue" ;
+    src: url('fonts/BebasNeue.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "WebSymbolsRegular";
+    src: url('fonts/websymbols-regular-webfont.eot');
+    src: url('fonts/websymbols-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/websymbols-regular-webfont.woff') format('woff'),
+         url('fonts/websymbols-regular-webfont.ttf') format('truetype'),
+         url('fonts/websymbols-regular-webfont.svg#WebSymbolsRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Sunshine";
+    src: url('fonts/AlittleSunshine.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/*Estilos Genereles*/
+*{
+    margin: 0px;
+    padding: 0px;
+    text-decoration: none;
+}
+
+head{
+    position: relative;
+}
+
+body{
+    background-color: #B6C3D3;
+}
+
+.wrap{
+    width: 1250;
+    margin: 0px auto;
+}
+
+.icon{
+    font-family: "WebSymbolsRegular";
+}
+
+.clearfix{
+    float: none;
+    clear: both;
+}
+
+/*Cabecera*/
+#header{
+ width: 100%;
+ height: 70px;
+ background-color: #8894A4;
+ font-family: Sunshine;
+ color: white;
+}
+
+#menu{
+    position: absolute;
+    left: 500px;
+    float: right;
+    height: 70px;
+   /* font-family: "finger"; */
+    background: transparent;
+}
+
+#menu ul li{
+    font-size: 24px;
+    display: inline-block;
+    margin: 0px 20px 0px 20px;
+    letter-spacing: 1px;
+    line-height: 70px;
+}
+
+#menu ul li a{
+    display: block;
+    color: white;
+    text-decoration: none;
+    transition: all 200ms;
+}
+
+#menu ul li a:hover{
+    font-family: "finger";
+    color: white;
+    transform: scale(1.2,1.2);
+   /* text-decoration: 2px underline #00ceae;*/
+}
+
+#noticias{
+    width: 100%;
+    padding: 20px;
+}
+
+#noticias h2{
+    width: 100%;
+    font-family: finger;
+    color: white;
+    font-size: 35px;
+    text-align: center;
+    font-weight: normal;
+    text-transform: uppercase;
+}
+
+#noticias h2::before{    
+    content:'';
+    height: 3px;
+    width: 100px;
+    background: white;
+    display: inline-block;
+    margin-top: -5px;
+    margin-right: 30px;
+    vertical-align: middle; }
+
+#noticias h2::after{
+    content:'';
+    height: 3px;
+    width: 100px;
+    background: white;
+    display: inline-block;
+    margin-top: -5px;
+    margin-left: 30px;
+    vertical-align: middle;
+}
+
+.columna{
+    float: left;
+    width: 50%;
+    box-sizing: border-box;
+
+}
+
+#noticias article{
+    width: 45%;
+    height: auto;
+    margin-top: 20px;
+    margin-right: 60px;
+    padding: 40px;
+    font-family: "BebasNeue";
+    background-color: white;
+    color: black;
+    border-bottom: 1px solid gray;
+    border-right: 1px solid gray;
+}
+
+#noticias article h4{
+    display: block;
+    font-size: 30px;
+    margin: 3px;
+}
+
+#noticias article h4 a{
+    text-decoration: none;
+    color: black;
+}
+
+#noticias article h4 a:hover{
+    text-decoration: underline;
+    text-decoration-color: #00ceae;
+}
+
+#noticias .data{
+    float: left;
+    background-color: #8894A4;
+    color: white;
+    height: 30px;
+    line-height: -10px;
+    padding: 3px;
+    font-size: 13px;
+    border-radius: 0px 0px 0px 5px;
+    margin-right: 10px;
+}
+
+#noticias .data span{
+    margin: 6px;
+    font-size: 15px;
+}
+
+#noticias .data span img{
+    height: 30px;
+    filter: invert();
+}
+
+#noticias p{
+    font-family: "TrebuchetMS";
+    font-size: 18px;
+}
+
+#footer{
+    width: 100%;
+    height: 300px;
+    background-color: #8894A4;
+    color: white;
+    overflow: hidden;
+    margin-top: 50px; 
+}
+
+#footer .wrap > div{
+    float: left;
+    width: 300px;
+    height: 200px;
+    margin: 40px;
+    text-align: center;
+    color: #8894A4;
+    font-family: "TrebuchetMS";
+}
+
+#footer a{
+    text-decoration: none;
+    color: black;
+    transition: all 300ms;
+}
+
+#footer h5{
+    display: block;
+    background: url("img/pxgray.png"), white;
+    height: 50px;
+    letter-spacing: 2px;
+    text-align: center;
+    font-family: Sunshine;
+    font-size: 20px;
+    line-height: 55px;
+    color: black;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    border: 2px solid black;
+}
+
+#footer ul{
+    text-align: left;
+    margin: 20px;
+    font-size: 20px;
+}
+
+#footer ul li{
+    margin-top: 10px;
+    padding: 5px;
+    border-bottom: 1px solid white;
+}
+
+#footer ul li a{
+    display: block;
+    height: 40px;
+    transition: all 300ms;
+}
+#footer ul li:hover a{
+    padding-left: 40px;
+    color: white;
+    width: 100%;
+}
+#footer iframe{
+    width: 100%;
+    height: 300px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: 5px solid white;
+    box-shadow: 0px 0px 5px gray;
+}
+#footer #info{
+    color: black;
+    font-family: "TrebuchetMS";
+}
+#footer #info a{
+    font-size: 20px;
+}
+#footer #info a:hover{
+    color: white;
+}
+#footer #info span{
+    font-size: 18px;
+    margin-left: 15px;
+}
+
+#contact-form {
+    float: left;
+    width: calc(25% - 40px);
+    margin: 20px;
+    text-align: center;
+    color: black;
+    font-family: "TrebuchetMS";
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+#contact-form h5 {
+    display: block;
+    height: 50px;
+    letter-spacing: 2px;
+    text-align: center;
+    font-family: Sunshine;
+    font-size: 20px;
+    line-height: 55px;
+    color: black;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    border: 2px solid black;
+}
+
+#contact-form label,
+#contact-form input,
+#contact-form textarea,
+#contact-form button {
+    color: black;
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+#contact-form textarea {
+    resize: vertical;
+}
+
+#contact-form button {
+    background-color: #88000F;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#contact-form button:hover {
+    background-color: #88000F;
+}
+
+#agregar-opinion {
+    text-align: center;
+    margin-top: 100px; 
+}
+
+#agregar-opinion button {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #88000F;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-family: finger;
+    font-size: 20px;
+}
+
+#agregar-opinion button:hover {
+    background-color: #f74780;
+}
+
+#puntuacion-container {
+    background-color: #8894A4;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-family: finger;
+    font-size: 30px;
+}
