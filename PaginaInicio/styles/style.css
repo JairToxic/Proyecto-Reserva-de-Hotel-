@@ -1,0 +1,141 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    /* Asegura que el cuerpo ocupa al menos el 100% de la altura de la ventana */
+}
+
+header {
+    background-color: #496ccc;
+    color: white;
+    text-align: left;
+    padding: 1em;
+}
+
+.header-content {
+    display: flex;
+    font-family: "Montserrat", sans-serif;
+    justify-content: space-between;
+    align-items: center;
+}
+
+button {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    background: #183153;
+    font-family: "Montserrat", sans-serif;
+    box-shadow: 0px 6px 24px 0px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    cursor: pointer;
+    border: none;
+    float: left;
+    margin: 10px;
+}
+
+button:after {
+    content: " ";
+    width: 0%;
+    height: 100%;
+    background: #53d19d;
+    position: absolute;
+    transition: all 0.4s ease-in-out;
+    right: 0;
+}
+
+button:hover::after {
+    right: auto;
+    left: 0;
+    width: 100%;
+}
+
+button span {
+    text-align: center;
+    text-decoration: none;
+    width: 100%;
+    padding: 18px 25px;
+    color: #fff;
+    font-size: 1.125em;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    z-index: 20;
+    transition: all 0.3s ease-in-out;
+}
+
+button:hover span {
+    color: #183153;
+    animation: scaleUp 0.3s ease-in-out;
+}
+
+@keyframes scaleUp {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(0.95);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.site-title {
+    margin: 0;
+}
+
+footer {
+    background-color: #4ab0c2;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    
+    margin-top: auto;
+    /* Empuja el footer hacia abajo */
+    width: 100%;
+}
+
+.footer-content {
+    border: solid #183153;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.footer-section {
+    background-color: #496ccc;
+    border: solid #000000;
+    border-radius: 5px;
+    width: 300px;
+    margin: 10px;
+}
+
+.footer-section h2 {
+    font-size: 1.2em;
+}
+
+.social-buttons {
+    display: flex;
+    justify-content: space-around;
+}
+
+.social-button {
+    display: inline-block;
+    padding: 8px 15px;
+    background-color: #172bd8;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 2px;
+}
+
+.social-button:hover {
+    color: black;
+    background-color: #acc1d3;
+}
+
