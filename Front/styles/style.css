@@ -1,0 +1,143 @@
+body {
+    background-image: url('../imagenes/fondito.jpg');
+    /* Cambia 'tu_imagen_de_fondo.jpg' con la ruta correcta de tu imagen */
+    background-size: cover;
+    /* Ajusta el tamaño de la imagen de fondo para cubrir todo el body */
+    background-repeat: no-repeat;
+    /* Evita que la imagen se repita */
+    background-attachment: fixed;
+    /* Añade el efecto de parallax al fondo */
+    margin: 0;
+    /* Elimina el margen predeterminado del body */
+    padding: 0;
+    /* Elimina el relleno predeterminado del body */
+}
+
+.productos-container {
+    width: 44%;
+    float: left;
+    /* Hace que el contenedor se alinee a la izquierda */
+    margin-left: 150px;
+    margin-right: 2%;
+    /* Espacio entre el contenedor y otros elementos, ajusta según sea necesario */
+}
+
+.producto {
+    border: 3px solid #97caec;
+    background-color: #5dbbf1;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px;
+    text-align: center;
+    display: flex;
+}
+
+.producto img {
+    width: 300px;
+    height: 220px;
+    object-fit: cover;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.producto .contenido {
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+}
+
+.btn-success {
+    background-color: #ffae00;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-success:hover {
+    background-color: #c96a2b;
+}
+
+
+
+.clear {
+    clear: both;
+}
+
+.container {
+    margin: 0 auto;
+}
+
+.card {
+    position: relative;
+    width: 250px;
+    height: 400px;
+    margin: 10 auto;
+    background: #000;
+    border-radius: 15px;
+    box-shadow: 0 15px 60px rgba(0, 0, 0, 0.5);
+}
+
+.face {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.face.back {
+    box-sizing: border-box;
+    padding: 15px;
+}
+
+.face.back b {
+    margin: 0;
+    padding: 0;
+}
+
+.face.back p {
+    color: #ffffff;
+    
+}
+
+.face.back .desc {
+    background-color: #eee;
+    
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    
+}
+
+
+
+.face.front {
+    transition: 0.5s;
+}
+
+.face.front b {
+    margin: 0;
+    padding: 0;
+    font-size: 5.1em;
+    color: #fff;
+    transition: 0.5s;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
+.card:hover .face.front {
+    height: 60px;
+}
+
+.card:hover .face.front b {
+    font-size: 2em;
+}
+
+.face.front {
+    background-color: #0cbaba;
+    border-radius: 15px;
+}
