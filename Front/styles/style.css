@@ -1,95 +1,27 @@
-body {
-    background-image: url('../imagenes/fondito.jpg');
-    /* Cambia 'tu_imagen_de_fondo.jpg' con la ruta correcta de tu imagen */
-    background-size: cover;
-    /* Ajusta el tamaño de la imagen de fondo para cubrir todo el body */
-    background-repeat: no-repeat;
-    /* Evita que la imagen se repita */
-    background-attachment: fixed;
-    /* Añade el efecto de parallax al fondo */
-    margin: 0;
-    /* Elimina el margen predeterminado del body */
-    padding: 0;
-    /* Elimina el relleno predeterminado del body */
-}
-
-.productos-container {
-    width: 44%;
-    float: left;
-    /* Hace que el contenedor se alinee a la izquierda */
+<<<
     margin-left: 150px;
     margin-right: 2%;
-    /* Espacio entre el contenedor y otros elementos, ajusta según sea necesario */
-}
-
-.producto {
-    border: 3px solid #97caec;
-    background-color: #5dbbf1;
-    border-radius: 10px;
-    padding: 15px;
-    margin: 10px;
+    /* Espacio entre el contenedor y otros elementos, ajusta según sea necesario *
     text-align: center;
-    display: flex;
-}
-
-.producto img {
-    width: 300px;
-    height: 220px;
-    object-fit: cover;
-    margin-right: 10px;
-    border-radius: 5px;
-}
-
-.producto .contenido {
+    display: flex
     display: flex;
     flex-direction: column;
-    margin-left: 15px;
-}
-
-.btn-success {
-    background-color: #ffae00;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.btn-success:hover {
+    margin-left: 1
     background-color: #c96a2b;
 }
 
-
-
-.clear {
-    clear: both;
-}
-
-.container {
-    margin: 0 auto;
-}
-
-.card {
     position: relative;
     width: 250px;
     height: 400px;
     margin: 10 auto;
     background: #000;
-    border-radius: 15px;
-    box-shadow: 0 15px 60px rgba(0, 0, 0, 0.5);
-}
-
 .face {
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     height: 100%;
     display: flex;
-    justify-content: center;
-    align-items: center;
 }
-
 .face.back {
     box-sizing: border-box;
     padding: 15px;
@@ -141,3 +73,63 @@ body {
     background-color: #0cbaba;
     border-radius: 15px;
 }
+=======
+    background-color: #45a049;
+}
+
+/*Boton de pagar con animacion*/
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 16vh; /* O la altura que prefieras */
+}
+
+.scene {
+    width: 10em;
+    justify-content: center;
+    align-items: center;
+   }
+   
+   .cube {
+    color: #ccc;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    transition: all 0.85s cubic-bezier(.17,.67,.14,.93);
+    transform-style: preserve-3d;
+    transform-origin: 100% 50%;
+    width: 10em;
+    height: 4em;
+   }
+   
+   .cube:hover {
+    transform: rotateX(-90deg);
+   }
+   
+   .side {
+    box-sizing: border-box;
+    position: absolute;
+    display: inline-block;
+    height: 4em;
+    width: 10em;
+    text-align: center;
+    text-transform: uppercase;
+    padding-top: 1.5em;
+    font-weight: bold;
+   }
+   
+   .top {
+    background: wheat;
+    color: #222229;
+    transform: rotateX(90deg) translate3d(0, 0, 2em);
+    box-shadow: inset 0 0 0 5px #fff;
+   }
+   
+   .front {
+    background: #222229;
+    color: #fff;
+    box-shadow: inset 0 0 0 5px #fff;
+    transform: translate3d(0, 0, 2em);
+   }
+
+ 
