@@ -12,7 +12,9 @@
     --header-height-difference: calc(var(--header-outer-height) - var(--header-inner-height));
     --header-bg: #fff;
 }
-
+.header-outer {
+    z-index: 1000; /* Un valor alto para asegurarse de que esté por encima de otros elementos */
+}
 body {
     font-family: "DM Sans", sans-serif;
     background-color: #f2f5f7;
@@ -171,7 +173,7 @@ p {
 
         .card__head {
             color: black;
-            background: rgba(255, 30, 173, 0.75);
+            background: rgba(41, 129, 201, 0.75);
             padding: 0.5em;
             transform: rotate(-90deg);
             transform-origin: 0% 0%;
@@ -215,3 +217,22 @@ p {
         }
     }
 }
+
+.contenedor{  padding-top: 10px;
+    padding-bottom: 20px;}
+  
+  
+  .fondo-img{
+    background-image: url("Imagenes/fondo_inicio.jpg");
+    height: 750px;
+    width: 1100px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    margin: 5% auto;
+    padding: 15px;
+    border: 3px solid #0a5d83;
+    border-radius: 4px;
+    box-shadow: 0px 0px 10px #000000;
+    position: relative;
+  }

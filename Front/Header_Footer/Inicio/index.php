@@ -3,6 +3,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
@@ -32,26 +33,35 @@
 	</div>
 </header>
 
+<section>
+  <div class="contenedor">
+    <div class="fondo-img">
+        
+    </div>
+  </div>
+</section>
+
+
 <div class="container-gallery">
   <div class="gallery-card">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d6/Cat_plotting_something_evil%21.jpg">
-    <div class="card__head">Plotting Cat</div>
+    <img src="styles\Imagenes\Cabana.jpg">
+    <div class="card__head">Cabana</div>
   </div>
   <div class="gallery-card">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/False_alarm_-a.jpg/1280px-False_alarm_-a.jpg">
-    <div class="card__head">Angry Cat</div>
+    <img src="styles\Imagenes\doble.jpg">
+    <div class="card__head">Doble</div>
   </div>
   <div class="gallery-card">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Neugierige-Katze.JPG/1280px-Neugierige-Katze.JPG">
-    <div class="card__head">Curious Cat</div>
+    <img src="styles\Imagenes\cuatro.jpg">
+    <div class="card__head">Cadruple</div>
   </div>
   <div class="gallery-card">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Al_acecho_%289272124788%29.jpg/1280px-Al_acecho_%289272124788%29.jpg">
-    <div class="card__head">Prowling Cat</div>
+    <img src="styles\Imagenes\suite2camas.jpg">
+    <div class="card__head">Suite 1</div>
   </div>
   <div class="gallery-card">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Mimi%26Tigsi.jpg/1280px-Mimi%26Tigsi.jpg">
-    <div class="card__head">Sleepy Cat</div>
+    <img src="styles\Imagenes\suite1cama.jpg">
+    <div class="card__head">Suite 2</div>
   </div>
 </div>
 
