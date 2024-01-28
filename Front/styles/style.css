@@ -14,22 +14,13 @@ body {
 }
 
 .productos-container {
-    width: 44%;
-    float: left;
-    /* Hace que el contenedor se alinee a la izquierda */
-    margin-left: 150px;
-    margin-right: 2%;
-    /* Espacio entre el contenedor y otros elementos, ajusta según sea necesario */
+    display: flex;
+    overflow: hidden;
 }
 
 .producto {
-    border: 3px solid #97caec;
-    background-color: #5dbbf1;
-    border-radius: 10px;
-    padding: 15px;
-    margin: 10px;
-    text-align: center;
-    display: flex;
+    width: 300px; /* Ajusta el ancho según tus necesidades */
+    margin-right: 20px; /* Espaciado entre las habitaciones */
 }
 
 .producto img {
@@ -66,29 +57,39 @@ body {
 }
 
 .container {
-    margin: 0 auto;
+    /* Estilos para tu contenedor adicional (Reserva) */
+    margin-top: 20px;
+    perspective: 1000px;
 }
 
 .card {
-    position: relative;
-    width: 250px;
-    height: 400px;
-    margin: 10 auto;
-    background: #000;
-    border-radius: 15px;
-    box-shadow: 0 15px 60px rgba(0, 0, 0, 0.5);
+    /* Estilos para la tarjeta de reserva */
+    width: 300px;
+    height: 200px;
+    transform-style: preserve-3d;
+    transform: rotateY(0deg);
+    transition: transform 0.5s;
 }
-
+.card:hover {
+    transform: rotateY(180deg);
+}
 .face {
+    /* Estilos para las caras de la tarjeta */
     position: absolute;
-    bottom: 0;
-    left: 0;
     width: 100%;
     height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    backface-visibility: hidden;
 }
+.back {
+    transform: rotateY(180deg);
+}
+.stars {
+    /* Estilos para las estrellas, puedes personalizar según tus necesidades */
+    display: inline-block;
+    color: #ffd700;
+    font-size: 24px;
+}
+
 
 .face.back {
     box-sizing: border-box;
