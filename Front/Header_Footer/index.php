@@ -1,6 +1,3 @@
-<?php
-include '../basedatos/basedatos.php';
-?>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
