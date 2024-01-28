@@ -21,7 +21,10 @@ $habitaciones = $resultado->fetch_all(MYSQLI_ASSOC);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Copo De Nieve</title>
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="styles/style.css" rel="stylesheet">
@@ -29,30 +32,20 @@ $habitaciones = $resultado->fetch_all(MYSQLI_ASSOC);
 
 <body>
     <!--Barra de navegación - header -->
-    <header>
-        <div class="navbar navbar-expand-lg navbar-dark bg-dark"> <!--Utilizamos estilos de boostrap -->
-            <div class="container"> <!--Contenedor -->
-                <a href="#" class="navbar-brand">
-                    <strong>Copo de Nieve</strong>
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarHeader">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link active">Catálogo</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">Contacto</a>
-                        </li>
-                    </ul>
-                    
-                </div>
-            </div><!--Fin del contenedor -->
-        </div>
-    </header>
+    <header class="header-outer">
+	<div class="header-inner responsive-wrapper">
+		<div class="header-logo">
+			<img src="styles/copo.jpg" />
+		</div>
+        <p id="Titulo">Copo de Nieve</p>
+		<nav class="header-navigation">
+			<a href="#">Inicio</a>
+			<a href="#">Galeria</a>
+			<a href="#">Contactanos</a>
+			<button>Menu</button>
+		</nav>
+	</div>
+</header>
 
 
 <!-- Mostrar todas las habitaciones -->
