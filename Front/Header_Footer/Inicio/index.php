@@ -20,7 +20,7 @@
 <header class="header-outer">
 	<div class="header-inner responsive-wrapper">
 		<div class="header-logo">
-			<img src="styles/copo.jpg" />
+			<img src="styles/Imagenes/copo.jpg" />
 		</div>
         <p id="Titulo">Copo de Nieve</p>
 		<nav class="header-navigation">
