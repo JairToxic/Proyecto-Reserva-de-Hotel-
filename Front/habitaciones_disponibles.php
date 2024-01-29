@@ -1,5 +1,5 @@
 <?php
-    include '../../basedatos/basedatos.php';
+    include '../basedatos/basedatos.php';
 
     // Se usa la variable $mysqli para realizar consultas
     $resultado = $mysqli->query("SELECT * FROM habitaciones");
@@ -18,29 +18,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Habitaciones Disponibles</title>
     <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
         .productos-container {
             display: flex;
-            overflow-x: auto;
-            padding: 10px;
+            flex-wrap: wrap;
             gap: 20px;
+            justify-content: center;
+            padding: 20px;
         }
 
         .producto {
-            flex: 0 0 auto;
-            width: 300px;
-            border: 1px solid #ddd;
+            flex: 0 0 300px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
             overflow: hidden;
+            margin-bottom: 20px;
         }
 
         .producto-imagen {
             width: 100%;
-            height: auto;
+            height: 150px;
+            object-fit: cover;
             border-bottom: 1px solid #ddd;
         }
 
         .contenido {
-            padding: 10px;
+            padding: 15px;
         }
 
         .producto-titulo {
@@ -53,6 +63,7 @@
         }
 
         .btn {
+            width: 100%;
             padding: 8px 16px;
             background-color: #4CAF50;
             color: #fff;
@@ -88,8 +99,6 @@
         </div>
     <?php endforeach; ?>
 </div>
-
-<!-- Resto de tu código ... -->
 
 </body>
 </html>

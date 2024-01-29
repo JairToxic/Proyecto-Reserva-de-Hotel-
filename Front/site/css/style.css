@@ -3394,10 +3394,26 @@ dl {
 	box-shadow: #2b2b2b 0 0 10px inset;
 	animation: neon 3s infinite ease;
 }
+.loader .hotel-sign1 {
+	padding: .25em 0;
+	position: absolute;
+	right: -3.5em;
+    bottom: 0.2em;
+	width: 1.3em;
+	content: " ";
+	text-align: center;
+	background: #a13a3a;
+	font-family: sans-serif;
+	font-weight: 700;
+	border-radius: 4px;
+	box-shadow: #2b2b2b 0 0 10px inset;
+	animation: neon 3s infinite ease;
+}
 
 .loader .hotel-sign span {
 	line-height: 1;
 }
+
 
 .loader .window {
 	background: white;
@@ -31734,4 +31750,40 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
 		opacity: 1;
 		transform: translate(-100%, -60%);
 	}
+}
+
+/* Estilos adicionales para mejorar la apariencia del carrusel */
+.productos-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding: 20px;
+}
+
+.producto {
+    flex: 0 0 auto;
+    width: 200px; /* Ajusta el ancho según tu preferencia */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+}
+
+.producto:hover {
+    transform: scale(1.05);
+}
+
+.producto img {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+}
+
+.contenido {
+    padding: 15px;
+}
+
+.contenido h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
 }
