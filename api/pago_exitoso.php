@@ -1,7 +1,4 @@
-
 <?php
-
-//Este es un ejemplo que se realizo para otra base de datos, ENTONCES SOLO ES EJEMPLO DE MOMENTO.
 require 'vendor/autoload.php';
 
 use PayPal\Api\Payment;
