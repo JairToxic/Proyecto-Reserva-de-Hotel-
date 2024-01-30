@@ -1,45 +1,3 @@
-<<<<<<< HEAD
-=======
-<?php
-// Aquí iría el código para procesar la reserva en la base de datos prueba_hotel
-
-// Recibir datos del formulario y procesar la reserva si se envió el formulario
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Recibir datos del formulario
-    $fecha_checkin = $_POST['fecha_checkin'];
-    $fecha_checkout = $_POST['fecha_checkout'];
-    $id_habitacion = $_POST['id_habitacion'];
-    $id_cliente = $_POST['id_cliente'];
-
-    // Conectar a la base de datos
-    $mysqli = new mysqli("localhost", "root", "", "prueba_hotel");
-
-    // Verificar la conexión
-    if ($mysqli->connect_error) {
-        die("Conexión fallida: " . $mysqli->connect_error);
-    }
-
-    // Preparar la consulta para insertar la reserva
-    $sql = "INSERT INTO RESERVA (ID_CLIENTE, FECHACHECKIN, FECHACHECKOUT) VALUES (?, ?, ?)";
-    $stmt = $mysqli->prepare($sql);
-
-    // Vincular parámetros
-    $stmt->bind_param("iss", $id_cliente, $fecha_checkin, $fecha_checkout);
-
-    // Ejecutar la consulta
-    if ($stmt->execute()) {
-        echo "Reserva realizada exitosamente";
-    } else {
-        echo "Error al realizar la reserva: " . $mysqli->error;
-    }
-
-    // Cerrar declaración y conexión
-    $stmt->close();
-    $mysqli->close();
-}
-?>
-
->>>>>>> d6b01fdac43a9e2c9f5d66bfaaa32969037671f0
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -52,7 +10,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <div id="calendar"></div>
 
-<<<<<<< HEAD
 <form action="" method="post">
     <label for="fecha_checkin">Fecha de check-in:</label>
     <input type="date" id="fecha_checkin" name="fecha_checkin" required><br>
@@ -76,13 +33,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <input type="submit" value="Reservar">
 </form>
 
-=======
->>>>>>> d6b01fdac43a9e2c9f5d66bfaaa32969037671f0
 <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core/main.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid/main.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-<<<<<<< HEAD
     var num_huespedes_input = document.getElementById('num_huespedes');
     var num_adultos_select = document.getElementById('num_adultos');
     var num_ninos_select = document.getElementById('num_ninos');
@@ -120,8 +74,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     num_huespedes_input.dispatchEvent(new Event('change'));
 
-=======
->>>>>>> d6b01fdac43a9e2c9f5d66bfaaa32969037671f0
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
@@ -134,12 +86,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     calendar.render();
 });
-</script>
-</body>
-</html>
-<<<<<<< HEAD
 <?php
-
 // Establecer conexión a la base de datos
 $mysqli = new mysqli("localhost", "root", "", "prueba_hotel");
 
@@ -184,5 +131,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Cerrar la conexión
 $mysqli->close();
 ?>
-=======
->>>>>>> d6b01fdac43a9e2c9f5d66bfaaa32969037671f0
+</script>
+</body>
+</html>
+
