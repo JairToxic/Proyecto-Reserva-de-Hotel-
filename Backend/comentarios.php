@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Hotel Copo de Nieve</title>
     <meta name="viewport" content="width=device-width, user-scalable=no">
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="stylesheet" type="text/css" href="../Front/styles/comentarios.css">
     
 </head> 
 <body>
@@ -113,7 +113,7 @@ function (data) {
 		if (parent == "0")
 		{
 			comments =  "<div class='comment-row' >"+
-            "<div class='comment-info'><img src='css/img/user.png'><span class='posted-by'>" + data[i]['comentario_nombre'].toUpperCase() + "</span></div>" + 
+            "<div class='comment-info'><img src='../Front/imagenes/user.png'><span class='posted-by'>" + data[i]['comentario_nombre'].toUpperCase() + "</span></div>" + 
             "<div class='comment-text' style='font-size: 18px;'>" + data[i]['comentarios'] + "</div>"+
             "</div>";
 
@@ -134,7 +134,7 @@ for (var i = 0; (i < data.length); i++)
     if (commentId == data[i].parent_id)
     {
         var comments = "<div class='comment-row' >"+
-        " <div class='comment-info'><img src='user.png'><span class='posted-by'>" + data[i]['comentario_nombre'].toUpperCase() + " </span></div>" + 
+        " <div class='comment-info'><../Front/imagenes/user.png'><span class='posted-by'>" + data[i]['comentario_nombre'].toUpperCase() + " </span></div>" + 
         "<div class='comment-text'>" + data[i]['comentarios'] + "</div>"+
         "</div>";
         var item = $("<li>").html(comments);
