@@ -1,22 +1,70 @@
+<?php
+    include '../../../basedatos/basedatos.php';
+
+    if (isset($_GET['habitacion_id'])) {
+        $habitacion_id = $_GET['habitacion_id'];
+
+        // Consulta SQL para obtener detalles de la habitación específica
+        $resultado = $mysqli->query("SELECT * FROM habitaciones WHERE ID_HABITACION = $habitacion_id");
+
+        if (!$resultado) {
+            echo "<script>alert('Error al ejecutar la consulta: " . $mysqli->error . "');</script>";
+            exit();
+        }
+
+        $habitacion = $resultado->fetch_assoc();
+
+        // Consulta SQL para obtener imágenes relacionadas con la habitación
+        $imagenes_resultado = $mysqli->query("SELECT * FROM imagenes_habitaciones WHERE id_habitacion = $habitacion_id");
+        $imagenes = $imagenes_resultado->fetch_all(MYSQLI_ASSOC);
+    } else {
+        // Si no se proporciona un ID de habitación válido, redireccionar o manejar el error según sea necesario
+        header("Location: ../tipo de habitaciones/habitaciones_dobles.php");
+        exit();
+    }
+?>
 
 <!-- icon list--><!DOCTYPE html>
 <html class="wide wow-animation" lang="en">
   <head>
     <!-- Site Title-->
-    <title>Habitaciones</title>
+    <title>Contacts</title>
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
-    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../images/favicon.ico" type="../image/x-icon">
     <!-- Stylesheets-->
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato:400,700,400italic%7CPoppins:300,400,500,700">
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/style.css">
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<!-- jQuery (required for Bootstrap JS) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
+<!-- Popper.js (required for Bootstrap JS) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="../text/css" href="//fonts.googleapis.com/css?family=Lato:400,700,400italic%7CPoppins:300,400,500,700">
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/style.css">
     <style>.ie-panel{display: none;background: #212121;padding: 10px 0;box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3);clear: both;text-align:center;position: relative;z-index: 1;} html.ie-10 .ie-panel, html.lt-ie-10 .ie-panel {display: block;}</style>
-  </head>
+    <style>
+        .miniatura-item {
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .miniatura-item:hover {
+            transform: scale(1.1);
+        }
+    </style>
+    </head>
   <body>
-    
+    <div class="ie-panel"><a href="http://windows.microsoft.com/en-US/internet-explorer/"><img src="../images/ie8-panel/warning_bar_0000_us.jpg" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today."></a></div>
+    <!-- Page-->
+    <div class="text-center page"><a class="banner banner-top" href="https://www.templatemonster.com/website-templates/monstroid2.html" target="_blank"><img src="../images/monstroid.jpg" alt="" height="0"></a>
+      <!-- Page preloader-->
       <div class="page-loader">
         <div>
           <div class="page-loader-body">
@@ -62,7 +110,7 @@
             <div class="rd-navbar-top-panel rd-navbar-collapse">
               <div class="rd-navbar-top-panel-inner">
                 <div class="left-side">
-                  <div class="group"><span class="text-italic">Follow Us:</span>
+                  <div class="group"><span class="text-italic">Siguenos en Redes Sociales:</span>
                     <ul class="list-inline">
                       <li><a class="icon icon-sm icon-secondary-5 fa fa-instagram" href="#"></a></li>
                       <li><a class="icon icon-sm icon-secondary-5 fa fa-facebook" href="#"></a></li>
@@ -72,7 +120,7 @@
                 </div>
                 <div class="center-side">
                   <!-- RD Navbar Brand-->
-                  <div class="rd-navbar-brand fullwidth-brand"><a class="brand-name" href="index.html"><img src="imagenes/logo.jpeg" alt="" width="114" height="48"/></a></div>
+                  <div class="rd-navbar-brand fullwidth-brand"><a class="brand-name" href="../index.html"><img src="../imagenes/logo.jpeg" alt="" width="214" height="28"/></a></div>
                 </div>
                 <div class="right-side">
                   <!-- Contact Info-->
@@ -93,17 +141,17 @@
                 <!-- RD Navbar collapse toggle-->
                 <button class="rd-navbar-collapse-toggle" data-rd-navbar-toggle=".rd-navbar-collapse"><span></span></button>
                 <!-- RD Navbar Brand-->
-                <div class="rd-navbar-brand mobile-brand"><a class="brand-name" href="index.html"><img src="images/logo-default-314x48.png" alt="" width="314" height="48"/></a></div>
+                <div class="rd-navbar-brand mobile-brand"><a class="brand-name" href="../index.html"><img src="../images/logo-default-314x48.png" alt="" width="314" height="48"/></a></div>
               </div>
               <div class="rd-navbar-aside-right">
                 <div class="rd-navbar-nav-wrap">
                   <div class="rd-navbar-nav-scroll-holder">
                     <ul class="rd-navbar-nav">
-                      <li><a href="index.html">Hotel Copo de Nieve</a>
+                      <li class="active"><a href="index.html">Hotel</a>
                       </li>
-                      <li class="active"><a href="about-us.html">Sobre Nosotros</a>
+                      <li><a href="about-us.html">Sobre Nosotros</a>
                       </li>
-                      <li><a href="contacts.html">Contactos</a>
+                      <li><a href="contacts.html">Contactanos</a>
                       </li>
                       <li><a href="habitaciones.html">Habitaciones</a>
                       </li>
@@ -115,100 +163,121 @@
           </nav>
         </div>
       </header>
-      <!-- Breadcrumbs & Page title-->
-      <section class="section-md text-center bg-image breadcrumbs-03">
-        <div class="shell shell-fluid">
-          <div class="range range-xs-center">
-            <div class="cell-xs-12 cell-xl-11">
-              <h2 class="text-white">Nuestras habitaciones</h2>
-              <ul class="breadcrumbs-custom">
-                <li><a href="index.html">Hotel Copo de nieve</a></li>
-                <li class="active">Habitaciones</li>
-              </ul>
+      <main>
+
+        <div class="container bg-light p-4">
+        <div id="carruselPrincipal" class="carousel slide mb-4" data-ride="carousel">
+            <div class="carousel-inner">
+                <?php
+                $first = true;
+                foreach ($imagenes as $index => $imagen) : ?>
+                    <div class="carousel-item <?php echo $first ? 'active' : ''; ?>">
+                        <img src="<?php echo $imagen['url']; ?>" class="d-block w-100" alt="Imagen de la habitación">
+                    </div>
+                <?php
+                $first = false;
+                endforeach; ?>
             </div>
-          </div>
+
+            <!-- Controles del carrusel -->
+            <a class="carousel-control-prev" href="#carruselPrincipal" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Anterior</span>
+            </a>
+            <a class="carousel-control-next" href="#carruselPrincipal" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Siguiente</span>
+            </a>
         </div>
-      </section>
 
-      <section class="section section-md">
-        <div class="shell">
-          <h3>
-            <a href="../../Front/habitaciones_disponibles.php">Habitaciones y suites</a>
-            <a class="thumbnail-classic" href="../../Front/habitaciones_disponibles.php" data-lightgallery="item"></a>
-          </h3>
-          <p>Hotel Copo de nieve ofrece las mejores habitaciones con diseños únicos que brindan un ambiente lujoso y relajante. Especialmente <br> selected fabrics and finishes vary from room to room, offering guests a variety of beautiful and unique atmospheres to select from.</p>
-          
-          <div class="range range-30" data-lightgallery="group">
-            <div class="cell-sm-6 cell-md-4"><a class="thumbnail-classic" href="imagenes/muestra1.jpg" data-lightgallery="item">
-                
-                <figure><img src="imagenes/muestra1.jpg" alt="" width="370" height="276"/>
-                </figure>
-                
-                <div class="caption">
-                  <p class="caption-title">Habitación individual</p>
-                  <p class="caption-text">Cada habitación tiene su propia decoración y disposición únicas.</p>
-                </div></a>
-                <a class="btn btn-primary" href="tipos de habitaciones/habitaciones_individuales.php">Ver Todas</a>
-            </div>
-            <div class="cell-sm-6 cell-md-4"><a class="thumbnail-classic" href="imagenes/muestra2.jpg" data-lightgallery="item">
-                <figure><img src="imagenes/muestra6.jpg" alt="" width="370" height="276"/>
-                </figure>
-                <div class="caption">
-                  <p class="caption-title">Habitacion Doble</p>
-                  <p class="caption-text">Cada habitación tiene su propia decoración y disposición únicas.</p>
-                </div></a>
-                <a class="btn btn-primary" href="tipos de habitaciones/habitaciones_dobles.php">Ver Todas</a>
-            </div>
-            <div class="cell-sm-6 cell-md-4"><a class="thumbnail-classic" href="imagenes/muestra3.jpg" data-lightgallery="item">
-                <figure><img src="imagenes/muestra3.jpg" alt="" width="370" height="276"/>
-                </figure>
-                <div class="caption">
-                  <p class="caption-title">Habitación Cuadruple</p>
-                  <p class="caption-text">Cada habitación tiene su propia decoración y disposición únicas.</p>
-                </div></a>
-                <a class="btn btn-primary" href="tipos de habitaciones/habitaciones_cuadruples.php">Ver Todas</a>
-            </div>
-            <div class="cell-sm-6 cell-md-4"><a class="thumbnail-classic" href="imagenes/muestra4.jpg" data-lightgallery="item">
-                <figure><img src="imagenes/muestra4.jpg" alt="" width="370" height="276"/>
-                </figure>
-                <div class="caption">
-                  <p class="caption-title">Habitacion estandar</p>
-                  <p class="caption-text">Cada habitación tiene su propia decoración y disposición únicas.</p>
-                </div></a>
-                <a class="btn btn-primary" href="tipos de habitaciones/habitaciones_estandar.php">Ver Todas</a>
-            </div>
-            <div class="cell-sm-6 cell-md-4"><a class="thumbnail-classic" href="imagenes/muestra5.jpg" data-lightgallery="item">
-                <figure><img src="imagenes/muestra5.jpg" alt="" width="370" height="276"/>
-                </figure>
-                <div class="caption">
-                  <p class="caption-title">Suites </p>
-                  <p class="caption-text">Cada habitación tiene su propia decoración y disposición únicas.</p>
-                </div></a>
-                <a class="btn btn-primary" href="tipos de habitaciones/habitaciones_suite.php">Ver Todas</a>
-            </div>
-            <div class="cell-sm-6 cell-md-4"><a class="thumbnail-classic" href="imagenes/muestra6.jpg" data-lightgallery="item">
-                <figure><img src="imagenes/muestra6.jpg" alt="" width="370" height="276"/>
-                </figure>
-                <div class="caption">
-                  <p class="caption-title">Ejecutivas</p>
-                  <p class="caption-text">Cada habitación tiene su propia decoración y disposición únicas.</p>
-                </div></a>
-                <a class="btn btn-primary" href="tipos de habitaciones/habitaciones_ejecutivas.php">Ver Todas</a>
-            </div>
-          </div>
+        
+    <!-- Carrusel de miniaturas debajo del carrusel principal -->
+    <div id="carruselMiniaturas" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <?php
+            $chunks = array_chunk($imagenes, 6);
+            foreach ($chunks as $index => $chunk) : ?>
+                <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>">
+                    <div class="row">
+                        <?php foreach ($chunk as $innerIndex => $imagen) : ?>
+                            <div class="col-2">
+                                <a href="#" data-toggle="modal" data-target="#modalImagen<?php echo $innerIndex + ($index * 6); ?>">
+                                    <img src="<?php echo $imagen['url']; ?>" class="d-block w-100 miniatura-item" alt="Miniatura de la habitación">
+                                </a>
+                            </div>
+
+                            <!-- Modal para cada imagen -->
+                            <div class="modal fade" id="modalImagen<?php echo $innerIndex + ($index * 6); ?>" tabindex="-1" role="dialog" aria-labelledby="modalImagenLabel<?php echo $innerIndex + ($index * 6); ?>" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="modalImagenLabel<?php echo $innerIndex + ($index * 6); ?>">Imagen de la habitación</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <img src="<?php echo $imagen['url']; ?>" class="d-block w-100" alt="Imagen de la habitación">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
         </div>
-      </section>
-      <script>
-        function redirectToRoom(url) {
-          window.location.href = url;
-        }
-      </script>
-    
+
+        <!-- Controles del carrusel de miniaturas -->
+        <a class="carousel-control-prev" href="#carruselMiniaturas" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Anterior</span>
+        </a>
+        <a class="carousel-control-next" href="#carruselMiniaturas" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Siguiente</span>
+        </a>
+    </div>
+</div>
+
+<br>
+
+    <div class="detalles-habitacion-container bg-light p-4 rounded shadow mx-auto" style="max-width: 1150px;">
+    <div class="mb-4">
+        <h3>Descripcion</h3>
+        <p class="mb-2"><?php echo $habitacion['DESCRIPCION']; ?></p>
+        <p class="mb-2">Precio por noche: $<?php echo $habitacion['PRECIOPORNOCHE']; ?></p>
+        <p class="mb-2">Capacidad: <?php echo $habitacion['CAPACIDAD']; ?> personas</p>
+    </div>
+    <div class="mb-4">
+        <p class="mb-2">Camas: <?php echo $habitacion['CAMAS']; ?></p>
+        <p class="mb-2">Baño: <?php echo $habitacion['BANO']; ?></p>
+        
+        <!-- Agregamos iconos para hacerlo más visual -->
+        <div class="mb-2">
+            <span class="icon icon-primary text-middle mdi mdi-star"></span>
+            <span class="ml-2">Valoración:  / 5</span>
+        </div>
+        <div class="mb-2">
+            <span class="icon icon-primary text-middle mdi mdi-wifi"></span>
+            <span class="ml-2">Wi-Fi: </span>
+        </div>
+        <div class="mb-2">
+            <span class="icon icon-primary text-middle mdi mdi-air-conditioner"></span>
+            <span class="ml-2">Aire Acondicionado: </span>
+        </div>
+    </div>
+
+    <!-- Puedes agregar más detalles según sea necesario -->
+
+    <a href="../tipos de habitaciones/habitaciones_dobles.php" class="btn btn-secondary">Volver a la lista de habitaciones</a>
+</div>
+<br>
 
 
-     
-       <!-- Page Footer-->
-       <footer class="page-footer text-left text-sm-left">
+        
+        <!-- Page Footer-->
+      <footer class="page-footer text-left text-sm-left">
         <div class="shell-wide">
         
           <div class="page-footer-minimal">
@@ -319,8 +388,20 @@
       </div>
     </div>
     <!-- Javascript-->
-    <script src="js/core.min.js"></script>
-    <script src="js/script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-DcPgea9PSpwOM3EKiWLPgPUA/IwzXYBzTNn8UezZG6G8tL8foOZ//Cp82Ci9WqLg" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyO8k+5TIxg3jpuDHvjkoWw49tiSM+rL4N" crossorigin="anonymous"></script>
+    <script>
+        / Agregar efecto de clic a las miniaturas
+        document.querySelectorAll('.miniatura-item').forEach(function(miniatura) {
+            miniatura.addEventListener('click', function() {
+                // Puedes agregar aquí más efectos o acciones al hacer clic en la miniatura
+            });
+        });
+    </script>
+    
+    <script src="../js/core.min.js"></script>
+    <script src="../js/script.js"></script>
     <!--Coded by Drel-->
   </body>
 </html>

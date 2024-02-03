@@ -1,22 +1,38 @@
+<?php
+    include '../../../basedatos/basedatos.php';
+
+    // Se usa la variable $mysqli para realizar consultas
+    $resultado = $mysqli->query("SELECT * FROM habitaciones WHERE tipo='individual'");
+
+    if (!$resultado) {
+        echo "<script>alert('Error al ejecutar la consulta: " . $mysqli->error . "');</script>";
+        exit();
+    }
+    // Convertir el resultado en un array asociativo
+    $habitaciones = $resultado->fetch_all(MYSQLI_ASSOC);
+?>
 
 <!-- icon list--><!DOCTYPE html>
 <html class="wide wow-animation" lang="en">
   <head>
     <!-- Site Title-->
-    <title>Habitaciones</title>
+    <title>Contacts</title>
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
-    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../images/favicon.ico" type="../image/x-icon">
     <!-- Stylesheets-->
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato:400,700,400italic%7CPoppins:300,400,500,700">
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" type="../text/css" href="//fonts.googleapis.com/css?family=Lato:400,700,400italic%7CPoppins:300,400,500,700">
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/style.css">
     <style>.ie-panel{display: none;background: #212121;padding: 10px 0;box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3);clear: both;text-align:center;position: relative;z-index: 1;} html.ie-10 .ie-panel, html.lt-ie-10 .ie-panel {display: block;}</style>
   </head>
   <body>
-    
+    <div class="ie-panel"><a href="http://windows.microsoft.com/en-US/internet-explorer/"><img src="../images/ie8-panel/warning_bar_0000_us.jpg" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today."></a></div>
+    <!-- Page-->
+    <div class="text-center page"><a class="banner banner-top" href="https://www.templatemonster.com/website-templates/monstroid2.html" target="_blank"><img src="../images/monstroid.jpg" alt="" height="0"></a>
+      <!-- Page preloader-->
       <div class="page-loader">
         <div>
           <div class="page-loader-body">
@@ -62,7 +78,7 @@
             <div class="rd-navbar-top-panel rd-navbar-collapse">
               <div class="rd-navbar-top-panel-inner">
                 <div class="left-side">
-                  <div class="group"><span class="text-italic">Follow Us:</span>
+                  <div class="group"><span class="text-italic">Siguenos en Redes Sociales:</span>
                     <ul class="list-inline">
                       <li><a class="icon icon-sm icon-secondary-5 fa fa-instagram" href="#"></a></li>
                       <li><a class="icon icon-sm icon-secondary-5 fa fa-facebook" href="#"></a></li>
@@ -72,7 +88,7 @@
                 </div>
                 <div class="center-side">
                   <!-- RD Navbar Brand-->
-                  <div class="rd-navbar-brand fullwidth-brand"><a class="brand-name" href="index.html"><img src="imagenes/logo.jpeg" alt="" width="114" height="48"/></a></div>
+                  <div class="rd-navbar-brand fullwidth-brand"><a class="brand-name" href="../index.html"><img src="../imagenes/logo.jpeg" alt="" width="214" height="28"/></a></div>
                 </div>
                 <div class="right-side">
                   <!-- Contact Info-->
@@ -93,17 +109,17 @@
                 <!-- RD Navbar collapse toggle-->
                 <button class="rd-navbar-collapse-toggle" data-rd-navbar-toggle=".rd-navbar-collapse"><span></span></button>
                 <!-- RD Navbar Brand-->
-                <div class="rd-navbar-brand mobile-brand"><a class="brand-name" href="index.html"><img src="images/logo-default-314x48.png" alt="" width="314" height="48"/></a></div>
+                <div class="rd-navbar-brand mobile-brand"><a class="brand-name" href="../index.html"><img src="../images/logo-default-314x48.png" alt="" width="314" height="48"/></a></div>
               </div>
               <div class="rd-navbar-aside-right">
                 <div class="rd-navbar-nav-wrap">
                   <div class="rd-navbar-nav-scroll-holder">
                     <ul class="rd-navbar-nav">
-                      <li><a href="index.html">Hotel Copo de Nieve</a>
+                      <li class="active"><a href="index.html">Hotel</a>
                       </li>
-                      <li class="active"><a href="about-us.html">Sobre Nosotros</a>
+                      <li><a href="about-us.html">Sobre Nosotros</a>
                       </li>
-                      <li><a href="contacts.html">Contactos</a>
+                      <li><a href="contacts.html">Contactanos</a>
                       </li>
                       <li><a href="habitaciones.html">Habitaciones</a>
                       </li>
@@ -115,100 +131,31 @@
           </nav>
         </div>
       </header>
-      <!-- Breadcrumbs & Page title-->
-      <section class="section-md text-center bg-image breadcrumbs-03">
-        <div class="shell shell-fluid">
-          <div class="range range-xs-center">
-            <div class="cell-xs-12 cell-xl-11">
-              <h2 class="text-white">Nuestras habitaciones</h2>
-              <ul class="breadcrumbs-custom">
-                <li><a href="index.html">Hotel Copo de nieve</a></li>
-                <li class="active">Habitaciones</li>
-              </ul>
+      <main>
+        <!-- Mostrar todas las habitaciones -->
+<div class="productos-container">
+    <?php foreach ($habitaciones as $habitacion) : ?>
+        <div class="producto">
+            <!-- Asume que todas las imágenes son .jpg. Modifica según tus necesidades -->
+            <img src="../imagenes/<?php echo $habitacion['ID_HABITACION']; ?>.jpg" alt="Imagen de la habitación" class="producto-imagen">
+            <div class="contenido">
+                <h2 class="producto-titulo"><?php echo $habitacion['TIPO']; ?></h2>
+                <p class="card-title">👥<?php echo $habitacion['CAPACIDAD']; ?> personas</p>
+                <p class="card-title">Precio: $<?php echo $habitacion['PRECIOPORNOCHE']; ?></p>
+                <p class="card-title"><?php echo $habitacion['DESCRIPCION']; ?></p>
+                <!-- Botón de Pago PayPal para cada Habitación -->
+                <form action="../habitaciones/detalle_habitacion_individual.php" method="get">
+                    <input type="hidden" name="habitacion_id" value="<?php echo $habitacion['ID_HABITACION']; ?>">
+                    <input type="submit" value="Ver" class="btn btn-success">
+                </form>
             </div>
-          </div>
         </div>
-      </section>
+    <?php endforeach; ?>
+</div>
 
-      <section class="section section-md">
-        <div class="shell">
-          <h3>
-            <a href="../../Front/habitaciones_disponibles.php">Habitaciones y suites</a>
-            <a class="thumbnail-classic" href="../../Front/habitaciones_disponibles.php" data-lightgallery="item"></a>
-          </h3>
-          <p>Hotel Copo de nieve ofrece las mejores habitaciones con diseños únicos que brindan un ambiente lujoso y relajante. Especialmente <br> selected fabrics and finishes vary from room to room, offering guests a variety of beautiful and unique atmospheres to select from.</p>
-          
-          <div class="range range-30" data-lightgallery="group">
-            <div class="cell-sm-6 cell-md-4"><a class="thumbnail-classic" href="imagenes/muestra1.jpg" data-lightgallery="item">
-                
-                <figure><img src="imagenes/muestra1.jpg" alt="" width="370" height="276"/>
-                </figure>
-                
-                <div class="caption">
-                  <p class="caption-title">Habitación individual</p>
-                  <p class="caption-text">Cada habitación tiene su propia decoración y disposición únicas.</p>
-                </div></a>
-                <a class="btn btn-primary" href="tipos de habitaciones/habitaciones_individuales.php">Ver Todas</a>
-            </div>
-            <div class="cell-sm-6 cell-md-4"><a class="thumbnail-classic" href="imagenes/muestra2.jpg" data-lightgallery="item">
-                <figure><img src="imagenes/muestra6.jpg" alt="" width="370" height="276"/>
-                </figure>
-                <div class="caption">
-                  <p class="caption-title">Habitacion Doble</p>
-                  <p class="caption-text">Cada habitación tiene su propia decoración y disposición únicas.</p>
-                </div></a>
-                <a class="btn btn-primary" href="tipos de habitaciones/habitaciones_dobles.php">Ver Todas</a>
-            </div>
-            <div class="cell-sm-6 cell-md-4"><a class="thumbnail-classic" href="imagenes/muestra3.jpg" data-lightgallery="item">
-                <figure><img src="imagenes/muestra3.jpg" alt="" width="370" height="276"/>
-                </figure>
-                <div class="caption">
-                  <p class="caption-title">Habitación Cuadruple</p>
-                  <p class="caption-text">Cada habitación tiene su propia decoración y disposición únicas.</p>
-                </div></a>
-                <a class="btn btn-primary" href="tipos de habitaciones/habitaciones_cuadruples.php">Ver Todas</a>
-            </div>
-            <div class="cell-sm-6 cell-md-4"><a class="thumbnail-classic" href="imagenes/muestra4.jpg" data-lightgallery="item">
-                <figure><img src="imagenes/muestra4.jpg" alt="" width="370" height="276"/>
-                </figure>
-                <div class="caption">
-                  <p class="caption-title">Habitacion estandar</p>
-                  <p class="caption-text">Cada habitación tiene su propia decoración y disposición únicas.</p>
-                </div></a>
-                <a class="btn btn-primary" href="tipos de habitaciones/habitaciones_estandar.php">Ver Todas</a>
-            </div>
-            <div class="cell-sm-6 cell-md-4"><a class="thumbnail-classic" href="imagenes/muestra5.jpg" data-lightgallery="item">
-                <figure><img src="imagenes/muestra5.jpg" alt="" width="370" height="276"/>
-                </figure>
-                <div class="caption">
-                  <p class="caption-title">Suites </p>
-                  <p class="caption-text">Cada habitación tiene su propia decoración y disposición únicas.</p>
-                </div></a>
-                <a class="btn btn-primary" href="tipos de habitaciones/habitaciones_suite.php">Ver Todas</a>
-            </div>
-            <div class="cell-sm-6 cell-md-4"><a class="thumbnail-classic" href="imagenes/muestra6.jpg" data-lightgallery="item">
-                <figure><img src="imagenes/muestra6.jpg" alt="" width="370" height="276"/>
-                </figure>
-                <div class="caption">
-                  <p class="caption-title">Ejecutivas</p>
-                  <p class="caption-text">Cada habitación tiene su propia decoración y disposición únicas.</p>
-                </div></a>
-                <a class="btn btn-primary" href="tipos de habitaciones/habitaciones_ejecutivas.php">Ver Todas</a>
-            </div>
-          </div>
-        </div>
-      </section>
-      <script>
-        function redirectToRoom(url) {
-          window.location.href = url;
-        }
-      </script>
-    
-
-
-     
-       <!-- Page Footer-->
-       <footer class="page-footer text-left text-sm-left">
+        
+        <!-- Page Footer-->
+      <footer class="page-footer text-left text-sm-left">
         <div class="shell-wide">
         
           <div class="page-footer-minimal">
@@ -319,8 +266,8 @@
       </div>
     </div>
     <!-- Javascript-->
-    <script src="js/core.min.js"></script>
-    <script src="js/script.js"></script>
+    <script src="../js/core.min.js"></script>
+    <script src="../js/script.js"></script>
     <!--Coded by Drel-->
   </body>
 </html>
