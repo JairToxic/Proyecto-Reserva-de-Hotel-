@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Habitaciones Disponibles</title>
+</head>
+<body>
+    <form action="buscar_habitaciones.php" method="post">
+        <label for="checkin">Fecha de Check-In:</label>
+        <input type="date" name="checkin" required>
+
+        <label for="checkout">Fecha de Check-Out:</label>
+        <input type="date" name="checkout" required>
+
+        <label for="capacidad">Capacidad de Personas:</label>
+        <input type="number" name="capacidad" required>
+
+        <button type="submit">Buscar Habitaciones Disponibles</button>
+    </form>
+</body>
+</html>
