@@ -274,6 +274,20 @@
 </div>
 <br>
 
+<form id="formReserva">
+    <div class="form-group">
+        <label for="fechaInicio">Fecha de Check-in:</label>
+        <input type="date" class="form-control" id="fechaInicio" name="fechaInicio" required>
+    </div>
+    <div class="form-group">
+        <label for="fechaFin">Fecha de Check-out:</label>
+        <input type="date" class="form-control" id="fechaFin" name="fechaFin" required>
+    </div>
+    <!-- Agrega un campo oculto para almacenar el ID_HABITACION -->
+    <input type="hidden" id="habitacion_id" name="habitacion_id" value="<?php echo $habitacion_id; ?>">
+    <button type="button" class="btn btn-primary" onclick="calcularPrecio()">Calcular Precio</button>
+</form>
+
 
         
         <!-- Page Footer-->
@@ -402,6 +416,37 @@
     
     <script src="../js/core.min.js"></script>
     <script src="../js/script.js"></script>
+
+    <script>
+     
+     function calcularPrecio() {
+    // Obtener fechas del formulario
+    var fechaInicio = document.getElementById('fechaInicio').value;
+    var fechaFin = document.getElementById('fechaFin').value;
+
+    // Obtener ID_HABITACION del campo oculto
+    var habitacion_id = document.getElementById('habitacion_id').value;
+
+    // Validar si se ingresaron fechas válidas
+    if (fechaInicio && fechaFin && fechaFin >= fechaInicio) {
+        // Calcular número de noches
+        var fecha1 = new Date(fechaInicio);
+        var fecha2 = new Date(fechaFin);
+        var diffTiempo = Math.abs(fecha2 - fecha1);
+        var diffDias = Math.ceil(diffTiempo / (1000 * 60 * 60 * 24));
+
+        // Calcular precio total
+        var precioPorNoche = <?php echo $habitacion['PRECIOPORNOCHE']; ?>;
+        var precioTotal = diffDias * precioPorNoche;
+
+        // Redirigir a la página de confirmación con parámetros
+        window.location.href = 'confirmar_reserva.php?habitacion_id=' + habitacion_id + '&fechaInicio=' + fechaInicio + '&fechaFin=' + fechaFin + '&noches=' + diffDias + '&precioTotal=' + precioTotal;
+    } else {
+        // Manejar caso de fechas no válidas
+        alert('Por favor, seleccione fechas válidas de check-in y check-out.');
+    }
+}
+</script>
     <!--Coded by Drel-->
   </body>
 </html>
