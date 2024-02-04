@@ -285,7 +285,7 @@
     </div>
     <!-- Agrega un campo oculto para almacenar el ID_HABITACION -->
     <input type="hidden" id="habitacion_id" name="habitacion_id" value="<?php echo $habitacion_id; ?>">
-    <button type="button" class="btn btn-primary" onclick="calcularPrecio()">Calcular Precio</button>
+    <button type="button" class="btn btn-primary" onclick="calcularPrecio()">Reservar ahora</button>
 </form>
 
   

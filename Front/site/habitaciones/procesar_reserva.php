@@ -56,6 +56,9 @@ $stmt->close();
     $stmt->bind_param("ii", $habitacion_id, $id_reserva);
     $stmt->execute();
     $stmt->close();
+    // Redirigir a la página de reserva exitosa
+header("Location: reserva_exitosa.php");
+exit();
 
     // Resto del código...
 } else {
