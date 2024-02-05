@@ -89,31 +89,6 @@ if (isset($_GET['type'])) {
                     </form>';
                     break;
                 
-                    case 'comentarios':
-                        // Formulario para agregar comentarios
-                        echo '
-                        <h3>Agregar Comentario</h3>
-                        <form action="agregar.php?type=comentarios" method="post">
-                            <label for="id_habitacion2_comentario">ID Habitación2:</label>
-                            <input type="text" id="id_habitacion2_comentario" name="id_habitacion2_comentario"><br>
-                            
-                            <label for="id_cliente_comentario">ID Cliente:</label>
-                            <input type="text" id="id_cliente_comentario" name="id_cliente_comentario"><br>
-                    
-                            <label for="id_habitacion_comentario">ID Habitación:</label>
-                            <input type="text" id="id_habitacion_comentario" name="id_habitacion_comentario"><br>
-                    
-                            <label for="calificacion_comentario">Calificación:</label>
-                            <input type="text" id="calificacion_comentario" name="calificacion_comentario"><br>
-                    
-                            <label for="comentario_comentario">Comentario:</label>
-                            <input type="text" id="comentario_comentario" name="comentario_comentario"><br>
-                    
-                            <!-- Agregar más campos de texto según las columnas de la tabla COMENTARIOS -->
-                    
-                            <input type="submit" value="Agregar Comentario">
-                        </form>';
-                        break;
                     
         default:
             // Tipo de entidad no válido

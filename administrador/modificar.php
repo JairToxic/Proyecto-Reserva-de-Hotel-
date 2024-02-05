@@ -94,37 +94,6 @@ if (isset($_GET['type'])) {
                         // Ejecutar la consulta SQL y manejar cualquier error si es necesario
                     }
                     break;
-                
-                    case 'comentarios':
-                        // HTML para modificar comentarios
-                        echo '<h3>Modificar Comentarios</h3>';
-                        echo '<form id="modificar-comentarios-form" method="post">
-                                <label for="comentario-id">ID del comentario:</label>
-                                <input type="text" id="comentario-id" name="comentario-id"><br>
-                                
-                                <label for="nombre-columna">Nombre de la columna:</label>
-                                <input type="text" id="nombre-columna" name="nombre-columna"><br>
-                        
-                                <label for="dato-cambiar">Dato a cambiar:</label>
-                                <input type="text" id="dato-cambiar" name="dato-cambiar"><br>
-                        
-                                <input type="submit" name="submit" value="Modificar Comentarios">
-                            </form>';
-                    
-                        // Procesamiento de datos si se envió el formulario
-                        if (isset($_POST['submit'])) {
-                            // Aquí colocas el código PHP para procesar los datos del formulario
-                            // Por ejemplo, puedes obtener los valores enviados desde el formulario utilizando $_POST y luego ejecutar una consulta SQL para modificar los comentarios en la base de datos
-                            $comentarioId = $_POST['comentario-id'];
-                            $nombreColumna = $_POST['nombre-columna'];
-                            $datoCambiar = $_POST['dato-cambiar'];
-                    
-                            // Ejemplo de consulta SQL para actualizar los datos de los comentarios
-                            $sql = "UPDATE COMENTARIOS SET $nombreColumna = '$datoCambiar' WHERE ID_COMENTARIO = $comentarioId";
-                            // Ejecutar la consulta SQL y manejar cualquier error si es necesario
-                        }
-                        break;
-                    
         default:
             // Tipo de entidad no válido
             echo "Error: Tipo de entidad no válido.";

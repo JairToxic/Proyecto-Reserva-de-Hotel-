@@ -55,6 +55,17 @@
             // Guardar el nombre del botón seleccionado en una variable global
             window.selectedButton = buttonId;
         }
+
+        function redirectToAction(action) {
+            var selectedButton = window.selectedButton;
+            if (selectedButton) {
+                var url;
+                if (action === 'eliminar') {
+                    url = 'eliminar.php?type=' + selectedButton;
+                }
+                window.location.href = url;
+            }
+        }
     </script>
 </head>
 <body>
@@ -65,29 +76,11 @@
     <button id="comentarios" class="crud-button" onclick="handleClick('comentarios')">Comentarios</button>
 
     <div id="crud-actions" style="display: none;">
-        <a href="#" class="crud-action-button" onclick="redirectToAction('agregar')">Agregar</a>
-        <a href="#" class="crud-action-button" onclick="redirectToAction('modificar')">Modificar</a>
         <a href="#" class="crud-action-button" onclick="redirectToAction('eliminar')">Eliminar</a>
     </div>
-
-    <script>
-        function redirectToAction(action) {
-            var selectedButton = window.selectedButton;
-            if (selectedButton) {
-                var url;
-                if (action === 'modificar') {
-                    url = 'modificar.php?type=' + selectedButton;
-                } else if (action === 'eliminar') {
-                    url = 'eliminar.php?type=' + selectedButton;
-                } else {
-                    url = 'agregar.php?type=' + selectedButton;
-                }
-                window.location.href = url;
-            }
-        }
-    </script>
 </body>
 </html>
+
 
 
 
