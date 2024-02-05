@@ -79,9 +79,10 @@ function verificarDisponibilidad($habitacion_id, $fechaInicio, $fechaFin) {
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
+            max-width: 600px;
             width: 100%;
             text-align: center;
+            box-sizing: border-box;
         }
 
         h1 {
@@ -93,6 +94,7 @@ function verificarDisponibilidad($habitacion_id, $fechaInicio, $fechaFin) {
             display: flex;
             flex-direction: column;
             align-items: center;
+            width: 100%;
         }
 
         label {
@@ -100,6 +102,8 @@ function verificarDisponibilidad($habitacion_id, $fechaInicio, $fechaFin) {
             margin-top: 15px;
             color: #555;
             font-size: 16px;
+            text-align: left;
+            width: 100%;
         }
 
         input {
@@ -114,63 +118,107 @@ function verificarDisponibilidad($habitacion_id, $fechaInicio, $fechaFin) {
         }
 
         button {
-            /* Estilos del botón de confirmar reserva ... */
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #paypal-button-container {
+            display: none; /* Inicialmente oculto */
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Confirmación de Reserva</h1>
-        <p>Fecha de Check-in: <?php echo $fechaInicio; ?></p>
-        <p>Fecha de Check-out: <?php echo $fechaFin; ?></p>
-        <p>Noches: <?php echo $noches; ?></p>
-        <p>Precio Total: <?php echo $precioTotal; ?></p>
+        <p><strong>Fecha de Check-in:</strong> <?php echo $fechaInicio; ?></p>
+        <p><strong>Fecha de Check-out:</strong> <?php echo $fechaFin; ?></p>
+        <p><strong>Noches:</strong> <?php echo $noches; ?></p>
+        <p><strong>Precio Total:</strong> <?php echo $precioTotal; ?></p>
 
         <!-- Formulario de detalles del cliente -->
         <form id="confirmarReservaForm" method="post" action="procesar_reserva.php">
-    <input type="hidden" name="fechaInicio" value="<?php echo $fechaInicio; ?>">
-    <input type="hidden" name="fechaFin" value="<?php echo $fechaFin; ?>">
-    <input type="hidden" name="noches" value="<?php echo $noches; ?>">
-    <input type="hidden" name="precioTotal" value="<?php echo $precioTotal; ?>">
-    <input type="hidden" name="habitacion_id" value="<?php echo $habitacion_id; ?>">
+            <input type="hidden" name="fechaInicio" value="<?php echo $fechaInicio; ?>">
+            <input type="hidden" name="fechaFin" value="<?php echo $fechaFin; ?>">
+            <input type="hidden" name="noches" value="<?php echo $noches; ?>">
+            <input type="hidden" name="precioTotal" value="<?php echo $precioTotal; ?>">
+            <input type="hidden" name="habitacion_id" value="<?php echo $habitacion_id; ?>">
 
-    <label for="nombre">Nombre:</label>
-    <input type="text" name="nombre" required>
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" required>
 
-    <label for="apellido">Apellido:</label>
-    <input type="text" name="apellido" required>
+            <label for="apellido">Apellido:</label>
+            <input type="text" name="apellido" required>
 
-    <label for="celular">Celular:</label>
-    <input type="text" name="celular" required>
+            <label for="celular">Celular:</label>
+            <input type="text" name="celular" required>
 
-    <label for="email">Email:</label>
-    <input type="email" name="email" required>
+            <label for="email">Email:</label>
+            <input type="email" name="email" required>
 
-    <div id="paypal-button-container"></div>
+            <button type="button" onclick="validarYMostrarPaypal()">Confirmar Reserva</button>
 
-    <!-- Campo oculto para indicar que el pago se realizó a través de PayPal -->
-    <input type="hidden" name="paypal_payment" value="1">
-</form>
-        
+            <!-- Campo oculto para indicar que el pago se realizó a través de PayPal -->
+            <input type="hidden" name="paypal_payment" value="1">
+        </form>
 
+        <div id="paypal-button-container"></div>
     </div>
+
     <script>
-        paypal.Buttons({
-            createOrder: function(data, actions) {
-                // Configurar la transacción
-                return actions.order.create({
-                    purchase_units: [{
-                        amount: {
-                            value: '<?php echo $precioTotal; ?>'
-                        }
-                    }]
-                });
-            },
-            onApprove: function(data, actions) {
-                // Ejecutar cuando el usuario completa el pago
-                document.getElementById('confirmarReservaForm').submit();
+        function validarYMostrarPaypal() {
+            if (validarFormulario()) {
+                // Deshabilitar el botón después de la validación exitosa
+                document.querySelector('#confirmarReservaForm button').disabled = true;
+
+                // Mostrar el botón de PayPal
+                document.getElementById('paypal-button-container').style.display = 'block';
+
+                // Iniciar el flujo de PayPal
+                iniciarPaypal();
             }
-        }).render('#paypal-button-container');
+        }
+
+        function validarFormulario() {
+            // Agrega aquí la lógica de validación del formulario si es necesario
+            // Por ejemplo, puedes verificar que todos los campos estén llenos
+            var inputs = document.querySelectorAll('#confirmarReservaForm input[required]');
+            for (var i = 0; i < inputs.length; i++) {
+                if (!inputs[i].value.trim()) {
+                    alert('Por favor, complete todos los campos antes de confirmar la reserva.');
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function iniciarPaypal() {
+            // Configurar el flujo de PayPal
+            paypal.Buttons({
+                createOrder: function(data, actions) {
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                value: '<?php echo $precioTotal; ?>'
+                            }
+                        }]
+                    });
+                },
+                onApprove: function(data, actions) {
+                    // Después de la aprobación de PayPal, enviar el formulario
+                    document.getElementById('confirmarReservaForm').submit();
+                }
+            }).render('#paypal-button-container');
+        }
     </script>
 </body>
 </html>
