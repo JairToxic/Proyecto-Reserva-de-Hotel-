@@ -61,6 +61,7 @@ function verificarDisponibilidad($habitacion_id, $fechaInicio, $fechaFin) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Confirmar Reserva</title>
+    <script src="https://www.paypal.com/sdk/js?client-id=AWgZnde6LENtYx86KBDDmY6X6slBw5fef6Pfa7W8Rrdp1L1c5yX3mL-cuJoyBVACPxBqscr7Ii58Ukol&currency=USD"></script>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -113,90 +114,7 @@ function verificarDisponibilidad($habitacion_id, $fechaInicio, $fechaFin) {
         }
 
         button {
-  position: relative;
-  margin: 0;
-  padding: 0.8em 1em;
-  outline: none;
-  text-decoration: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  border: none;
-  text-transform: uppercase;
-  background-color: #333;
-  border-radius: 10px;
-  color: #fff;
-  font-weight: 300;
-  font-size: 18px;
-  font-family: inherit;
-  z-index: 0;
-  overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.02, 0.01, 0.47, 1);
-}
-
-button:hover {
-  animation: sh0 0.5s ease-in-out both;
-}
-
-@keyframes sh0 {
-  0% {
-    transform: rotate(0deg) translate3d(0, 0, 0);
-  }
-
-  25% {
-    transform: rotate(7deg) translate3d(0, 0, 0);
-  }
-
-  50% {
-    transform: rotate(-7deg) translate3d(0, 0, 0);
-  }
-
-  75% {
-    transform: rotate(1deg) translate3d(0, 0, 0);
-  }
-
-  100% {
-    transform: rotate(0deg) translate3d(0, 0, 0);
-  }
-}
-
-button:hover span {
-  animation: storm 0.7s ease-in-out both;
-  animation-delay: 0.06s;
-}
-
-button::before,
-button::after {
-  content: '';
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  background: #fff;
-  opacity: 0;
-  transition: transform 0.15s cubic-bezier(0.02, 0.01, 0.47, 1), opacity 0.15s cubic-bezier(0.02, 0.01, 0.47, 1);
-  z-index: -1;
-  transform: translate(100%, -25%) translate3d(0, 0, 0);
-}
-
-button:hover::before,
-button:hover::after {
-  opacity: 0.15;
-  transition: transform 0.2s cubic-bezier(0.02, 0.01, 0.47, 1), opacity 0.2s cubic-bezier(0.02, 0.01, 0.47, 1);
-}
-
-button:hover::before {
-  transform: translate3d(50%, 0, 0) scale(0.9);
-}
-
-button:hover::after {
-  transform: translate(50%, 0) scale(1.1);
-}
-
-
+            /* Estilos del botón de confirmar reserva ... */
         }
     </style>
 </head>
@@ -209,27 +127,50 @@ button:hover::after {
         <p>Precio Total: <?php echo $precioTotal; ?></p>
 
         <!-- Formulario de detalles del cliente -->
-        <form method="post" action="procesar_reserva.php">
-            <input type="hidden" name="fechaInicio" value="<?php echo $fechaInicio; ?>">
-            <input type="hidden" name="fechaFin" value="<?php echo $fechaFin; ?>">
-            <input type="hidden" name="noches" value="<?php echo $noches; ?>">
-            <input type="hidden" name="precioTotal" value="<?php echo $precioTotal; ?>">
-            <input type="hidden" name="habitacion_id" value="<?php echo $habitacion_id; ?>">
+        <form id="confirmarReservaForm" method="post" action="procesar_reserva.php">
+    <input type="hidden" name="fechaInicio" value="<?php echo $fechaInicio; ?>">
+    <input type="hidden" name="fechaFin" value="<?php echo $fechaFin; ?>">
+    <input type="hidden" name="noches" value="<?php echo $noches; ?>">
+    <input type="hidden" name="precioTotal" value="<?php echo $precioTotal; ?>">
+    <input type="hidden" name="habitacion_id" value="<?php echo $habitacion_id; ?>">
 
-            <label for="nombre">Nombre:</label>
-            <input type="text" name="nombre" required>
+    <label for="nombre">Nombre:</label>
+    <input type="text" name="nombre" required>
 
-            <label for="apellido">Apellido:</label>
-            <input type="text" name="apellido" required>
+    <label for="apellido">Apellido:</label>
+    <input type="text" name="apellido" required>
 
-            <label for="celular">Celular:</label>
-            <input type="text" name="celular" required>
+    <label for="celular">Celular:</label>
+    <input type="text" name="celular" required>
 
-            <label for="email">Email:</label>
-            <input type="email" name="email" required>
+    <label for="email">Email:</label>
+    <input type="email" name="email" required>
 
-            <button type="submit" name="confirmar_reserva">Confirmar Reserva</button>
-        </form>
+    <div id="paypal-button-container"></div>
+
+    <!-- Campo oculto para indicar que el pago se realizó a través de PayPal -->
+    <input type="hidden" name="paypal_payment" value="1">
+</form>
+        
+
     </div>
+    <script>
+        paypal.Buttons({
+            createOrder: function(data, actions) {
+                // Configurar la transacción
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '<?php echo $precioTotal; ?>'
+                        }
+                    }]
+                });
+            },
+            onApprove: function(data, actions) {
+                // Ejecutar cuando el usuario completa el pago
+                document.getElementById('confirmarReservaForm').submit();
+            }
+        }).render('#paypal-button-container');
+    </script>
 </body>
 </html>
