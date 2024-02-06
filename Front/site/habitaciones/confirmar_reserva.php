@@ -167,6 +167,8 @@ function verificarDisponibilidad($habitacion_id, $fechaInicio, $fechaFin) {
 
             <button type="button" onclick="validarYMostrarPaypal()">Confirmar Reserva</button>
 
+           
+
             <!-- Campo oculto para indicar que el pago se realizó a través de PayPal -->
             <input type="hidden" name="paypal_payment" value="1">
         </form>
