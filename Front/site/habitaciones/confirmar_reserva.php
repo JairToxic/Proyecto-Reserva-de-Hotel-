@@ -154,16 +154,16 @@ function verificarDisponibilidad($habitacion_id, $fechaInicio, $fechaFin) {
             <input type="hidden" name="habitacion_id" value="<?php echo $habitacion_id; ?>">
 
             <label for="nombre">Nombre:</label>
-            <input type="text" name="nombre" required>
+            <input type="text" name="nombre" required placeholder="Ingrese su nombre">
 
             <label for="apellido">Apellido:</label>
-            <input type="text" name="apellido" required>
+            <input type="text" name="apellido" required placeholder="Ingresa tu apellido">
 
             <label for="celular">Celular:</label>
-            <input type="text" name="celular" required>
+            <input type="text" name="celular" required placeholder="Ingresa tu numero celular">
 
             <label for="email">Email:</label>
-            <input type="email" name="email" required>
+            <input type="email" name="email" required placeholder="alguien@gmail.com">
 
             <button type="button" onclick="validarYMostrarPaypal()">Confirmar Reserva</button>
 
@@ -172,8 +172,11 @@ function verificarDisponibilidad($habitacion_id, $fechaInicio, $fechaFin) {
             <!-- Campo oculto para indicar que el pago se realizó a través de PayPal -->
             <input type="hidden" name="paypal_payment" value="1">
         </form>
+        
 
-        <div id="paypal-button-container"></div>
+        <div id="paypal-button-container">
+            <h4>Para confirmar su reserva paga con:</h4>
+        </div>
     </div>
 
     <script>
