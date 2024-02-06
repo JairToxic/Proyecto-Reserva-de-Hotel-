@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato:400,700,400italic%7CPoppins:300,400,500,700">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../styles/busqueda.css">
     <style>.ie-panel{display: none;background: #212121;padding: 10px 0;box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3);clear: both;text-align:center;position: relative;z-index: 1;} html.ie-10 .ie-panel, html.lt-ie-10 .ie-panel {display: block;}</style>
   </head>
   <body>
@@ -172,62 +173,25 @@
               <div class="hotel-booking-form">
                 <h3>Reservar una habitación</h3>
                 <!-- RD Mailform-->
-                <form class="rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="bat/rd-mailform.php">
-                  <div class="range range-sm-bottom spacing-20">
-                    <div class="cell-lg-12 cell-md-4">
-                      <p class="text-uppercase">Tu nombre</p>
-                      <div class="form-wrap">
-                        <input class="form-input" id="contact-first-name" type="text" name="name" data-constraints="@Required">
-                        <label class="form-label" for="contact-first-name">Tu nombre completo</label>
-                      </div>
-                    </div>
-                    <div class="cell-lg-12 cell-md-4 cell-sm-6">
-                      <p class="text-uppercase">Llegada</p>
-                      <div class="form-wrap">
-                        <label class="form-label form-label-icon" for="date-in"><span class="icon icon-primary fa-calendar"></span><span>Check-in Date</span></label>
-                        <input class="form-input" id="date-in" data-time-picker="date" type="text" name="date" data-constraints="@Required">
-                      </div>
-                    </div>
-                    <div class="cell-lg-12 cell-md-4 cell-sm-6">
-                      <p class="text-uppercase">Partida</p>
-                      <div class="form-wrap">
-                        <label class="form-label form-label-icon" for="date-out"><span class="icon icon-primary fa-calendar"></span><span>Check-out Date</span></label>
-                        <input class="form-input" id="date-out" data-time-picker="date" type="text" name="date" data-constraints="@Required">
-                      </div>
-                    </div>
-                    <div class="cell-lg-6 cell-md-4 cell-xs-6">
-                      <p class="text-uppercase">Adultos</p>
-                      <div class="form-wrap form-wrap-validation">
-                        <!--Select 2-->
-                        <select class="form-input select-filter" data-minimum-results-search="-1" data-placeholder="1" data-constraints="@Required">
-                          <option>&nbsp;</option>
-                          <option value="1">1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                          <option value="4">4</option>
-                          <option value="5">5</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="cell-lg-6 cell-md-4 cell-xs-6">
-                      <p class="text-uppercase">Niños</p>
-                      <div class="form-wrap form-wrap-validation">
-                        <!--Select 2-->
-                        <select class="form-input select-filter" data-minimum-results-search="-1" data-placeholder="0" data-constraints="@Required">
-                          <option>&nbsp;</option>
-                          <option value="1">0</option>
-                          <option value="2">1</option>
-                          <option value="3">2</option>
-                          <option value="4">3</option>
-                          <option value="5">4</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="cell-lg-12 cell-md-4">
-                      <button class="button button-primary button-square button-block button-effect-ujarak" type="submit"><span>check availability</span></button>
-                    </div>
-                  </div>
-                </form>
+                <form action="../buscar/buscar_habitaciones.php" method="post">
+                  <label for="checkin">Fecha de Check-In:</label>
+                  <input type="date" name="checkin" required>
+          
+                  <label for="checkout">Fecha de Check-Out:</label>
+                  <input type="date" name="checkout" required>
+          
+                  <label for="tipo">Tipo de Habitación:</label>
+                  <select name="tipo" required>
+                      <option value="habitaciones_cuadruples">Cuádruples</option>
+                      <option value="habitaciones_dobles">Dobles</option>
+                      <option value="habitaciones_ejecutivas">Ejecutivas</option>
+                      <option value="habitaciones_estandar">Estándar</option>
+                      <option value="habitaciones_individuales">Individuales</option>
+                      <option value="habitaciones_suite">Suite</option>
+                  </select>
+          
+                  <button type="submit">Buscar Habitaciones Disponibles</button>
+              </form>
               </div>
             </div>
           </div>
