@@ -59,8 +59,10 @@ if (isset($_POST['paypal_payment']) && isset($_POST['fechaInicio']) && isset($_P
     $stmt->close();
 
     // Redirigir a la página de reserva exitosa
-    header("Location: reserva_exitosa.php");
-    exit();
+    // Redirigir a la página de reserva exitosa con la ID de la reserva
+        header("Location: reserva_exitosa.php?id_reserva=" . $id_reserva);
+        exit();
+
 } else {
     // Si no se reciben los datos necesarios o no hay confirmación de PayPal, redireccionar o manejar el error según sea necesario
     echo "Error: No se han proporcionado los datos necesarios o no se ha completado la transacción de PayPal.";

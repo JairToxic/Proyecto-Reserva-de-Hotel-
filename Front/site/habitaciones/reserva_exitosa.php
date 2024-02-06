@@ -1,3 +1,44 @@
+<?php
+include '../../../basedatos/basedatos.php';
+
+// Recuperar la ID de la reserva desde la URL (suponiendo que se pasa como parámetro)
+$id_reserva = $_GET['id_reserva']; // Asegúrate de validar y sanitizar este valor
+
+// Consulta SQL para obtener detalles de la reserva y número de habitación
+$consultaReserva = "SELECT c.NOMBRE, c.APELLIDO, c.CELULAR, c.EMAIL, r.FECHACHECKIN, r.FECHACHECKOUT, r.ESTADORESERVA, p.METODOPAGO, p.FECHAPAGO, hr.ID_HABITACION
+                   FROM cliente c
+                   JOIN reserva r ON c.ID_CLIENTE = r.ID_CLIENTE
+                   LEFT JOIN pago p ON r.ID_RESERVA = p.ID_RESERVA
+                   JOIN habitacion_reserva hr ON r.ID_RESERVA = hr.ID_RESERVA
+                   WHERE r.ID_RESERVA = ?";
+
+// Usar consulta preparada para seguridad
+$stmt = $mysqli->prepare($consultaReserva);
+$stmt->bind_param("i", $id_reserva);
+$stmt->execute();
+
+// Obtener resultados
+$resultado = $stmt->get_result();
+
+// Verificar si hay resultados
+if ($resultado->num_rows > 0) {
+    // Mostrar detalles de la reserva y número de habitación
+    $reserva = $resultado->fetch_assoc();
+    ?>
+    
+       
+   
+    <?php
+} else {
+    // No se encontraron resultados, manejar el caso según sea necesario
+    echo "Error: No se encontraron detalles de la reserva.";
+}
+
+// Cerrar la conexión y liberar recursos
+$stmt->close();
+$mysqli->close();
+?>
+
 <!-- icon list--><!DOCTYPE html>
 <html class="wide wow-animation" lang="en">
   <head>
@@ -177,7 +218,18 @@
         <h1>¡Reserva Exitosa!</h1>
         <p>Tu reserva ha sido confirmada. Esperamos que tengas una estancia increíble.</p>
         <p>Los detalles de la reserva han sido enviados a su correo electronico</p>
-        <!-- Incluir detalles relevantes de la reserva aquí -->
+        
+
+        <p><strong>Nombre:</strong> <?php echo $reserva['NOMBRE']; ?></p>
+        <p><strong>Apellido:</strong> <?php echo $reserva['APELLIDO']; ?></p>
+        <p><strong>Celular:</strong> <?php echo $reserva['CELULAR']; ?></p>
+        <p><strong>Email:</strong> <?php echo $reserva['EMAIL']; ?></p>
+        <p><strong>Fecha de Check-in:</strong> <?php echo $reserva['FECHACHECKIN']; ?></p>
+        <p><strong>Fecha de Check-out:</strong> <?php echo $reserva['FECHACHECKOUT']; ?></p>
+        <p><strong>Estado de Reserva:</strong> <?php echo $reserva['ESTADORESERVA']; ?></p>
+        <p><strong>Método de Pago:</strong> <?php echo $reserva['METODOPAGO']; ?></p>
+        <p><strong>Fecha de Pago:</strong> <?php echo $reserva['FECHAPAGO']; ?></p>
+        <p><strong>Número de Habitación:</strong> <?php echo $reserva['ID_HABITACION']; ?></p>
 
         <div class="thank-you-message">¡Gracias por elegir nuestro hotel!</div>
 
