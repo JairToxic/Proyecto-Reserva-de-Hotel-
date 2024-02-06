@@ -21,8 +21,9 @@ $sql = "SELECT * FROM usuarios WHERE username='$username' AND password='$passwor
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-    // Credenciales válidas, redirigir o realizar otras acciones necesarias
-    echo "Credenciales válidas. Bienvenido!";
+    // Credenciales válidas, redirigir a la página de éxito
+    header("Location: admin_habitaciones.php");
+    exit(); // Asegura que no se ejecute más código después de la redirección
 } else {
     // Credenciales inválidas, mostrar mensaje de error
     echo "Credenciales inválidas. Intenta de nuevo.";
