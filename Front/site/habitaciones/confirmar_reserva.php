@@ -151,7 +151,11 @@ function verificarDisponibilidad($habitacion_id, $fechaInicio, $fechaFin) {
             <input type="hidden" name="fechaFin" value="<?php echo $fechaFin; ?>">
             <input type="hidden" name="noches" value="<?php echo $noches; ?>">
             <input type="hidden" name="precioTotal" value="<?php echo $precioTotal; ?>">
-            <input type="hidden" name="habitacion_id" value="<?php echo $habitacion_id; ?>">
+
+            <!-- Iterar sobre las habitaciones seleccionadas -->
+            <?php foreach ($habitaciones as $habitacion_id): ?>
+                <input type="hidden" name="habitaciones[]" value="<?php echo $habitacion_id; ?>">
+            <?php endforeach; ?>
 
             <label for="nombre">Nombre:</label>
             <input type="text" name="nombre" required placeholder="Ingrese su nombre">
@@ -166,8 +170,6 @@ function verificarDisponibilidad($habitacion_id, $fechaInicio, $fechaFin) {
             <input type="email" name="email" required placeholder="alguien@gmail.com">
 
             <button type="button" onclick="validarYMostrarPaypal()">Confirmar Reserva</button>
-
-           
 
             <!-- Campo oculto para indicar que el pago se realizó a través de PayPal -->
             <input type="hidden" name="paypal_payment" value="1">
