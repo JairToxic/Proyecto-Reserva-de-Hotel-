@@ -22,7 +22,7 @@ $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     // Credenciales válidas, redirigir a la página de éxito
-    header("Location: admin_habitaciones.php");
+    header("Location: admin_imagenes_habitaciones.php");
     exit(); // Asegura que no se ejecute más código después de la redirección
 } else {
     // Credenciales inválidas, mostrar mensaje de error
