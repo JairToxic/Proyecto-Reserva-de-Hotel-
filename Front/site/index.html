@@ -13,6 +13,22 @@
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato:400,700,400italic%7CPoppins:300,400,500,700">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+    <script>
+      $(function() {
+      $(".datepicker").datepicker({
+        minDate: 0,
+        appendTo: ".container", 
+        showAnim: "slideDown",
+      });
+    });
+    </script>
+
     <style>.ie-panel{display: none;background: #212121;padding: 10px 0;box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3);clear: both;text-align:center;position: relative;z-index: 1;} html.ie-10 .ie-panel, html.lt-ie-10 .ie-panel {display: block;}</style>
   </head>
   <body>
@@ -168,10 +184,11 @@
 
               
             </div>
+            <!--ANTERIOR
             <div class="cell-lg-4 cell-xl-3 reveal-lg-flex">
               <div class="hotel-booking-form">
                 <h3>Reservar una habitación</h3>
-                <!-- RD Mailform-->
+                 RD Mailform
                 <form class="rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="bat/rd-mailform.php">
                   <div class="range range-sm-bottom spacing-20">
                     <div class="cell-lg-12 cell-md-4">
@@ -198,7 +215,7 @@
                     <div class="cell-lg-6 cell-md-4 cell-xs-6">
                       <p class="text-uppercase">Adultos</p>
                       <div class="form-wrap form-wrap-validation">
-                        <!--Select 2-->
+                        Select 2
                         <select class="form-input select-filter" data-minimum-results-search="-1" data-placeholder="1" data-constraints="@Required">
                           <option>&nbsp;</option>
                           <option value="1">1</option>
@@ -212,7 +229,7 @@
                     <div class="cell-lg-6 cell-md-4 cell-xs-6">
                       <p class="text-uppercase">Niños</p>
                       <div class="form-wrap form-wrap-validation">
-                        <!--Select 2-->
+                        Select 2
                         <select class="form-input select-filter" data-minimum-results-search="-1" data-placeholder="0" data-constraints="@Required">
                           <option>&nbsp;</option>
                           <option value="1">0</option>
@@ -229,7 +246,52 @@
                   </div>
                 </form>
               </div>
+            </div>-->
+
+            <div class="cell-lg-4 cell-xl-3 reveal-lg-flex">
+              <div class="hotel-booking-form">
+                <h3>Reservar una habitación</h3>
+                <!-- RD Mailform-->
+                <form class="rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="../buscar/buscar_habitaciones.php" onsubmit="return validarFormulario()">
+                  <div class="range range-sm-bottom spacing-20">
+                    <div class="cell-lg-12 cell-md-4 cell-sm-6">
+                      <p class="text-uppercase">Llegada</p>
+                      <div class="form-wrap">
+                        <label class="form-label form-label-icon" for="date-in"><span class="icon icon-primary fa-calendar"></span><span>Check-in Date</span></label>
+                        <input class="form-input" id="checkIn" class="datepicker" type="text" name="checkIn" data-constraints="@Required">
+                      </div>
+                    </div>
+                    <div class="cell-lg-12 cell-md-4 cell-sm-6">
+                      <p class="text-uppercase">Partida</p>
+                      <div class="form-wrap">
+                        <label class="form-label form-label-icon" for="date-out"><span class="icon icon-primary fa-calendar"></span><span>Check-out Date</span></label>
+                        <input class="form-input" id="checkOut" class="datepicker" type="text" name="checkOut" data-constraints="@Required">
+                      </div>
+                    </div>
+                    <div class="cell-lg-6 cell-md-4 cell-xs-6">
+                      <p class="text-uppercase">Huespedes</p>
+                      <div class="form-wrap form-wrap-validation">
+                        <!--Select 2-->
+                        <select class="form-input select-filter" data-minimum-results-search="-1" data-placeholder="1" name="numberOfPeople" id="numberOfPeople" data-constraints="@Required">
+                          <option>&nbsp;</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="5">6</option>
+                          <option value="5">7</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="cell-lg-12 cell-md-4">
+                      <button class="button button-primary button-square button-block button-effect-ujarak" type="submit"><span>check availability</span></button>
+                    </div>
+                  </div>
+                </form>
+              </div>
             </div>
+
           </div>
         </div>
       </section>

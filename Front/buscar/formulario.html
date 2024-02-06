@@ -1,22 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buscar Habitaciones Disponibles</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reserva de Habitaciones</title>
+  <link rel="stylesheet" href="busqueda.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Song+Myung&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+  <script>
+    $(function() {
+    $(".datepicker").datepicker({
+      minDate: 0,
+      appendTo: ".container", 
+      showAnim: "slideDown",
+    });
+  });
+  </script>
+
 </head>
 <body>
-    <form action="buscar_habitaciones.php" method="post">
-        <label for="checkin">Fecha de Check-In:</label>
-        <input type="date" name="checkin" required>
 
-        <label for="checkout">Fecha de Check-Out:</label>
-        <input type="date" name="checkout" required>
+<div class="container">
+  <form id="reservationForm" method="post" action="buscar_habitaciones.php" onsubmit="return validarFormulario()">
+    <label for="checkIn">Check-in:</label>
+    <input input type="text" class="datepicker" id="checkIn" name="checkIn" required>
 
-        <label for="capacidad">Capacidad de Personas:</label>
-        <input type="number" name="capacidad" required>
+    <label for="checkOut">Check-out:</label>
+    <input input type="text" class="datepicker" id="checkOut" name="checkOut" required>
 
-        <button type="submit">Buscar Habitaciones Disponibles</button>
-    </form>
+    <label for="numberOfPeople">Huéspedes:</label>
+    <select id="numberOfPeople" name="numberOfPeople" required>
+      <option value="" disabled selected></option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+    </select>
+
+    <!-- Botón de envío con nombre específico para identificarlo en el procesamiento -->
+    <button type="submit" name="submitReservation" value="submit">Buscar</button>
+  </form>
+</div>
+
+<script src="scripts.js"></script>
 </body>
 </html>
