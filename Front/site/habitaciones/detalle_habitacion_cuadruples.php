@@ -439,7 +439,7 @@
         var precioTotal = diffDias * precioPorNoche;
 
         // Redirigir a la página de confirmación con parámetros
-        window.location.href = 'confirmar_reserva.php?habitacion_id=' + habitacion_id + '&fechaInicio=' + fechaInicio + '&fechaFin=' + fechaFin + '&noches=' + diffDias + '&precioTotal=' + precioTotal;
+        window.location.href = 'seleccionar_habitaciones.php' + habitacion_id + '&fechaInicio=' + fechaInicio + '&fechaFin=' + fechaFin + '&noches=' + diffDias + '&precioTotal=' + precioTotal;
     } else {
         // Manejar caso de fechas no válidas
         alert('Por favor, seleccione fechas válidas de check-in y check-out.');
