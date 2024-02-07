@@ -1,0 +1,121 @@
+body {
+    font-family: 'Song Myung', serif;
+    font-size: 30px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .container {
+    background-color: #e9e9e9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+  }
+  
+  .room {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+  }
+  
+  #roomsContainer {
+    display: none;
+  }
+  button {
+    --bg: #4c88dc;
+    --text-color: #fff;
+    position: relative;
+    width: 150px;
+    border: none;
+    background: var(--bg);
+    color: var(--text-color);
+    padding: 1em;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: 0.2s;
+    border-radius: 5px;
+    opacity: 0.8;
+    letter-spacing: 1px;
+    box-shadow: #4176bf 0px 7px 2px, #000 0px 8px 5px;
+  }
+  
+  button:hover {
+    opacity: 1;
+  }
+  
+  button:active {
+    top: 4px;
+    box-shadow: #4176bf 0px 3px 2px,#000 0px 3px 5px;
+  }
+
+/*calendario*/
+/* Estilo para el calendario */
+.ui-datepicker {
+  font-family: 'Song Myung', sans-serif; /* Cambia la fuente del calendario */
+}
+
+.ui-datepicker-header {
+  background-color: #007bff; /* Cambia el color de fondo del encabezado */
+  color: #fff; /* Cambia el color del texto del encabezado */
+}
+
+.ui-datepicker-title {
+  font-size: 1.2em; /* Cambia el tamaño del texto del título */
+}
+
+.ui-datepicker-prev, .ui-datepicker-next {
+  background-color: #007bff; /* Cambia el color de fondo de los botones de navegación */
+  color: #fff; /* Cambia el color del texto de los botones de navegación */
+}
+
+.ui-datepicker-calendar {
+  border: 1px solid #007bff; /* Cambia el borde del calendario */
+}
+
+.ui-datepicker-calendar th {
+  background-color: #007bff; /* Cambia el color de fondo de las celdas del encabezado del calendario */
+  color: #fff; /* Cambia el color del texto del encabezado del calendario */
+}
+
+.ui-datepicker-calendar td {
+  background-color: #f8f9fa; /* Cambia el color de fondo de las celdas del cuerpo del calendario */
+}
+
+.ui-datepicker-calendar .ui-state-default {
+  color: #000; /* Cambia el color del texto de las fechas */
+}
+
+.ui-datepicker-calendar .ui-state-highlight {
+  background-color: #ffc107; /* Cambia el color de fondo de la fecha seleccionada */
+}
+
+.ui-datepicker-calendar .ui-state-active {
+  background-color: #17a2b8; /* Cambia el color de fondo de la fecha activa (al hacer clic) */
+  color: #fff; /* Cambia el color del texto de la fecha activa */
+}
+/* Ajustes adicionales para reducir aún más el tamaño del calendario */
+.ui-datepicker {
+  transform: scale(0.7); /* Reduce aún más el tamaño del calendario */
+}
+
+/* Ajustes para el tamaño del título */
+.ui-datepicker .ui-datepicker-title {
+  font-size: 0.8em; /* Reduce el tamaño del texto del título */
+}
+
+/* Ajustes para los botones de navegación */
+.ui-datepicker .ui-datepicker-header .ui-datepicker-prev,
+.ui-datepicker .ui-datepicker-header .ui-datepicker-next {
+  font-size: 0.6em; /* Reduce el tamaño del texto de los botones de navegación */
+  width: 1em; /* Reduce el ancho de los botones de navegación */
+  height: 1em; /* Reduce la altura de los botones de navegación */
+}
+
+/* Ajustes para las celdas de fecha */
+.ui-datepicker table.ui-datepicker-calendar td {
+  padding: 0.1em; /* Reduce el espacio alrededor del texto dentro de las celdas */
+}
