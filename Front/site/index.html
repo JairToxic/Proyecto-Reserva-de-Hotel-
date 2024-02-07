@@ -14,7 +14,9 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="../styles/busqueda.css">
+
     <style>.ie-panel{display: none;background: #212121;padding: 10px 0;box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3);clear: both;text-align:center;position: relative;z-index: 1;} html.ie-10 .ie-panel, html.lt-ie-10 .ie-panel {display: block;}</style>
+    
   </head>
   <body>
     
@@ -172,16 +174,17 @@
             <div class="cell-lg-4 cell-xl-3 reveal-lg-flex">
               <div class="hotel-booking-form">
                 <h3>Reservar una habitación</h3>
-                <!-- RD Mailform-->
+
                 <form action="../buscar/buscar_habitaciones.php" method="post">
                   <label for="checkin">Fecha de Check-In:</label>
-                  <input type="date" name="checkin" required>
-          
+                  <input type="date" name="checkin" placeholder="Leaving Date" required id="checkinDate">
+              
                   <label for="checkout">Fecha de Check-Out:</label>
-                  <input type="date" name="checkout" required>
-          
+                  <input type="date" name="checkout" placeholder="Leaving Date" required id="checkoutDate">
+              
                   <label for="tipo">Tipo de Habitación:</label>
-                  <select name="tipo" required>
+                  <select name="tipo"  id="tipo" required>
+                      <option value="" disabled selected hidden>Selecciona un tipo</option>
                       <option value="habitaciones_cuadruples">Cuádruples</option>
                       <option value="habitaciones_dobles">Dobles</option>
                       <option value="habitaciones_ejecutivas">Ejecutivas</option>
@@ -189,14 +192,18 @@
                       <option value="habitaciones_individuales">Individuales</option>
                       <option value="habitaciones_suite">Suite</option>
                   </select>
-          
-                  <button type="submit">Buscar Habitaciones Disponibles</button>
+              
+                  <div id="boton">
+                    <button class="btn"><i class="animation"></i>Buscar Habitación<i class="animation"></i>
+                    </button>
+                </div>
               </form>
               </div>
             </div>
           </div>
         </div>
       </section>
+
       <!-- About us-->
       <section class="section section-md bg-white text-center text-sm-left">
         <div class="shell-wide">
@@ -526,6 +533,27 @@
     <!-- Javascript-->
     <script src="js/core.min.js"></script>
     <script src="js/script.js"></script>
-    <!--Coded by Drel-->
+
+
+    <script>
+      // Obtener la fecha actual en formato yyyy-mm-dd
+      function getCurrentDate() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        // Establecer la fecha mínima para los campos de fecha
+        document.getElementById('checkinDate').setAttribute('min', getCurrentDate());
+        document.getElementById('checkoutDate').setAttribute('min', getCurrentDate());
+
+        // Actualizar la fecha mínima de check-out cada vez que se selecciona una fecha de check-in
+        document.getElementById('checkinDate').addEventListener('change', function() {
+            document.getElementById('checkoutDate').setAttribute('min', this.value);
+        });
+  </script>
+
   </body>
 </html>
