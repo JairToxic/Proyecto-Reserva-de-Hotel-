@@ -2,15 +2,25 @@
 // Incluir el archivo de conexión a la base de datos
 include '../../../basedatos/basedatos.php';
 
+
+  // Obtener la fecha de check-in y check-out del formulario
+$checkin = $_GET['checkin'];
+$checkout = $_GET['checkout'];
 // Obtener todas las habitaciones disponibles
-$habitacionesDisponibles = obtenerTodasLasHabitacionesDisponibles();
+$habitacionesDisponibles = obtenerTodasLasHabitacionesDisponibles($checkin,$checkout);
 
 // Función para obtener todas las habitaciones disponibles
-function obtenerTodasLasHabitacionesDisponibles() {
+function obtenerTodasLasHabitacionesDisponibles($checkin,$checkout) {
     global $mysqli;
 
     // Consulta SQL para obtener todas las habitaciones
-    $consultaTodasLasHabitaciones = "SELECT * FROM habitaciones";
+    $consultaTodasLasHabitaciones = "SELECT * FROM habitaciones 
+    WHERE ID_HABITACION NOT IN (
+        SELECT hr.ID_HABITACION 
+        FROM habitacion_reserva hr
+        JOIN reserva r ON hr.ID_RESERVA = r.ID_RESERVA
+        WHERE (r.FECHACHECKIN <= '$checkout' AND r.FECHACHECKOUT >= '$checkin')
+    )";
 
     // Ejecutar la consulta
     $resultado = $mysqli->query($consultaTodasLasHabitaciones);
@@ -46,21 +56,32 @@ function obtenerTodasLasHabitacionesDisponibles() {
         }
 
         #fechas-container {
+            font-family: 'Verdana';
+            font-weight: bold;
             padding: 20px;
             margin-bottom: 20px;
-            background-color: #f0f0f0;
-            border: 1px solid #ccc;
-            width: 80%;
+            
+            background-color: hsl(187 75% 64%);
+            border: 3px solid black;
+            border-radius: 4px;
+            width: 90%;
             box-sizing: border-box;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        #habitaciones-container {
-            width: 80%;
-            box-sizing: border-box;
+        .habitacion-container {
+            width: 450px;
+            border: solid 1px #fff;
+            background-color: yellow;
+            font-family: ;
+            padding: 10px;
+            margin-bottom: 10px;
         }
+
 
         #seleccionadas {
             background-color: #f0f0f0;
+            font-family: 'Verdana';
             border: 1px solid #ccc;
             padding: 20px;
             width: 80%;
@@ -71,40 +92,128 @@ function obtenerTodasLasHabitacionesDisponibles() {
         #reservar-btn {
             margin-top: 20px;
             padding: 10px;
-            background-color: #4caf50;
+            width: 30%;
+            font-size: 25px;
+            font-weight: bolder;
+            background-color: #0E6655;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 7px;
             cursor: pointer;
         }
+        img {
+	display: block;
+	width: 50%;
+}
+
+h2 {
+	margin: 0;
+	font-size: 1.4rem;
+}
+
+@media (min-width: 50em) {
+	h2 {
+		font-size: 1.8rem;
+	}
+}
+
+.cta {
+	--shadowColor: 187 60% 40%;
+	display: flex;
+	
+	background: hsl(187 70% 85%);
+	max-width: 60rem;
+	width: 100%;
+	box-shadow: 0.65rem 0.65rem 0 hsl(var(--shadowColor) / 1);
+	border-radius: 0.8rem;
+	overflow: hidden;
+	border: 0.5rem solid;
+}
+
+.cta img {
+	
+	object-fit: cover;
+	flex: 1 1 300px;
+	outline: 0.5rem solid;
+}
+
+.cta__text-column {
+    font-family: 'Verdana';
+	padding: min(2rem, 5vw) min(2rem, 5vw) min(2.5rem, 5vw);
+	flex: 1 0 50%;
+}
+
+.cta__text-column > * + * {
+	margin: min(1.5rem, 2.5vw) 0 0 0;
+}
+
+.cta a {
+	display: inline-block;
+	color: black;
+	padding: 0.5rem 1rem;
+    
+	text-decoration: none;
+	background: hsl(187 75% 64%);
+	border-radius: 0.6rem;
+	font-weight: 700;
+	border: 0.35rem solid;
+}
+    .habitacion-seleccionada {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.detalle-titulo {
+    font-weight: bold;
+    margin: 0;
+}
+
+.detalle-info {
+    margin: 0;
+}
+
+#seleccionadas {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 20px;
+    width: 80%;
+    box-sizing: border-box;
+    margin-top: 20px;
+}
     </style>
 </head>
 <body>
-    <div id="fechas-container">
-        <form id="formFechas">
-            <div class="form-group">
-                <label for="fechaInicio">Fecha de Check-in:</label>
-                <input type="date" class="form-control" id="fechaInicio" name="fechaInicio" required>
-            </div>
-            <div class="form-group">
-                <label for="fechaFin">Fecha de Check-out:</label>
-                <input type="date" class="form-control" id="fechaFin" name="fechaFin" required>
-            </div>
-        </form>
-    </div>
+<div id="fechas-container">
+    <form id="formFechas">
+        <div class="form-group">
+            <label for="fechaInicio">Fecha de Check-in:</label>
+            <input type="date" class="form-control" id="fechaInicio" name="fechaInicio" value="<?php echo $checkin; ?>" required>
+        </div>
+        <div class="form-group">
+            <label for="fechaFin">Fecha de Check-out:</label>
+            <input type="date" class="form-control" id="fechaFin" name="fechaFin" value="<?php echo $checkout; ?>" required>
+        </div>
+    </form>
+</div>
+
 
     <div id="habitaciones-container">
         <?php
         // Mostrar las habitaciones disponibles
         foreach ($habitacionesDisponibles as $habitacion) {
             // Aquí deberías mostrar cada habitación con sus detalles y opciones de selección
-            echo "<div>";
-            echo "Habitación ID: " . $habitacion['ID_HABITACION'] . "<br>";
-            echo "Tipo: " . $habitacion['TIPO'] . "<br>";
-            echo "Descripción: " . $habitacion['DESCRIPCION'] . "<br>";
-            echo "Precio por Noche: $" . $habitacion['PRECIOPORNOCHE'] . "<br>";
+            echo "<article class='cta'>";
+            echo "<img src='https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' alt='Bluetit'>";
+            echo "<div class='cta__text-column'>";
+            echo "<h2>Habitación ID: " . $habitacion['ID_HABITACION'] . "</h2>";
+            echo "<p>Tipo: " . $habitacion['TIPO'] . "</p>";
+            echo "<p>Descripción: " . $habitacion['DESCRIPCION'] . "</p>";
+            echo "<p>Precio por Noche: $" . $habitacion['PRECIOPORNOCHE'] . "</p>";
             echo "<button onclick='seleccionarHabitacion(" . $habitacion['ID_HABITACION'] . ")'>Seleccionar</button>";
             echo "</div>";
+            echo "</article>";
             echo "<br><br>";
         }
         ?>
@@ -152,7 +261,7 @@ function obtenerTodasLasHabitacionesDisponibles() {
                 var habitacion = detallesHabitaciones.find(h => h.ID_HABITACION == idHabitacion);
 
                 // Aquí deberías obtener los detalles de cada habitación y mostrarlos en un cuadro
-                seleccionadasDiv.innerHTML += "<div>";
+                seleccionadasDiv.innerHTML += "<div class='seleccionadas'>";
                 seleccionadasDiv.innerHTML += "Detalles de la habitación ID: " + habitacion.ID_HABITACION + "<br>";
                 seleccionadasDiv.innerHTML += "Precio por Noche: $" + habitacion.PRECIOPORNOCHE + "<br>";
                 // Obtener más detalles según sea necesario
