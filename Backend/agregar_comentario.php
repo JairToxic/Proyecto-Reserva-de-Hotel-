@@ -5,7 +5,7 @@ $comment = isset($_POST['comment']) ? $_POST['comment'] : "";
 $commentSenderName = isset($_POST['name']) ? $_POST['name'] : "";
 $date = date('Y-m-d H:i:s');
 
-$query = "INSERT INTO tbl_comentarios(parent_id,comentarios,comentario_nombre,fecha) VALUES (?,?,?,?)";
+$query = "INSERT INTO comentarios(parent_id,comentarios,comentario_nombre,fecha) VALUES (?,?,?,?)";
 
 $sql_stmt = $conn->prepare($query);
 
