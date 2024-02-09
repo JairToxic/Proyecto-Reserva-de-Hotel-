@@ -1,4 +1,5 @@
 <?php
+include '../basedatos/basedatos.php';
 // Obtener el nombre del botón seleccionado de la URL
 if (isset($_GET['type'])) {
     $tipoEntidad = $_GET['type'];

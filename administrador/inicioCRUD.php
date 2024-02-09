@@ -47,10 +47,15 @@
         function handleClick(buttonId) {
             var buttons = document.getElementsByClassName("crud-button");
             for (var i = 0; i < buttons.length; i++) {
-                if (buttons[i].id !== buttonId) {
-                    buttons[i].disabled = true;
-                }
+                buttons[i].disabled = false; // Habilitar todos los botones primero
             }
+            
+            // Deshabilitar botón agregar y modificar si se hace clic en "Comentarios"
+            if (buttonId === 'comentarios') {
+                document.getElementById("agregar-button").disabled = true;
+                document.getElementById("modificar-button").disabled = true;
+            }
+
             document.getElementById("crud-actions").style.display = "block";
             // Guardar el nombre del botón seleccionado en una variable global
             window.selectedButton = buttonId;
@@ -62,6 +67,8 @@
                 var url;
                 if (action === 'eliminar') {
                     url = 'eliminar.php?type=' + selectedButton;
+                } else {
+                    url = action + '.php?type=' + selectedButton; // Corrección aquí
                 }
                 window.location.href = url;
             }
@@ -72,18 +79,13 @@
     <h1>Inicio CRUD</h1>
     <button id="reserva" class="crud-button" onclick="handleClick('reserva')">Reserva</button>
     <button id="habitacion" class="crud-button" onclick="handleClick('habitacion')">Habitación</button>
-    <button id="cabana" class="crud-button" onclick="handleClick('cabana')">Cabaña</button>
+    <button id="clientes" class="crud-button" onclick="handleClick('clientes')">Clientes</button>
     <button id="comentarios" class="crud-button" onclick="handleClick('comentarios')">Comentarios</button>
 
     <div id="crud-actions" style="display: none;">
-        <a href="#" class="crud-action-button" onclick="redirectToAction('eliminar')">Eliminar</a>
+        <button id="agregar-button" class="crud-action-button" onclick="redirectToAction('agregar')">Agregar</button>
+        <button id="modificar-button" class="crud-action-button" onclick="redirectToAction('modificar')">Modificar</button>
+        <button id="eliminar-button" class="crud-action-button" onclick="redirectToAction('eliminar')">Eliminar</button>
     </div>
 </body>
 </html>
-
-
-
-
-
-
-
