@@ -1,6 +1,10 @@
 <?php
 include '../../../basedatos/basedatos.php';
-
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+require 'PHPMailer-master/src/Exception.php';
+require 'PHPMailer-master/src/PHPMailer.php';
+require 'PHPMailer-master/src/SMTP.php';
 // Recuperar la ID de la reserva desde la URL (suponiendo que se pasa como parámetro)
 $id_reserva = $_GET['id_reserva']; // Asegúrate de validar y sanitizar este valor
 
@@ -245,7 +249,48 @@ $mysqli->close();
     <span aria-hidden="true" class="hover-text">&nbsp;Copo de Nieve&nbsp;</span>
     </button>
     </div>
+    <?php
+    // Configura la instancia de PHPMailer
+$mail = new PHPMailer(true);
 
+try {
+    // Configuración del servidor SMTP
+    $mail->isSMTP();
+    $mail->Host       = 'smtp.gmail.com'; // Cambia esto con la información de tu servidor SMTP
+    $mail->SMTPAuth   = true;
+    $mail->Username   = 'jair2002san@gmail.com'; // Cambia esto con tu dirección de correo
+    $mail->Password   = 'plis iikk vlzc kgcc'; // Cambia esto con tu contraseña
+    $mail->SMTPSecure = 'tls'; // Puedes cambiarlo a 'ssl' si es necesario
+    $mail->Port       = 587; // Puedes cambiar el puerto según la configuración de tu servidor
+    
+   
+    // Configuración del correo
+    $mail->setFrom('jair2002san@gmail.com', 'HOTEL COPO DE NIVE');
+    $mail->addAddress($reserva['EMAIL'], $reserva['NOMBRE']); // Dirección de correo del cliente
+
+    $mail->Subject = 'Detalles de la reserva';
+    $mail->Body = "Detalles de la reserva:\n\n"
+            . "Nombre: " . $reserva['NOMBRE'] . "\n"
+            . "Apellido: " . $reserva['APELLIDO'] . "\n"
+            . "Celular: " . $reserva['CELULAR'] . "\n"
+            . "Email: " . $reserva['EMAIL'] . "\n"
+            . "Fecha de Check-in: " . $reserva['FECHACHECKIN'] . "\n"
+            . "Fecha de Check-out: " . $reserva['FECHACHECKOUT'] . "\n"
+            . "Estado de Reserva: " . $reserva['ESTADORESERVA'] . "\n"
+            . "Método de Pago: " . $reserva['METODOPAGO'] . "\n"
+            . "Fecha de Pago: " . $reserva['FECHAPAGO'] . "\n"
+            . "Número de Habitación: " . $reserva['ID_HABITACION'] . "\n"
+            . "\n¡Gracias por elegir nuestro hotel!";
+
+    // Envía el correo
+    $mail->send();
+    // Antes del bloque try-catch
+  echo 'Antes de intentar enviar el correo.';
+    echo 'Correo enviado correctamente.';
+} catch (Exception $e) {
+    echo 'Error al enviar el correo: ', $mail->ErrorInfo;
+}
+?>
    
 
    <!-- Page Footer-->
