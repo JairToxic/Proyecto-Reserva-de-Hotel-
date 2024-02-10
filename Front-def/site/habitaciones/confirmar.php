@@ -1,22 +1,27 @@
 <?php
 include '../../../basedatos/basedatos.php';
 
+// Obtener los datos del POST
+$fechaInicio = $_POST['fechaInicio'] ?? '';
+$fechaFin = $_POST['fechaFin'] ?? '';
+$precioTotal = $_POST['precioTotal'] ?? 0;
+$habitaciones = $_POST['habitaciones'] ?? [];
+
 // Verificar si se reciben los parámetros necesarios
-if (isset($_GET['fechaInicio']) && isset($_GET['fechaFin']) && isset($_GET['noches']) && isset($_GET['precioTotal'])) {
-    $fechaInicio = $_GET['fechaInicio'];
-    $fechaFin = $_GET['fechaFin'];
-    $noches = $_GET['noches'];
-    $precioTotal = $_GET['precioTotal'];
+if (!empty($fechaInicio) && !empty($fechaFin) && !empty($habitaciones)) {
+    // Calcular el número de noches y el precio total
+    $noches = calcularNoches($fechaInicio, $fechaFin);
 
     // Verificar disponibilidad
-    $habitacion_id = $_GET['habitacion_id'];
-    $disponible = verificarDisponibilidad($habitacion_id, $fechaInicio, $fechaFin);
+    foreach ($habitaciones as $habitacion_id) {
+        $disponible = verificarDisponibilidad($habitacion_id, $fechaInicio, $fechaFin);
 
-    if (!$disponible) {
-        // La habitación no está disponible para las fechas seleccionadas.
-        // Redirigir a una página de habitaciones disponibles o a otra de tu elección.
-        header("Location: habitacion_no_disponible.php");
-        exit();
+        if (!$disponible) {
+            // La habitación no está disponible para las fechas seleccionadas.
+            // Redirigir a una página de habitaciones disponibles o a otra de tu elección.
+            header("Location: habitacion_no_disponible.php");
+            exit();
+        }
     }
 
     // Aquí puedes realizar cualquier lógica adicional que necesites
@@ -25,6 +30,35 @@ if (isset($_GET['fechaInicio']) && isset($_GET['fechaFin']) && isset($_GET['noch
     // Si no se proporcionan los parámetros necesarios, redireccionar o manejar el error según sea necesario
     echo "Error: No se han proporcionado los parámetros necesarios para la reserva.";
     exit();
+}
+
+function calcularNoches($fechaInicio, $fechaFin) {
+    // Lógica para calcular el número de noches entre dos fechas
+    $dateInicio = new DateTime($fechaInicio);
+    $dateFin = new DateTime($fechaFin);
+    $diferencia = $dateInicio->diff($dateFin);
+    return $diferencia->days;
+}
+
+function calcularPrecioTotal($habitaciones) {
+    global $mysqli;
+
+    // Escapar los identificadores de habitación para evitar inyecciones SQL
+    $habitacionesEscapadas = array_map('intval', $habitaciones);
+
+    // Consulta SQL para obtener los precios de las habitaciones seleccionadas
+    $consultaPrecios = "SELECT SUM(PRECIOPORNOCHE) as total FROM habitaciones WHERE ID_HABITACION IN (" . implode(',', $habitacionesEscapadas) . ")";
+
+    // Ejecutar la consulta
+    $resultado = $mysqli->query($consultaPrecios);
+
+    // Obtener el resultado como un array asociativo
+    $total = $resultado->fetch_assoc()['total'];
+
+    // Liberar el resultado
+    $resultado->free();
+
+    return $total;
 }
 
 function verificarDisponibilidad($habitacion_id, $fechaInicio, $fechaFin) {
@@ -53,8 +87,8 @@ function verificarDisponibilidad($habitacion_id, $fechaInicio, $fechaFin) {
         return true;
     }
 }
-
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -88,6 +122,11 @@ function verificarDisponibilidad($habitacion_id, $fechaInicio, $fechaFin) {
         h1 {
             color: #007bff;
             margin-bottom: 20px;
+        }
+
+        p {
+            text-align: left;
+            margin-left: 20px;
         }
 
         form {
@@ -132,7 +171,6 @@ function verificarDisponibilidad($habitacion_id, $fechaInicio, $fechaFin) {
         }
 
         #paypal-button-container {
-            display: none; /* Inicialmente oculto */
             margin-top: 20px;
         }
     </style>
@@ -146,7 +184,7 @@ function verificarDisponibilidad($habitacion_id, $fechaInicio, $fechaFin) {
         <p><strong>Precio Total:</strong> <?php echo $precioTotal; ?></p>
 
         <!-- Formulario de detalles del cliente -->
-        <form id="confirmarReservaForm" method="post" action="procesar_reserva.php">
+        <form id="confirmarReservaForm" method="post" action="reserva_procesada.php">
             <input type="hidden" name="fechaInicio" value="<?php echo $fechaInicio; ?>">
             <input type="hidden" name="fechaFin" value="<?php echo $fechaFin; ?>">
             <input type="hidden" name="noches" value="<?php echo $noches; ?>">
@@ -170,14 +208,10 @@ function verificarDisponibilidad($habitacion_id, $fechaInicio, $fechaFin) {
             <input type="email" name="email" required placeholder="alguien@gmail.com">
 
             <button type="button" onclick="validarYMostrarPaypal()">Confirmar Reserva</button>
-
-            <!-- Campo oculto para indicar que el pago se realizó a través de PayPal -->
-            <input type="hidden" name="paypal_payment" value="1">
         </form>
         
-
         <div id="paypal-button-container">
-            <h4>Para confirmar su reserva paga con:</h4>
+            <h4>Para confirmar su reserva, pague con:</h4>
         </div>
     </div>
 
