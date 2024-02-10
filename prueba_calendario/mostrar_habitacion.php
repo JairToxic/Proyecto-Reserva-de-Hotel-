@@ -70,7 +70,7 @@ $mysqli->close();
 <?php if ($result && $result->num_rows > 0) { ?>
     <?php while ($row = $result->fetch_assoc()) { ?>
         <div class="habitacion">
-            <img src="F:/XAMPP/htdocs/proyectoSoftware/Proyecto-Reserva-de-Hotel-/prueba_calendario/1.jpg" alt="Habitación <?php echo $row['ID_HABITACION']; ?>">
+            <img src="1.jpg/<?php echo $row['IMAGEN']; ?>" alt="Habitación <?php echo $row['ID_HABITACION']; ?>">
             <p>ID de habitación: <?php echo $row['ID_HABITACION']; ?></p>
             <p>Descripción: <?php echo $row['DESCRIPCION']; ?></p>
             <p>Precio por noche: <?php echo $row['PRECIOPORNOCHE']; ?></p>
