@@ -147,13 +147,17 @@
                 <div class="rd-navbar-nav-wrap">
                   <div class="rd-navbar-nav-scroll-holder">
                     <ul class="rd-navbar-nav">
-                      <li class="active"><a href="index.html">Hotel</a>
+                    <li class="active"><a href="../index.html">Hotel</a>
                       </li>
-                      <li><a href="about-us.html">Sobre Nosotros</a>
+                      <li><a href="../about-us.html">Sobre Nosotros</a>
                       </li>
-                      <li><a href="contacts.html">Contactanos</a>
+                      <li><a href="../contacts.html">Contactanos</a>
                       </li>
-                      <li><a href="habitaciones.html">Habitaciones</a>
+                      <li><a href="../habitaciones.html">Habitaciones</a>
+                      </li>
+                      <li><a href="../comentarios.html">Comentarios</a>
+                      </li>
+                      <li><a href="../galeria.html">Galeria de Fotos</a>
                       </li>
                     </ul>
                   </div>
@@ -274,7 +278,7 @@
 </div>
 <br>
 
-<form id="formReserva">
+<form id="formReserva" action="" method="post">
     <div class="form-group">
         <label for="fechaInicio">Fecha de Check-in:</label>
         <input type="date" class="form-control" id="fechaInicio" name="fechaInicio" required>
@@ -285,7 +289,9 @@
     </div>
     <!-- Agrega un campo oculto para almacenar el ID_HABITACION -->
     <input type="hidden" id="habitacion_id" name="habitacion_id" value="<?php echo $habitacion_id; ?>">
+
     <button type="button" class="btn btn-primary" onclick="calcularPrecio()">Reservar ahora</button>
+    <button type="submit" class="btn btn-primary" onclick="setAction('reservar')">Buscar Habitación</button>
 </form>
 
   
@@ -446,6 +452,24 @@
     }
 }
 </script>
+</script>
+<script>
+    function setAction(action) {
+        var form = document.getElementById('formReserva');
+       
+        if (action === 'reservar') {
+            // Configura la acción del formulario para reservar
+            form.action = "../../buscar/buscar_habitaciones.php";
+        } else {
+            // Configura la acción del formulario para buscar habitaciones
+            form.action = "../../buscar/buscar_habitaciones.php";
+        }
+
+        // Envía el formulario
+        form.submit();
+    }
+  
+    
 </script>
 
 

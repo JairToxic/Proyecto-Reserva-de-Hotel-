@@ -49,7 +49,7 @@ function obtenerTodasLasHabitacionesDisponibles($checkin,$checkout) {
 <html class="wide wow-animation" lang="en">
   <head>
     <!-- Site Title-->
-    <title>Contacts</title>
+    <title>Habitaciones Disponibles</title>
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -294,17 +294,17 @@ h2 {
                 <div class="rd-navbar-nav-wrap">
                   <div class="rd-navbar-nav-scroll-holder">
                     <ul class="rd-navbar-nav">
-                      <li class="active"><a href="index.html">Hotel</a>
+                      <li class="active"><a href="../index.html">Hotel</a>
                       </li>
-                      <li><a href="about-us.html">Sobre Nosotros</a>
+                      <li><a href="../about-us.html">Sobre Nosotros</a>
                       </li>
-                      <li><a href="contacts.html">Contactanos</a>
+                      <li><a href="../contacts.html">Contactanos</a>
                       </li>
-                      <li><a href="habitaciones.html">Habitaciones</a>
+                      <li><a href="../habitaciones.html">Habitaciones</a>
                       </li>
-                      <li><a href="comentarios.html">Comentarios</a>
+                      <li><a href="../comentarios.html">Comentarios</a>
                       </li>
-                      <li><a href="galeria.html">Galeria de Fotos</a>
+                      <li><a href="../galeria.html">Galeria de Fotos</a>
                       </li>
                     </ul>
                   </div>
