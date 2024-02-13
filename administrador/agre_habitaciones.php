@@ -4,22 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar Habitación</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
+    <link rel="stylesheet" href="styles2.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </head>
 <body>
     <h2>Agregar Habitación</h2>
@@ -27,7 +14,7 @@
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
         <label for="id_habitacion">ID de Habitación:</label><br>
         <input type="text" id="id_habitacion" name="id_habitacion" required><br><br>
-        
+
         <label for="tipo">Tipo:</label><br>
         <input type="text" id="tipo" name="tipo" required><br><br>
         
@@ -46,10 +33,8 @@
         <label for="bano">Baño:</label><br>
         <input type="text" id="bano" name="bano"><br><br>
         
-        <label for="reservas">Reservas:</label><br>
-        <input type="text" id="reservas" name="reservas"><br><br>
-        
-        <label for="imagen_principal">Imagen Principal:</label><br>
+        <!-- Agregar la columna 'IMAGEN_PRINCIPAL' -->
+        <label for="imagen_principal">Imagenes de la habitación:</label><br>
         <input type="text" id="imagen_principal" name="imagen_principal"><br><br>
         
         <input type="submit" value="Agregar Habitación">
@@ -65,14 +50,13 @@
             <th>CAPACIDAD</th>
             <th>CAMAS</th>
             <th>BANO</th>
-            <th>RESERVAS</th>
-            <th>IMAGEN_PRINCIPAL</th>
+            <th>IMAGENES DE LA HABITACIÓN</th>
         </tr>
         <?php
         $servername = "localhost";
         $username = "root";
         $password = "";
-        $dbname = "hotel";
+        $dbname = "hotel2";
         
         $conn = new mysqli($servername, $username, $password, $dbname);
         if ($conn->connect_error) {
@@ -81,30 +65,42 @@
         
         // Verificar si se ha enviado el formulario de habitación
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $id_habitacion = $_POST['id_habitacion'];
             $tipo = $_POST['tipo'];
             $descripcion = $_POST['descripcion'];
             $precio_por_noche = $_POST['precio_por_noche'];
             $capacidad = $_POST['capacidad'];
             $camas = $_POST['camas'];
             $bano = $_POST['bano'];
-            $reservas = $_POST['reservas'];
             $imagen_principal = $_POST['imagen_principal'];
-        
-            $sql = "INSERT INTO habitaciones (TIPO, DESCRIPCION, PRECIOPORNOCHE, CAPACIDAD, CAMAS, BANO, reservas, IMAGEN_PRINCIPAL) 
-                    VALUES ('$tipo', '$descripcion', '$precio_por_noche', '$capacidad', '$camas', '$bano', '$reservas', '$imagen_principal')";
-        
+
+            // Actualizar los datos de la habitación en la base de datos
+            $sql = "INSERT INTO habitaciones (ID_HABITACION, TIPO, DESCRIPCION, PRECIOPORNOCHE, CAPACIDAD, CAMAS, BANO) 
+                    VALUES ('$id_habitacion', '$tipo', '$descripcion', '$precio_por_noche', '$capacidad', '$camas', '$bano')";
+
             if ($conn->query($sql) === TRUE) {
                 echo "Habitación agregada exitosamente.";
             } else {
                 echo "Error al agregar la habitación: " . $conn->error;
             }
-        }
+             // Insertar la URL de la imagen en la tabla imagenes_habitaciones
+            $sql_imagen = "INSERT INTO imagenes_habitaciones (id_habitacion, url) 
+            VALUES ('$id_habitacion', '$imagen_principal')";
+            if ($conn->query($sql_imagen) === TRUE) {
+            echo "Imagen agregada exitosamente.";
+            } else {
+                echo "Error al agregar la imagen: " . $conn->error;
+            }
+    }
         
-        // Mostrar las habitaciones agregadas en la tabla
-        $sql = "SELECT * FROM habitaciones";
-        $result = $conn->query($sql);
+         // Consulta para obtener las habitaciones y sus imágenes
+         $sql = "SELECT habitaciones.*, GROUP_CONCAT(imagenes_habitaciones.url) AS imagenes_principales 
+         FROM habitaciones 
+         LEFT JOIN imagenes_habitaciones ON habitaciones.ID_HABITACION = imagenes_habitaciones.id_habitacion 
+         GROUP BY habitaciones.ID_HABITACION";
+         $result = $conn->query($sql);
 
-        if ($result->num_rows > 0) {
+         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 echo "<tr>";
                 echo "<td>" . $row["ID_HABITACION"] . "</td>";
@@ -114,16 +110,25 @@
                 echo "<td>" . $row["CAPACIDAD"] . "</td>";
                 echo "<td>" . $row["CAMAS"] . "</td>";
                 echo "<td>" . $row["BANO"] . "</td>";
-                echo "<td>" . $row["reservas"] . "</td>";
-                echo "<td>" . $row["IMAGEN_PRINCIPAL"] . "</td>";
+                
+                // Mostrar las imágenes como imágenes en la tabla
+                $imagenes_principales = explode(",", $row["imagenes_principales"]);
+                echo "<td>";
+                foreach ($imagenes_principales as $imagen) {
+                    echo "<img src='$imagen' alt='Imagen' style='width: 150px; height: auto;'>";
+                }
+                echo "</td>";
+                
                 echo "</tr>";
             }
         } else {
             echo "No hay habitaciones agregadas.";
         }
         
+ 
         $conn->close();
         ?>
     </table>
 </body>
 </html>
+

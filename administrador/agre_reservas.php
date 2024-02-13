@@ -4,7 +4,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $servername = "localhost";
     $username = "root";
     $password = "";
-    $dbname = "hotel";
+    $dbname = "hotel2";
 
     $conn = new mysqli($servername, $username, $password, $dbname);
     if ($conn->connect_error) {
@@ -12,21 +12,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Recibir los datos del formulario
-    $id_habitacion = $_POST['id_habitacion'];
     $id_cliente = $_POST['id_cliente'];
     $fecha_checkin = $_POST['fecha_checkin'];
     $fecha_checkout = $_POST['fecha_checkout'];
     $estado_reserva = $_POST['estado_reserva'];
 
     // Insertar los datos en la tabla reserva
-    $sql = "INSERT INTO reserva (ID_HABITACION, ID_CLIENTE, FECHACHECKIN, FECHACHECKOUT, ESTADORESERVA) VALUES ('$id_habitacion', '$id_cliente', '$fecha_checkin', '$fecha_checkout', '$estado_reserva')";
+    $sql = "INSERT INTO reserva (ID_CLIENTE, FECHACHECKIN, FECHACHECKOUT, ESTADORESERVA) 
+            VALUES ('$id_cliente', '$fecha_checkin', '$fecha_checkout', '$estado_reserva')";
     if ($conn->query($sql) === TRUE) {
         echo "Reserva agregada exitosamente.";
     } else {
         echo "Error al agregar reserva: " . $conn->error;
     }
 
-    
+    $conn->close();
 }
 ?>
 <!DOCTYPE html>
@@ -35,14 +35,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar Reserva</title>
+    <link rel="stylesheet" href="styles2.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </head>
 <body>
     <h2>Agregar Reserva</h2>
 
-    <form method="post" action="agregar_reserva.php">
-        <label for="id_habitacion">ID de Habitación:</label><br>
-        <input type="text" id="id_habitacion" name="id_habitacion" required><br><br>
-
+    <form method="post" action="agre_reservas.php">
         <label for="id_cliente">ID de Cliente:</label><br>
         <input type="text" id="id_cliente" name="id_cliente" required><br><br>
 
@@ -53,51 +53,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="datetime-local" id="fecha_checkout" name="fecha_checkout" required><br><br>
 
         <label for="estado_reserva">Estado de Reserva:</label><br>
-        <input type="text" id="estado_reserva" name="estado_reserva"><br><br>
+        <select id="estado_reserva" name="estado_reserva" required>
+            <option value="Reservado">Reservado</option>
+            <option value="Confirmado">Confirmado</option>
+        </select><br><br>
         
         <input type="submit" value="Agregar Reserva">
     </form>
 
     <h2>Reservas Agregadas</h2>
     <table>
-        <!-- Encabezados de la tabla para reservas -->
-        <tr>
-            <th>ID Habitación</th>
-            <th>ID Cliente</th>
-            <th>Fecha Check-in</th>
-            <th>Fecha Check-out</th>
-            <th>Estado de Reserva</th>
-        </tr>
-        
-        <!-- PHP para mostrar datos de reservas -->
+
         <?php
         // Mostrar reservas existentes en una tabla
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "hotel";
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "hotel2";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
-}
+        $conn = new mysqli($servername, $username, $password, $dbname);
+        if ($conn->connect_error) {
+            die("Conexión fallida: " . $conn->connect_error);
+        }
 
-$sql = "SELECT * FROM reserva";
-$result = $conn->query($sql);
+        $sql = "SELECT * FROM reserva";
+        $result = $conn->query($sql);
 
-if ($result->num_rows > 0) {
-    echo "<table border='1'>";
-    echo "<tr><th>ID Habitación</th><th>ID Cliente</th><th>Fecha Check-in</th><th>Fecha Check-out</th><th>Estado de Reserva</th></tr>";
-    while ($row = $result->fetch_assoc()) {
-        echo "<tr><td>".$row["ID_HABITACION"]."</td><td>".$row["ID_CLIENTE"]."</td><td>".$row["FECHACHECKIN"]."</td><td>".$row["FECHACHECKOUT"]."</td><td>".$row["ESTADORESERVA"]."</td></tr>";
-    }
-    echo "</table>";
-} else {
-    echo "No hay reservas.";
-}
+        if ($result->num_rows > 0) {
+            echo "<table border='1'>";
+            echo "<tr><th>ID Reserva</th><th>ID Cliente</th><th>Fecha Check-in</th><th>Fecha Check-out</th><th>Estado de Reserva</th></tr>";
+            while ($row = $result->fetch_assoc()) {
+                echo "<tr><td>".$row["ID_RESERVA"]."</td><td>".$row["ID_CLIENTE"]."</td><td>".$row["FECHACHECKIN"]."</td><td>".$row["FECHACHECKOUT"]."</td><td>".$row["ESTADORESERVA"]."</td></tr>";
+            }
+            echo "</table>";
+        } else {
+            echo "No hay reservas.";
+        }
 
-$conn->close();
+        $conn->close();
         ?>
     </table>
 </body>
 </html>
+
