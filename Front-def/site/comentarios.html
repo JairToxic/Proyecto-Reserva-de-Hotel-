@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato:400,700,400italic%7CPoppins:300,400,500,700">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/rating.css">
 
     <style>.ie-panel{display: none;background: #212121;padding: 10px 0;box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3);clear: both;text-align:center;position: relative;z-index: 1;} html.ie-10 .ie-panel, html.lt-ie-10 .ie-panel {display: block;}</style>
   </head>
@@ -144,17 +145,76 @@
             <div class="clearfix"></div>
             <br><br><br>
             <div id="puntuacion-container">
-                Puntuación:
-                <span class="estrella">&#9733;</span>
-                <span class="estrella">&#9733;</span>
-                <span class="estrella">&#9733;</span>
-                <span class="estrella">&#9734;</span>
-                <span class="estrella">&#9734;</span>
-            </div>
-            <br><br><br>
+                <p>Puntuación:<br>★★★★</p>
 
+                <div class="container">
+                  <div class="rating-card">
+                    <div class="rating-container">
+                      <div class="rating-bar">
+                        <div class="rating-number">
+                          <span>5</span>
+                        </div>
+                        <div class="rating-graph-wrapper">
+                          <div class="rating-width" style="width: 40%;"></div>
+                        </div>
+                      </div>
+                      <div class="rating-bar">
+                        <div class="rating-number">
+                          <span>4</span>
+                        </div>
+                        <div class="rating-graph-wrapper">
+                          <div class="rating-width" style="width: 50%;"></div>
+                        </div>
+                      </div>
+                      <div class="rating-bar">
+                        <div class="rating-number">
+                          <span>3</span>
+                        </div>
+                        <div class="rating-graph-wrapper">
+                          <div class="rating-width" style="width: 10%;"></div>
+                        </div>
+                      </div>
+                      <div class="rating-bar">
+                        <div class="rating-number">
+                          <span>2</span>
+                        </div>
+                        <div class="rating-graph-wrapper">
+                          <div class="rating-width" style="width: 0%;"></div>
+                        </div>
+                      </div>
+                      <div class="rating-bar">
+                        <div class="rating-number">
+                          <span>1</span>
+                        </div>
+                        <div class="rating-graph-wrapper">
+                          <div class="rating-width" style="width: 0%;"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="overall-container">
+                      <div class="rating-point">
+                        4.3
+                      </div>
+                      <div class="rating-star">
+                         <div class="star-container">
+                           <div class="star-icon active"></div>
+                           <div class="star-icon active"></div>
+                           <div class="star-icon active"></div>
+                           <div class="star-icon active"></div>
+                           <div class="star-icon"></div>
+                         </div>
+                      </div>
+                      <div class="rating-count">
+                        <span>10 Ratings</span>
+                      </div>
+                    </div>
+                  </div>
+
+            </div>
+          </div>
             <!-- Mostrar Comentarios -->
             <div id="comentarios-container"></div>
+
         </section>
         
            <!-- Botón para agregar opinión -->
@@ -281,42 +341,48 @@
     <!--Logica Comentarios-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        function listComment() {
-        $.post("../../Backend/lista_comentarios.php",
-        function (data) {
-            var data = JSON.parse(data);
+       function listComment() {
+          $.post("../../Backend/lista_comentarios.php", function (data) {
+              var data = JSON.parse(data);
+              var list = $("<ul class='outer-comment'>");
 
-            var comments = "";
-            var replies = "";
-            var item = "";
-            var parent = -1;
-            var results = new Array();
+              for (var i = 0; i < data.length; i++) {
+                  var commentId = data[i]['co_id'];
+                  var parent = data[i]['parent_id'];
+                  var stars = data[i]['stars']; // Agrega esta línea para obtener la puntuación de estrellas del comentario
 
-            var list = $("<ul class='outer-comment'>");
-            var item = $("<li>").html(comments);
+                  if (parent == "0") {
+                      var comments = "<div class='comment-row'>" +
+                          "<div class='comment-info'>" +
+                          "<img src='../../Front-def/imagenes/user.png'>" +
+                          "<span class='posted-by'>" + data[i]['comentario_nombre'].toUpperCase() + "</span>" +
+                          "<p>Puntuación: " + getStarIcons(stars) + "</p>" + // Agrega las estrellas al comentario
+                          "</div>" +
+                          "<div class='comment-text' style='font-size: 18px;'>" + data[i]['comentarios'] + "</div>" +
+                          "</div>";
 
-            for (var i = 0; (i < data.length); i++)
-            {
-                var commentId = data[i]['co_id'];
-                parent = data[i]['parent_id'];
+                      var item = $("<li>").html(comments);
+                      list.append(item);
+                      var reply_list = $("<ul>");
+                      item.append(reply_list);
+                      listReplies(commentId, data, reply_list);
+                  }
+              }
+              $("#comentarios-container").html(list);
+          });
+      }
 
-                if (parent == "0")
-                {
-                    comments =  "<div class='comment-row' >"+
-                    "<div class='comment-info'><img src='../../Front/imagenes/user.png'><span class='posted-by'>" + data[i]['comentario_nombre'].toUpperCase() + "</span></div>" + 
-                    "<div class='comment-text' style='font-size: 18px;'>" + data[i]['comentarios'] + "</div>"+
-                    "</div>";
 
-                    var item = $("<li>").html(comments);
-                    list.append(item);
-                    var reply_list = $("<ul>");
-                    item.append(reply_list);
-                    listReplies(commentId, data, reply_list);
-                }
+        // Función para generar el HTML de las estrellas horizontalmente
+        function getStarIcons(stars) {
+            var starIcons = "";
+            for (var i = 0; i < stars; i++) {
+                starIcons += "⭐ "; // Agrega una estrella seguida de un espacio para mostrarlas horizontalmente
             }
-            $("#comentarios-container").html(list)
-        });
+            return starIcons;
         }
+
+
         function listReplies(commentId, data, list) {
 
         for (var i = 0; (i < data.length); i++)
@@ -324,7 +390,7 @@
             if (commentId == data[i].parent_id)
             {
                 var comments = "<div class='comment-row' >"+
-                " <div class='comment-info'><../../Front/imagenes/user.png'><span class='posted-by'>" + data[i]['comentario_nombre'].toUpperCase() + " </span></div>" + 
+                " <div class='comment-info'><'../../Front-def/imagenes/user.png'><span class='posted-by'>" + data[i]['comentario_nombre'].toUpperCase() + " </span></div>" + 
                 "<div class='comment-text'>" + data[i]['comentarios'] + "</div>"+
                 "</div>";
                 var item = $("<li>").html(comments);
@@ -340,9 +406,13 @@
         document.addEventListener("DOMContentLoaded", function() {
                 listComment();
         });
+
+
         function redirigirAFormulario() {
                 window.location.href = 'formulario_comentarios.html';
-            }
+            };
+
+            
     </script>
 
   </body>
