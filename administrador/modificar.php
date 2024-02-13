@@ -123,7 +123,16 @@ if (isset($_GET['type'])) {
                     $imagen_principal = $_POST['imagen_principal'];
             
                     // Actualizar los datos de la habitación en la base de datos
-                    $sql = "UPDATE habitaciones SET TIPO='$tipo', DESCRIPCION='$descripcion', PRECIOPORNOCHE='$precio_por_noche', CAPACIDAD='$capacidad', CAMAS='$camas', BANO='$bano', reservas='$reservas', IMAGEN_PRINCIPAL='$imagen_principal' WHERE ID_HABITACION='$id_habitacion'";
+                    $sql = "UPDATE habitaciones SET
+                            TIPO = '$tipo',
+                            DESCRIPCION = '$descripcion',
+                            PRECIOPORNOCHE = '$precio_por_noche',
+                            CAPACIDAD = '$capacidad',
+                            CAMAS = '$camas',
+                            BANO = '$bano',
+                            reservas = (SELECT ID_RESERVA FROM reserva WHERE ID_HABITACION = $id_habitacion LIMIT 1),
+                            IMAGEN_PRINCIPAL = '$imagen_principal'
+                            WHERE ID_HABITACION = $id_habitacion";
             
                     if ($mysqli->query($sql) === TRUE) {
                         echo "Habitación modificada exitosamente.";
@@ -168,7 +177,7 @@ if (isset($_GET['type'])) {
                 }
             
                 echo '</div>';
-                break;
+                break;            
             
                 case 'clientes':
                    // Conexión a la base de datos

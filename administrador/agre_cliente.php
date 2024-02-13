@@ -4,7 +4,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $servername = "localhost";
     $username = "root";
     $password = "";
-    $dbname = "hotel";
+    $dbname = "hotel2";
 
     $conn = new mysqli($servername, $username, $password, $dbname);
     if ($conn->connect_error) {
@@ -34,11 +34,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar Cliente</title>
+    <link rel="stylesheet" href="styles2.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
 </head>
 <body>
     <h2>Agregar Cliente</h2>
 
-    <form method="post" action="agregar_cliente.php">
+    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
         <label for="nombre">Nombre:</label><br>
         <input type="text" id="nombre" name="nombre" required><br><br>
 
@@ -57,18 +61,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <h2>Clientes Agregados</h2>
     <table>
         <tr>
-            <th>ID_CLIENTE</th>
-            <th>NOMBRE</th>
-            <th>APELLIDO</th>
-            <th>CELULAR</th>
-            <th>EMAIL</th>
+            <th>ID Cliente</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Celular</th>
+            <th>Email</th>
         </tr>
         <?php
         // Conexión a la base de datos
         $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "hotel";
+        $username = "root";
+        $password = "";
+        $dbname = "hotel2";
 
         $conn = new mysqli($servername, $username, $password, $dbname);
         if ($conn->connect_error) {
@@ -91,4 +95,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </table>
 </body>
 </html>
+
 
