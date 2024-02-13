@@ -1,21 +1,25 @@
 <?php
 require_once ("dbconnect.php");
+
 $commentId = isset($_POST['comment_id']) ? $_POST['comment_id'] : "";
 $comment = isset($_POST['comment']) ? $_POST['comment'] : "";
 $commentSenderName = isset($_POST['name']) ? $_POST['name'] : "";
 $date = date('Y-m-d H:i:s');
+$stars = isset($_POST['stars']) ? $_POST['stars'] : ""; // Recupera el valor de las estrellas
 
-$query = "INSERT INTO comentarios(parent_id,comentarios,comentario_nombre,fecha) VALUES (?,?,?,?)";
+$query = "INSERT INTO comentarios(parent_id, comentarios, comentario_nombre, fecha, stars) VALUES (?, ?, ?, ?, ?)";
 
 $sql_stmt = $conn->prepare($query);
 
-$param_type = "dsss";
+$param_type = "dsssi"; // Ajusta los tipos de parámetros según sea necesario
 $param_value_array = array(
     $commentId,
     $comment,
     $commentSenderName,
-    $date
+    $date,
+    $stars // Incluye el valor de las estrellas en el array de valores de parámetros
 );
+
 $param_value_reference[] = & $param_type;
 for ($i = 0; $i < count($param_value_array); $i ++) {
     $param_value_reference[] = & $param_value_array[$i];
