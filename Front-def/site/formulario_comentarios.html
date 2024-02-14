@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato:400,700,400italic%7CPoppins:300,400,500,700">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
+
     <style>.ie-panel{display: none;background: #212121;padding: 10px 0;box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3);clear: both;text-align:center;position: relative;z-index: 1;} html.ie-10 .ie-panel, html.lt-ie-10 .ie-panel {display: block;}</style>
   </head>
   <body>
@@ -318,10 +319,11 @@
         });
       });
 
-      // Maneja el evento click del botón "Agregar Comentario"
-      $("#submitButton").click(function () {
-          $("#comment-message").css('display', 'none'); // Oculta el mensaje de comentario creado con éxito (si está visible)
-          
+      $(document).ready(function() {
+        $("#submitButton").click(function() {
+          // Oculta el mensaje de comentario creado con éxito (si está visible)
+          $("#comment-message").css('display', 'none');
+
           // Obtén el valor de las estrellas mostradas en el texto
           var starsText = $("#texto-estrellas").text();
           // Extrae el número de estrellas del texto
@@ -329,47 +331,53 @@
           // Asigna el valor de las estrellas al campo oculto
           $("#stars").val(stars);
 
-          var str = $("#frm-comment").serialize(); // Serializa los datos del formulario en formato de cadena para enviarlos
+          // Obtén los valores de nombre, comentario y estrellas
+          var name = $("#name").val().trim();
+          var comment = $("#comment").val().trim();
+          var stars = $("#stars").val().trim();
+
+          // Verifica si algún campo está vacío
+          if (name === "" || comment === "" || stars === "") {
+            alert("Por favor, complete todos los campos del formulario.");
+            return false;
+          }
+
+          // Verifica si el nombre contiene solo letras
+          if (!/^[a-zA-Z\s]+$/.test(name)) {
+            alert("El nombre solo puede contener letras.");
+            return false;
+          }
+
+          // Verifica si el nombre contiene solo letras
+          if (!/^[a-zA-Z\s]+$/.test(comment)) {
+            alert("El comentario solo puede contener letras.");
+            return false;
+          }
 
           // Envía los datos del formulario al script "AgregarComentario.php" utilizando AJAX
           $.ajax({
-              url: "../../Backend/agregar_comentario.php", // URL del script PHP que procesará el formulario
-              data: str, // Datos del formulario serializados
-              type: 'post', // Método de envío (POST)
-              success: function (response) // Función a ejecutar cuando la solicitud AJAX es exitosa
-              {
-                  console.log("Respuesta del servidor:", response);
-                  // Verifica la respuesta del servidor
-                  if (response.trim() == 'success') {
-                      $("#comment-message").css('display', 'inline-block').html('Comentario creado con éxito!'); // Muestra el mensaje de comentario creado con éxito
-                      $("#name").val(""); // Limpia el campo de nombre
-                      $("#comment").val(""); // Limpia el campo de comentario
-                      $("#commentId").val(""); // Limpia el campo oculto de ID de comentario
+            url: "../../Backend/agregar_comentario.php",
+            data: $("#frm-comment").serialize(),
+            type: 'post',
+            success: function(response) {
+              console.log("Respuesta del servidor:", response);
+              if (response.trim() == 'success') {
+                $("#comment-message").css('display', 'inline-block').html('Comentario creado con éxito!');
+                $("#name").val("");
+                $("#comment").val("");
+                $("#commentId").val("");
 
-                      // Redirigir a comentarios.php después de 2 segundos
-                      setTimeout(function() {
-                          window.location.href = "comentarios.html";
-                      }, 2000);
-
-                  } else {
-                      // Maneja el caso en el que ocurrió un error al agregar el comentario
-                      $("#comment-message").css('display', 'inline-block').html('Comentario creado con éxito!');
-                      $("#name").val(""); // Limpia el campo de nombre
-                      $("#comment").val(""); // Limpia el campo de comentario
-                      $("#commentId").val(""); // Limpia el campo oculto de ID de comentario
-
-                      // Redirigir a comentarios.php después de 2 segundos
-                      setTimeout(function() {
-                          window.location.href = "comentarios.html";
-                      }, 2000);
-                  }
-              },
-              error: function () // Función a ejecutar si hay un error en la solicitud AJAX
-              {
-                  // Maneja el caso en el que ocurrió un error de comunicación con el servidor
-                  $("#comment-message").css('display', 'inline-block').html('Hubo un error de comunicación con el servidor. Por favor, inténtalo de nuevo más tarde.');
+                // Redirige a comentarios.html después de 2 segundos solo si el formulario se envió correctamente
+                  window.location.href = "comentarios.html";
+              } else {
+                $("#comment-message").css('display', 'inline-block').html('Hubo un error al agregar el comentario. Por favor, inténtalo de nuevo.');
               }
+            },
+            error: function() {
+              $("#comment-message").css('display', 'inline-block').html('Hubo un error de comunicación con el servidor. Por favor, inténtalo de nuevo más tarde.');
+            }
           });
+        });
       });
 
   </script>

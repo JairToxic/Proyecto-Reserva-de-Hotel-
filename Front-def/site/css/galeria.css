@@ -1,0 +1,15 @@
+.isotope-item img {
+    width: 300px;
+    height: 200px;
+}
+
+.isotope-wrap{
+    margin-top: 100px; /* Espacio arriba de cada imagen */
+    margin-bottom: 100px; /* Espacio abajo de cada imagen */
+    padding-left: 60px; 
+    padding-right: 60px;
+}
+.texto1{
+    text-align:left;
+    margin: 60px;
+}

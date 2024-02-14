@@ -1998,17 +1998,27 @@ h4 + .form-comment {
 	bottom: 25px;
 	transform: translateY(45%);
 }
-
+/*reserva habitacion*/
 .hotel-booking-form {
 	width: 100%;
 	text-align: left;
 	padding: 30px 20px 30px;
 	color: #000;
-	background: #e3e3e3;
+	background:   #8c849c;
 }
 
+#conte-form{
+	background-color: white;
+	padding: 20px;
+}
 .hotel-booking-form h3 {
-	color: inherit;
+	color: white;
+	text-align: center;
+	margin-top: 10px;
+	background-color:  #4eadd3;
+	padding-top: 30px;
+	padding-bottom: 30px;
+	font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .hotel-booking-form .form-label {
@@ -2018,7 +2028,7 @@ h4 + .form-comment {
 
 .hotel-booking-form .form-input {
 	padding-left: 22px;
-	background-color: #fff;
+	background-color: #ffffff;
 }
 
 .hotel-booking-form .select2-container .select2-choice {
@@ -32138,3 +32148,14 @@ span.posted-by {
 	text-align: left;
 	padding-left: 40px;
 }
+#checkinDate,
+#checkoutDate {
+  border: 2px solid  #7ec3dc; 
+  border-radius: 8px; 
+  padding: 5px; 
+  outline: none; 
+}
+#checkinLabel,
+  #checkoutLabel {
+    color: #5491C4  ; 
+  }

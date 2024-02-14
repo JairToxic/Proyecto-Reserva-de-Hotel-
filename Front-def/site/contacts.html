@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato:400,700,400italic%7CPoppins:300,400,500,700">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/contactos.css">
     <style>.ie-panel{display: none;background: #212121;padding: 10px 0;box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3);clear: both;text-align:center;position: relative;z-index: 1;} html.ie-10 .ie-panel, html.lt-ie-10 .ie-panel {display: block;}</style>
   </head>
   <body>
@@ -138,6 +139,64 @@
           </div>
         </section>
 
+        <div id="shell-wide-container" class="shell-wide">
+          <div class="row">
+              <div id="contact-container" class="col-md-6 col-lg-4 mb-4">
+                  <div class="page-footer-minimal-inner">
+                      <h4>Números de Contacto</h4>
+                      <ul class="list-unstyled">
+                          <li>
+                              <dl class="list-desc">
+                                  <dt><span class="icon icon-sm mdi mdi-phone"></span></dt>
+                                  <dd><a class="link link-gray-darker" href="#">+ (593) 987297703</a></dd>
+                              </dl>
+                          </li>
+                          <li>
+                              <dl class="list-desc">
+                                  <dt><span class="icon icon-sm mdi mdi-phone"></span></dt>
+                                  <dd><a class="link link-gray-darker" href="#">+ (593) 987297704</a></dd>
+                              </dl>
+                          </li>
+                          <li>
+                              <dl class="list-desc">
+                                  <dt><span class="icon icon-sm mdi mdi-phone"></span></dt>
+                                  <dd><a class="link link-gray-darker" href="#">+ (593) 987297705</a></dd>
+                              </dl>
+                          </li>
+                      </ul>
+                  </div>
+              </div>
+              <div id="form-container" class="col-md-6 col-lg-4 mb-4">
+                  <div class="page-footer-minimal-inner">
+                      <h4>Formulario de Contacto</h4>
+                      <form class="rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="bat/rd-mailform.php">
+                          <div class="form-wrap">
+                              <input class="form-input" id="contact-name" type="text" name="name" data-constraints="@Required">
+                              <label class="form-label" for="contact-name">Nombre</label>
+                          </div>
+                          <div class="form-wrap">
+                              <input class="form-input" id="contact-email" type="email" name="email" data-constraints="@Email @Required">
+                              <label class="form-label" for="contact-email">Correo Electrónico</label>
+                          </div>
+                          <div class="form-wrap">
+                              <label class="form-label" for="contact-message">Mensaje</label>
+                              <textarea class="form-input" id="contact-message" name="message" data-constraints="@Required"></textarea>
+                          </div>
+                          <button class="button button-primary button-effect-ujarak" type="submit" id="botonC"  style=" color: white;">Enviar Mensaje</button>
+                      </form>
+                  </div>
+              </div>
+              <div id="map-container" class="col-md-12 col-lg-4">
+                  <div class="page-footer-minimal-inner-subscribe">
+                      <h4>Mapa</h4>
+                      <!-- Google Maps Embed -->
+                      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d199370.33033901163!2d-78.53765240556996!3d-0.18065319834638202!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x903328af1e028ed7%3A0xf0d00df2a394bf90!2sQuito%2C%20Ecuador!5e0!3m2!1sen!2sus!4v1644690409906!5m2!1sen!2sus" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                  </div>
+              </div>
+          </div>
+      </div>
+      
+      
         
         <!-- Page Footer-->
       <footer class="page-footer text-left text-sm-left">
