@@ -177,31 +177,23 @@
             </div>
             <div class="cell-lg-4 cell-xl-3 reveal-lg-flex">
               <div class="hotel-booking-form">
-                <h3>Reservar una habitación</h3>
+                <div id="conte-form">
+                <h3>Reserva una habitación</h3>
 
                 <form action="../buscar/buscar_habitaciones.php" method="post">
-                  <label for="checkin">Fecha de Check-In:</label>
+                  <label for="checkin" id="checkinLabel">Fecha de Check-In:</label>
                   <input type="date" name="checkin" placeholder="Leaving Date" required id="checkinDate">
               
-                  <label for="checkout">Fecha de Check-Out:</label>
+                  <label for="checkout" id="checkoutLabel">Fecha de Check-Out:</label>
                   <input type="date" name="checkout" placeholder="Leaving Date" required id="checkoutDate">
               
-                  <label for="tipo">Tipo de Habitación:</label>
-                  <select name="tipo"  id="tipo" required>
-                      <option value="" disabled selected hidden>Selecciona un tipo</option>
-                      <option value="habitaciones_cuadruples">Cuádruples</option>
-                      <option value="habitaciones_dobles">Dobles</option>
-                      <option value="habitaciones_ejecutivas">Ejecutivas</option>
-                      <option value="habitaciones_estandar">Estándar</option>
-                      <option value="habitaciones_individuales">Individuales</option>
-                      <option value="habitaciones_suite">Suite</option>
-                  </select>
               
                   <div id="boton">
                     <button class="btn"><i class="animation"></i>Buscar Habitación<i class="animation"></i>
                     </button>
                 </div>
               </form>
+            </div>
               </div>
             </div>
           </div>
@@ -339,7 +331,7 @@
             <div class="cell-sm-6">
               <h3>Nuestra Galeria</h3>
             </div>
-            <div class="cell-sm-6 text-sm-right"><a class="heading-link link-gray-darker" href="#">Mira todas las fotos</a></div>
+            <div class="cell-sm-6 text-sm-right"><a class="heading-link link-gray-darker" href="galeria.html">Mira todas las fotos</a></div>
           </div>
           <hr>
           <div class="isotope-wrap">
@@ -478,15 +470,10 @@
                 </div>
                 <div class="cell-sm-8 cell-md-4 wow fadeInUp" data-wow-delay=".3s">
                   <div class="page-footer-minimal-inner-subscribe">
-                    <h4>Suscríbase a nuestro boletín</h4>
-                    <!-- RD Mailform-->
-                    <form class="rd-mailform rd-mailform-inline form-center" data-form-output="form-output-global" data-form-type="subscribe" method="post" action="">
-                      <div class="form-wrap">
-                        <input class="form-input" id="subscribe-email" type="email" name="email" data-constraints="@Email @Required">
-                        <label class="form-label" for="subscribe-email">Introduce tu correo electrónico</label>
-                      </div>
-                      <button class="button button-primary-2 button-effect-ujarak button-square" type="submit"><span>Subscribe</span></button>
-                    </form>
+                    
+                    <!-- PONER EL MAPA-->
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31918.287513070125!2d-78.5031436881349!3d-0.2308383154034494!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91d59a25c31db3b5%3A0x6c011283454d8bce!2sBas%C3%ADlica%20del%20Voto%20Nacional!5e0!3m2!1ses-419!2sec!4v1707592393266!5m2!1ses-419!2sec" 
+                    width="400" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                   </div>
                 </div>
               </div>
@@ -542,22 +529,29 @@
     <script>
       // Obtener la fecha actual en formato yyyy-mm-dd
       function getCurrentDate() {
-            const today = new Date();
-            const year = today.getFullYear();
-            const month = String(today.getMonth() + 1).padStart(2, '0');
-            const day = String(today.getDate()).padStart(2, '0');
-            return `${year}-${month}-${day}`;
-        }
-
-        // Establecer la fecha mínima para los campos de fecha
-        document.getElementById('checkinDate').setAttribute('min', getCurrentDate());
-        document.getElementById('checkoutDate').setAttribute('min', getCurrentDate());
-
-        // Actualizar la fecha mínima de check-out cada vez que se selecciona una fecha de check-in
-        document.getElementById('checkinDate').addEventListener('change', function() {
-            document.getElementById('checkoutDate').setAttribute('min', this.value);
-        });
+          const today = new Date();
+          const year = today.getFullYear();
+          const month = String(today.getMonth() + 1).padStart(2, '0');
+          const day = String(today.getDate()).padStart(2, '0');
+          return `${year}-${month}-${day}`;
+      }
+  
+      // Establecer la fecha mínima para los campos de fecha
+      document.getElementById('checkinDate').setAttribute('min', getCurrentDate());
+  
+      // Actualizar la fecha mínima de check-out cada vez que se selecciona una fecha de check-in
+      document.getElementById('checkinDate').addEventListener('change', function() {
+          const checkinDate = new Date(this.value);
+          const nextDay = new Date(checkinDate);
+          nextDay.setDate(checkinDate.getDate() + 1); // Añadir un día
+  
+          // Formatear la fecha en formato yyyy-mm-dd
+          const nextDayFormatted = nextDay.toISOString().split('T')[0];
+  
+          document.getElementById('checkoutDate').setAttribute('min', nextDayFormatted);
+      });
   </script>
+  
 
   </body>
 </html>
