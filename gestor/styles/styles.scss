@@ -2,7 +2,7 @@ $left-color:  #242e4d;
 $right-color: #897e79;
 $green-dark:  #35c3c1;
 $green-light: #00d6b7;
-$gray:        #8f8f8f;
+$gray:        #569ee2;
 $gray-light:  #f5f6f8;
 
 * {
@@ -39,6 +39,7 @@ body {
 }
 
 .login-form {
+  border: solid 5px #242e4d;
   width: 100%;
   padding: 2em;
   position: relative;
