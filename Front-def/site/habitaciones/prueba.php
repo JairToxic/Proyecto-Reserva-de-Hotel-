@@ -61,6 +61,7 @@ function obtenerTodasLasHabitacionesDisponibles($checkin,$checkout) {
     <link rel="stylesheet" href="../css/style.css">
     <style>
         body {
+            color: black;
             display: flex;
             flex-direction: column;
             
@@ -192,17 +193,23 @@ h2 {
 
 #seleccionadas {
     background-color: #D5DBDB;
-    border: 1px solid #ccc;
-    padding: 20px;
+    border: 1px solid #2971D3;
+    padding: 5px;
     width: 30%; /* Modifica el ancho según tus preferencias */
     box-sizing: border-box;
-    margin-top: 40px;
+    margin-top: 20px;
     margin-right: 25px;
     position: fixed; /* Puedes usar 'absolute' si prefieres que sea relativo al contenido */
-    top: 50%; /* Ajusta según tu preferencia para la posición vertical */
+    top: 55%; /* Ajusta según tu preferencia para la posición vertical */
     right: 0; /* Coloca el elemento a la derecha de la página */
-    transform: translate(0, -50%); /* Centra verticalmente con respecto al top: 50% */
-    box-shadow: 0 0 10px #E59866;
+    transform: translate(0, -40%); /* Centra verticalmente con respecto al top: 50% */
+    max-height: calc(100% - 80px);
+    overflow-y: auto;
+    box-shadow: 0 0 10px #2971D3;
+}
+
+#seleccionadas button{
+    margin-left: 10px;
 }
     </style>
     <style>.ie-panel{display: none;background: #212121;padding: 10px 0;box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3);clear: both;text-align:center;position: relative;z-index: 1;} html.ie-10 .ie-panel, html.lt-ie-10 .ie-panel {display: block;}</style>
@@ -315,7 +322,7 @@ h2 {
         </div>
       </header>
       <main>
-      
+    
       <div id="fechas-container">
     <form id="formFechas">
         <div class="form-group">
@@ -329,7 +336,7 @@ h2 {
     </form>
 </div>
 
-
+<div id="body-container">
     <div id="habitaciones-container">
     <?php
 // Mostrar las habitaciones disponibles
@@ -374,7 +381,7 @@ foreach ($habitacionesDisponibles as $habitacion) {
     <!-- Mueve el botón de reservar fuera del área dinámica -->
     <button id="reservar-btn" onclick="confirmarReserva()" disabled>Reservar</button>
     </div>
-        
+    </div>
         <!-- Page Footer-->
       <footer class="page-footer text-left text-sm-left">
         <div class="shell-wide">
@@ -540,7 +547,7 @@ foreach ($habitacionesDisponibles as $habitacion) {
                 // Aquí deberías obtener los detalles de cada habitación y mostrarlos en un cuadro
                 seleccionadasDiv.innerHTML += "<div class='seleccionadas'>";
                 seleccionadasDiv.innerHTML += "Detalles de la habitación ID: " + habitacion.ID_HABITACION + "<br>";
-                seleccionadasDiv.innerHTML += "Precio por Noche: $" + habitacion.PRECIOPORNOCHE + "<br>";
+                seleccionadasDiv.innerHTML += "Precio por Noche: $" + habitacion.PRECIOPORNOCHE;
                 // Obtener más detalles según sea necesario
                 seleccionadasDiv.innerHTML += "<button onclick='quitarSeleccion(" + idHabitacion + ")'>Quitar Selección</button>";
                 seleccionadasDiv.innerHTML += "</div>";
@@ -560,8 +567,8 @@ foreach ($habitacionesDisponibles as $habitacion) {
 
             // Mostrar las fechas seleccionadas y el precio total
             seleccionadasDiv.innerHTML += "<hr>";
-            seleccionadasDiv.innerHTML += "<p>Fechas Seleccionadas: " + fechaInicio + " - " + fechaFin + "</p>";
-            seleccionadasDiv.innerHTML += "<p>Noches: " + totalNoches + "</p>";
+            seleccionadasDiv.innerHTML += "Fechas Seleccionadas: " + fechaInicio + " - " + fechaFin + "<br>";
+            seleccionadasDiv.innerHTML += "Noches: " + totalNoches + "<br>";
             seleccionadasDiv.innerHTML += "<p>Precio Total: $" + precioTotal.toFixed(2) + "</p>";
 
             

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="login-form">
+        <h1>Vini</h1>
+        <form method="post" action="login.php"> <!-- Agregamos un formulario y especificamos un archivo PHP para manejar el inicio de sesión -->
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Username" name="username" id="UserName">
+                <i class="fa fa-user"></i>
+            </div>
+            <div class="form-group log-status">
+                <input type="password" class="form-control" placeholder="Password" name="password" id="Password">
+                <i class="fa fa-lock"></i>
+            </div>
+            <span class="alert">Invalid Credentials</span>
+            <a class="link" href="#">Lost your password?</a>
+            <button type="submit" class="log-btn">Log in</button> <!-- Cambiamos el tipo de botón a "submit" para enviar el formulario -->
+        </form>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
