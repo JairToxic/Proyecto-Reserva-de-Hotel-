@@ -129,13 +129,17 @@ $habitaciones = $resultado->fetch_all(MYSQLI_ASSOC);
                 <div class="rd-navbar-nav-wrap">
                   <div class="rd-navbar-nav-scroll-holder">
                     <ul class="rd-navbar-nav">
-                      <li class="active"><a href="index.html">Hotel</a>
+                    <li class="active"><a href="../index.html">Hotel</a>
                       </li>
-                      <li><a href="about-us.html">Sobre Nosotros</a>
+                      <li><a href="../about-us.html">Sobre Nosotros</a>
                       </li>
-                      <li><a href="contacts.html">Contactanos</a>
+                      <li><a href="../contacts.html">Contactanos</a>
                       </li>
-                      <li><a href="habitaciones.html">Habitaciones</a>
+                      <li><a href="../habitaciones.html">Habitaciones</a>
+                      </li>
+                      <li><a href="../comentarios.html">Comentarios</a>
+                      </li>
+                      <li><a href="../galeria.html">Galeria de Fotos</a>
                       </li>
                     </ul>
                   </div>

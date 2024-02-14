@@ -145,7 +145,7 @@
             <div class="clearfix"></div>
             <br><br><br>
             <div id="puntuacion-container">
-                <p>Puntuación:<br>★★★★</p>
+                <p>Puntuación:<br>⭐⭐⭐⭐</p>
 
                 <div class="container">
                   <div class="rating-card">
@@ -212,6 +212,7 @@
 
             </div>
           </div>
+
             <!-- Mostrar Comentarios -->
             <div id="comentarios-container"></div>
 
@@ -407,7 +408,119 @@
                 listComment();
         });
 
+        //Funcion para panel estrellas
+        // Función para cargar los datos de estrellas desde el archivo PHP
+function cargarDatosEstrellas() {
+    $.ajax({
+        url: "../../Backend/panel_estrellas.php", // Ruta al archivo PHP que extrae los datos de estrellas
+        type: "GET",
+        dataType: "json",
+        success: function(response) {
+            // Calcular la cantidad total de comentarios
+            var cantidadTotal = response.length;
 
+            // Contadores para cada cantidad de estrellas
+            var count5 = 0, count4 = 0, count3 = 0, count2 = 0, count1 = 0;
+
+            // Contar la cantidad de estrellas de cada comentario
+            response.forEach(function(star) {
+                if (star === 5) {
+                    count5++;
+                } else if (star === 4) {
+                    count4++;
+                } else if (star === 3) {
+                    count3++;
+                } else if (star === 2) {
+                    count2++;
+                } else if (star === 1) {
+                    count1++;
+                }
+            });
+
+            // Calcular el porcentaje de cada cantidad de estrellas
+            var porcentaje5 = ((count5 / cantidadTotal) * 100).toFixed(2);
+            var porcentaje4 = ((count4 / cantidadTotal) * 100).toFixed(2);
+            var porcentaje3 = ((count3 / cantidadTotal) * 100).toFixed(2);
+            var porcentaje2 = ((count2 / cantidadTotal) * 100).toFixed(2);
+            var porcentaje1 = ((count1 / cantidadTotal) * 100).toFixed(2);
+
+            // Calcular el promedio general
+            var suma = response.reduce((a, b) => a + b, 0);
+            var promedio = (suma / cantidadTotal).toFixed(2);
+
+            // Mostrar resultados
+            console.log("Cantidad total de comentarios:", cantidadTotal);
+            console.log("Comentarios con 5 estrellas:", count5);
+            console.log("Comentarios con 4 estrellas:", count4);
+            console.log("Comentarios con 3 estrellas:", count3);
+            console.log("Comentarios con 2 estrellas:", count2);
+            console.log("Comentarios con 1 estrella:", count1);
+            console.log("Porcentaje de comentarios con 5 estrellas:", porcentaje5 + "%");
+            console.log("Porcentaje de comentarios con 4 estrellas:", porcentaje4 + "%");
+            console.log("Porcentaje de comentarios con 3 estrellas:", porcentaje3 + "%");
+            console.log("Porcentaje de comentarios con 2 estrellas:", porcentaje2 + "%");
+            console.log("Porcentaje de comentarios con 1 estrella:", porcentaje1 + "%");
+            console.log("Promedio general de estrellas:", promedio);
+        },
+        error: function() {
+            console.log("Error al cargar los datos de estrellas.");
+        }
+    });
+}
+
+//en 2
+// Función para cargar los datos de estrellas desde el archivo PHP y actualizar el HTML
+function cargarDatosEstrellas() {
+    $.ajax({
+        url: "../../Backend/panel_estrellas.php", // Ruta al archivo PHP que extrae los datos de estrellas
+        type: "GET",
+        dataType: "json",
+        success: function(response) {
+            // Calcular el promedio general
+            var suma = response.reduce((a, b) => a + b, 0);
+            var promedio = suma / response.length;
+
+            // Calcular porcentaje de cada cantidad de estrellas
+            var cantidadTotal = response.length;
+            var porcentajes = {
+                1: 0,
+                2: 0,
+                3: 0,
+                4: 0,
+                5: 0
+            };
+            response.forEach(function(star) {
+                porcentajes[star]++;
+            });
+            for (var key in porcentajes) {
+                porcentajes[key] = (porcentajes[key] / cantidadTotal) * 100;
+            }
+
+            // Actualizar el HTML con los valores obtenidos
+            $(".rating-width").eq(0).css("width", porcentajes[5] + "%");
+            $(".rating-width").eq(1).css("width", porcentajes[4] + "%");
+            $(".rating-width").eq(2).css("width", porcentajes[3] + "%");
+            $(".rating-width").eq(3).css("width", porcentajes[2] + "%");
+            $(".rating-width").eq(4).css("width", porcentajes[1] + "%");
+
+            $(".rating-point").text(promedio.toFixed(2));
+            $(".rating-count span").text(cantidadTotal + " Ratings");
+        },
+        error: function() {
+            console.log("Error al cargar los datos de estrellas.");
+        }
+    });
+}
+
+// Llamar a la función cuando se cargue la página
+$(document).ready(function() {
+    cargarDatosEstrellas();
+});
+
+ 
+
+
+        //funcion redirigir
         function redirigirAFormulario() {
                 window.location.href = 'formulario_comentarios.html';
             };

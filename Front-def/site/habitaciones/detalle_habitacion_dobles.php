@@ -28,7 +28,7 @@
 <html class="wide wow-animation" lang="en">
   <head>
     <!-- Site Title-->
-    <title>Contacts</title>
+    <title>Habitacion Dobles</title>
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -147,13 +147,17 @@
                 <div class="rd-navbar-nav-wrap">
                   <div class="rd-navbar-nav-scroll-holder">
                     <ul class="rd-navbar-nav">
-                      <li class="active"><a href="index.html">Hotel</a>
+                    <li class="active"><a href="../index.html">Hotel</a>
                       </li>
-                      <li><a href="about-us.html">Sobre Nosotros</a>
+                      <li><a href="../about-us.html">Sobre Nosotros</a>
                       </li>
-                      <li><a href="contacts.html">Contactanos</a>
+                      <li><a href="../contacts.html">Contactanos</a>
                       </li>
-                      <li><a href="habitaciones.html">Habitaciones</a>
+                      <li><a href="../habitaciones.html">Habitaciones</a>
+                      </li>
+                      <li><a href="../comentarios.html">Comentarios</a>
+                      </li>
+                      <li><a href="../galeria.html">Galeria de Fotos</a>
                       </li>
                     </ul>
                   </div>
@@ -274,7 +278,7 @@
 </div>
 <br>
 
-<form id="formReserva">
+<form id="formReserva" action="" method="post">
     <div class="form-group">
         <label for="fechaInicio">Fecha de Check-in:</label>
         <input type="date" class="form-control" id="fechaInicio" name="fechaInicio" required>
@@ -285,11 +289,12 @@
     </div>
     <!-- Agrega un campo oculto para almacenar el ID_HABITACION -->
     <input type="hidden" id="habitacion_id" name="habitacion_id" value="<?php echo $habitacion_id; ?>">
-    <button type="button" class="btn btn-primary" onclick="calcularPrecio()">Calcular Precio</button>
+
+    <button type="button" class="btn btn-primary" onclick="calcularPrecio()">Reservar ahora</button>
+    <button type="submit" class="btn btn-primary" onclick="setAction('reservar')">Buscar Habitación</button>
 </form>
 
-
-        
+  
         <!-- Page Footer-->
       <footer class="page-footer text-left text-sm-left">
         <div class="shell-wide">
@@ -416,7 +421,7 @@
     
     <script src="../js/core.min.js"></script>
     <script src="../js/script.js"></script>
-
+    <!--Coded by Drel-->
     <script>
      
      function calcularPrecio() {
@@ -447,6 +452,27 @@
     }
 }
 </script>
-    <!--Coded by Drel-->
+</script>
+<script>
+    function setAction(action) {
+        var form = document.getElementById('formReserva');
+       
+        if (action === 'reservar') {
+            // Configura la acción del formulario para reservar
+            form.action = "../../buscar/buscar_habitaciones.php";
+        } else {
+            // Configura la acción del formulario para buscar habitaciones
+            form.action = "../../buscar/buscar_habitaciones.php";
+        }
+
+        // Envía el formulario
+        form.submit();
+    }
+  
+    
+</script>
+
+
+
   </body>
 </html>
