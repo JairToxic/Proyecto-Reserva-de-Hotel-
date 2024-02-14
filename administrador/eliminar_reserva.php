@@ -57,7 +57,7 @@ if (isset($_GET['borrar_reserva'])) {
 }
 
 // Obtener la lista de reservas
-$sql = "SELECT * FROM reserva";
+$sql = "SELECT r.*, c.NOMBRE, c.APELLIDO FROM reserva r INNER JOIN cliente c ON r.ID_CLIENTE = c.ID_CLIENTE";
 $result = $mysqli->query($sql);
 
 $reservas = array();
@@ -68,7 +68,6 @@ if ($result->num_rows > 0) {
     }
 }
 
-$mysqli->close();
 ?>
 
 <!DOCTYPE html>
@@ -101,8 +100,19 @@ $mysqli->close();
         <tbody>
             <?php foreach ($reservas as $reserva): ?>
                 <tr>
-                    <?php foreach ($reserva as $valor): ?>
-                        <td><?php echo $valor; ?></td>
+                    <?php foreach ($reserva as $clave => $valor): ?>
+                        <?php if ($clave === 'ID_CLIENTE'): ?>
+                            <?php
+                            // Obtener nombre y apellido del cliente correspondiente al ID de cliente de esta reserva
+                            $cliente_id = $reserva['ID_CLIENTE'];
+                            $sql_cliente = "SELECT NOMBRE, APELLIDO FROM cliente WHERE ID_CLIENTE='$cliente_id'";
+                            $result_cliente = $mysqli->query($sql_cliente);
+                            $cliente_info = $result_cliente->fetch_assoc();
+                            ?>
+                            <td><?php echo $cliente_info['NOMBRE'] . ' ' . $cliente_info['APELLIDO']; ?></td>
+                        <?php else: ?>
+                            <td><?php echo $valor; ?></td>
+                        <?php endif; ?>
                     <?php endforeach; ?>
                     <td>
                         <a href="?borrar_reserva=<?php echo $reserva['ID_RESERVA']; ?>" onclick="return confirm('¿Seguro que deseas borrar esta reserva?')">Borrar</a>

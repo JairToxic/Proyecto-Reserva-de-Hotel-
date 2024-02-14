@@ -43,8 +43,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <h2>Agregar Reserva</h2>
 
     <form method="post" action="agre_reservas.php">
-        <label for="id_cliente">ID de Cliente:</label><br>
-        <input type="text" id="id_cliente" name="id_cliente" required><br><br>
+        <label for="id_cliente">Cliente:</label><br>
+        <select name="id_cliente" required>
+    <?php
+    // Obtener nombres y apellidos de clientes de la base de datos
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "hotel2";
+
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    if ($conn->connect_error) {
+        die("Conexión fallida: " . $conn->connect_error);
+    }
+
+    $sql_clientes = "SELECT ID_CLIENTE, NOMBRE, APELLIDO FROM cliente";
+    $result_clientes = $conn->query($sql_clientes);
+
+    if ($result_clientes->num_rows > 0) {
+        while ($row_cliente = $result_clientes->fetch_assoc()) {
+            echo "<option value=\"" . $row_cliente["ID_CLIENTE"] . "\">" . $row_cliente["NOMBRE"] . " " . $row_cliente["APELLIDO"] . "</option>";
+        }
+    } else {
+        echo "<option value=\"\">No hay clientes registrados</option>";
+    }
+
+    $conn->close();
+    ?>
+</select><br><br>
+
 
         <label for="fecha_checkin">Fecha de Check-in:</label><br>
         <input type="datetime-local" id="fecha_checkin" name="fecha_checkin" required><br><br>
@@ -63,7 +90,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <h2>Reservas Agregadas</h2>
     <table>
-
         <?php
         // Mostrar reservas existentes en una tabla
         $servername = "localhost";
@@ -95,4 +121,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </table>
 </body>
 </html>
+
 

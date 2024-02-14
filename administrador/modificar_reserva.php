@@ -29,10 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Error al modificar la reserva: " . $conn->error;
     }
 }
-
- 
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -42,6 +39,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="styles2.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectButtons = document.querySelectorAll('.select-btn');
+
+            selectButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    document.getElementById('id_reserva').value = this.getAttribute('data-id');
+                    document.getElementById('fecha_checkin').value = this.getAttribute('data-checkin');
+                    document.getElementById('fecha_checkout').value = this.getAttribute('data-checkout');
+                    document.getElementById('estado_reserva').value = this.getAttribute('data-estado');
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <h2>Modificar Reserva</h2>
@@ -67,50 +78,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <th>Fecha de Check-in</th>
                 <th>Fecha de Check-out</th>
                 <th>Estado de Reserva</th>
+                <th>Acción</th> <!-- Agregado -->
             </tr>
             <?php
-            // Configuración de la conexión a la base de datos
-            $servername = "localhost";
-            $username = "root";
-            $password = "";
-            $dbname = "hotel2";
+            // Obtener reservas existentes
+            $sql_reservas = "SELECT * FROM reserva";
+            $result_reservas = $conn->query($sql_reservas);
 
-            // Crear conexión
-            $conn = new mysqli($servername, $username, $password, $dbname);
-
-            // Verificar la conexión
-            if ($conn->connect_error) {
-                die("Conexión fallida: " . $conn->connect_error);
+            if ($result_reservas->num_rows > 0) {
+                while ($row = $result_reservas->fetch_assoc()) {
+                    echo "<tr>";
+                    echo "<td>" . $row["ID_RESERVA"] . "</td>";
+                    echo "<td>" . $row["ID_CLIENTE"] . "</td>";
+                    echo "<td>" . $row["FECHACHECKIN"] . "</td>";
+                    echo "<td>" . $row["FECHACHECKOUT"] . "</td>";
+                    echo "<td>" . $row["ESTADORESERVA"] . "</td>";
+                    // Agregando botón de selección
+                    echo "<td><button class='select-btn' data-id='" . $row["ID_RESERVA"] . "' data-checkin='" . $row["FECHACHECKIN"] . "' data-checkout='" . $row["FECHACHECKOUT"] . "' data-estado='" . $row["ESTADORESERVA"] . "'>Seleccionar</button></td>";
+                    echo "</tr>";
+                }
+            } else {
+                echo "<tr><td colspan='6'>No hay reservas.</td></tr>";
             }
-
-           // Obtener reservas existentes
-           $sql_reservas = "SELECT * FROM reserva";
-           $result_reservas = $conn->query($sql_reservas);
-
-           if ($result_reservas->num_rows > 0) {
-               while ($row = $result_reservas->fetch_assoc()) {
-                   echo "<tr>";
-                   echo "<td>" . $row["ID_RESERVA"] . "</td>";
-                   echo "<td>" . $row["ID_CLIENTE"] . "</td>";
-                   echo "<td>" . $row["FECHACHECKIN"] . "</td>";
-                   echo "<td>" . $row["FECHACHECKOUT"] . "</td>";
-                   echo "<td>" . $row["ESTADORESERVA"] . "</td>";
-                   echo "</tr>";
-               }
-           } else {
-               echo "<tr><td colspan='5'>No hay reservas.</td></tr>";
-           }
-
-           // Cerrar la conexión
-           $conn->close();
-           ?>
+            ?>
         </table>
     </div>
 </body>
 </html>
 
-
-
-
-
-
+<?php
+// Cerrar la conexión
+$conn->close();
+?>
