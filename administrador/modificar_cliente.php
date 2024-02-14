@@ -45,6 +45,21 @@ $result_clientes = $conn->query($sql_clientes);
     <link rel="stylesheet" href="styles2.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectButtons = document.querySelectorAll('.select-btn');
+
+            selectButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    document.getElementById('id_cliente').value = this.getAttribute('data-id');
+                    document.getElementById('nombre').value = this.getAttribute('data-nombre');
+                    document.getElementById('apellido').value = this.getAttribute('data-apellido');
+                    document.getElementById('celular').value = this.getAttribute('data-celular');
+                    document.getElementById('email').value = this.getAttribute('data-email');
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <h2>Modificar Cliente</h2>
@@ -72,6 +87,7 @@ $result_clientes = $conn->query($sql_clientes);
                 <th>Apellido</th>
                 <th>Celular</th>
                 <th>Email</th>
+                <th>Acción</th> <!-- Agregado -->
             </tr>
             <?php
             if ($result_clientes->num_rows > 0) {
@@ -82,10 +98,12 @@ $result_clientes = $conn->query($sql_clientes);
                     echo "<td>" . $row["APELLIDO"] . "</td>";
                     echo "<td>" . $row["CELULAR"] . "</td>";
                     echo "<td>" . $row["EMAIL"] . "</td>";
+                    // Agregando botón de selección
+                    echo "<td><button class='select-btn' data-id='" . $row["ID_CLIENTE"] . "' data-nombre='" . $row["NOMBRE"] . "' data-apellido='" . $row["APELLIDO"] . "' data-celular='" . $row["CELULAR"] . "' data-email='" . $row["EMAIL"] . "'>Seleccionar</button></td>";
                     echo "</tr>";
                 }
             } else {
-                echo "<tr><td colspan='5'>No hay clientes.</td></tr>";
+                echo "<tr><td colspan='6'>No hay clientes.</td></tr>";
             }
             ?>
         </table>
@@ -97,3 +115,5 @@ $result_clientes = $conn->query($sql_clientes);
 // Cerrar la conexión
 $conn->close();
 ?>
+
+

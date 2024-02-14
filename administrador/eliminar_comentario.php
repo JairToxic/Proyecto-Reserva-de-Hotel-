@@ -66,7 +66,7 @@ function borrarComentario($id_comentario, $mysqli) {
             <tr>
                 <th>ID</th>
                 <th>ID Habitación</th>
-                <th>ID Cliente</th>
+                <th>Nombre</th>
                 <th>Calificación</th>
                 <th>Comentario</th>
                 <th>Acciones</th>
