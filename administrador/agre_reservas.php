@@ -1,12 +1,7 @@
 <?php
+include'../basedatos/basedatos.php';
 // Verificar si se ha enviado el formulario de reserva
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "hotel2";
-
-    $conn = new mysqli($servername, $username, $password, $dbname);
     if ($conn->connect_error) {
         die("Conexión fallida: " . $conn->connect_error);
     }
@@ -47,12 +42,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <select name="id_cliente" required>
     <?php
     // Obtener nombres y apellidos de clientes de la base de datos
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "hotel2";
-
-    $conn = new mysqli($servername, $username, $password, $dbname);
     if ($conn->connect_error) {
         die("Conexión fallida: " . $conn->connect_error);
     }
@@ -92,24 +81,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <table>
         <?php
         // Mostrar reservas existentes en una tabla
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "hotel2";
-
-        $conn = new mysqli($servername, $username, $password, $dbname);
+        include'../basedatos/basedatos.php';
         if ($conn->connect_error) {
             die("Conexión fallida: " . $conn->connect_error);
         }
 
-        $sql = "SELECT * FROM reserva";
+        $sql = "SELECT r.ID_RESERVA, r.ID_CLIENTE, c.NOMBRE, c.APELLIDO, r.FECHACHECKIN, r.FECHACHECKOUT, r.ESTADORESERVA FROM reserva r
+        INNER JOIN cliente c ON r.ID_CLIENTE = c.ID_CLIENTE";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
             echo "<table border='1'>";
-            echo "<tr><th>ID Reserva</th><th>ID Cliente</th><th>Fecha Check-in</th><th>Fecha Check-out</th><th>Estado de Reserva</th></tr>";
+            echo "<tr><th>ID Reserva</th><th>Nombre del Cliente</th><th>Fecha Check-in</th><th>Fecha Check-out</th><th>Estado de Reserva</th></tr>";
             while ($row = $result->fetch_assoc()) {
-                echo "<tr><td>".$row["ID_RESERVA"]."</td><td>".$row["ID_CLIENTE"]."</td><td>".$row["FECHACHECKIN"]."</td><td>".$row["FECHACHECKOUT"]."</td><td>".$row["ESTADORESERVA"]."</td></tr>";
+                echo "<tr><td>".$row["ID_RESERVA"]."</td><td>".$row["NOMBRE"]." ".$row["APELLIDO"]."</td><td>".$row["FECHACHECKIN"]."</td><td>".$row["FECHACHECKOUT"]."</td><td>".$row["ESTADORESERVA"]."</td></tr>";
             }
             echo "</table>";
         } else {
@@ -121,5 +106,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </table>
 </body>
 </html>
-
-

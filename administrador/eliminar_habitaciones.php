@@ -1,31 +1,26 @@
 <?php
 // Crear una conexión a la base de datos
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "hotel2";
-
-$mysqli = new mysqli($servername, $username, $password, $dbname);
+include'../basedatos/basedatos.php';
 
 // Verificar la conexión
-if ($mysqli->connect_error) {
-    die("Conexión fallida: " . $mysqli->connect_error);
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
 }
 
 
 // Verificar si se ha enviado una solicitud para borrar una habitación
 if (isset($_GET['borrar_habitacion'])) {
     $id_habitacion = $_GET['borrar_habitacion'];
-    borrarHabitacion($id_habitacion, $mysqli);
+    borrarHabitacion($id_habitacion, $conn);
 }
 
 // Obtener la lista de habitaciones desde la base de datos
-$habitaciones = obtenerHabitaciones($mysqli);
+$habitaciones = obtenerHabitaciones($conn);
 
 // Función para obtener la lista de habitaciones
-function obtenerHabitaciones($mysqli) {
+function obtenerHabitaciones($conn) {
     $consulta = "SELECT * FROM HABITACIONES";
-    $resultado = $mysqli->query($consulta);
+    $resultado = $conn->query($consulta);
 
     $habitaciones = array();
     while ($habitacion = $resultado->fetch_assoc()) {
@@ -36,22 +31,22 @@ function obtenerHabitaciones($mysqli) {
 }
 
 // Función para borrar una habitación por ID y sus referencias relacionadas
-function borrarHabitacion($id_habitacion, $mysqli) {
+function borrarHabitacion($id_habitacion, $conn) {
     // Eliminar referencias de habitacion_reserva
-    $stmt1 = $mysqli->prepare("DELETE FROM habitacion_reserva WHERE ID_HABITACION = ?");
+    $stmt1 = $conn->prepare("DELETE FROM habitacion_reserva WHERE ID_HABITACION = ?");
     $stmt1->bind_param("i", $id_habitacion);
     $stmt1->execute();
     $stmt1->close();
 
     // Eliminar imágenes asociadas en imagenes_habitaciones
-    $stmt2 = $mysqli->prepare("DELETE FROM imagenes_habitaciones WHERE id_habitacion = ?");
+    $stmt2 = $conn->prepare("DELETE FROM imagenes_habitaciones WHERE id_habitacion = ?");
     $stmt2->bind_param("i", $id_habitacion);
     $stmt2->execute();
     $stmt2->close();
 
     
     // Eliminar la entrada de la habitación en la tabla habitaciones
-    $stmt5 = $mysqli->prepare("DELETE FROM habitaciones WHERE ID_HABITACION = ?");
+    $stmt5 = $conn->prepare("DELETE FROM habitaciones WHERE ID_HABITACION = ?");
     $stmt5->bind_param("i", $id_habitacion);
     $stmt5->execute();
     $stmt5->close();

@@ -1,30 +1,25 @@
 <?php
 // Crear una conexión a la base de datos
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "hotel2";
-
-$mysqli = new mysqli($servername, $username, $password, $dbname);
+include'../basedatos/basedatos.php';
 
 // Verificar la conexión
-if ($mysqli->connect_error) {
-    die("Conexión fallida: " . $mysqli->connect_error);
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
 }
 
 // Verificar si se ha enviado una solicitud para borrar un comentario
 if (isset($_GET['borrar_comentario'])) {
     $id_comentario = $_GET['borrar_comentario'];
-    borrarComentario($id_comentario, $mysqli);
+    borrarComentario($id_comentario, $conn);
 }
 
 // Obtener la lista de comentarios desde la base de datos
-$comentarios = obtenerComentarios($mysqli);
+$comentarios = obtenerComentarios($conn);
 
 // Función para obtener la lista de comentarios
-function obtenerComentarios($mysqli) {
-    $consulta = "SELECT * FROM comentarios";
-    $resultado = $mysqli->query($consulta);
+function obtenerComentarios($conn) {
+    $consulta = "SELECT co_id, comentario_nombre, stars, comentarios FROM comentarios";
+    $resultado = $conn->query($consulta);
 
     $comentarios = array();
     while ($comentario = $resultado->fetch_assoc()) {
@@ -35,8 +30,8 @@ function obtenerComentarios($mysqli) {
 }
 
 // Función para borrar un comentario por ID
-function borrarComentario($id_comentario, $mysqli) {
-    $stmt = $mysqli->prepare("DELETE FROM comentarios WHERE co_id = ?");
+function borrarComentario($id_comentario, $conn) {
+    $stmt = $conn->prepare("DELETE FROM comentarios WHERE co_id = ?");
     $stmt->bind_param("i", $id_comentario);
     $stmt->execute();
     $stmt->close();
@@ -65,7 +60,6 @@ function borrarComentario($id_comentario, $mysqli) {
         <thead>
             <tr>
                 <th>ID</th>
-                <th>ID Habitación</th>
                 <th>Nombre</th>
                 <th>Calificación</th>
                 <th>Comentario</th>
@@ -76,7 +70,6 @@ function borrarComentario($id_comentario, $mysqli) {
             <?php foreach ($comentarios as $comentario): ?>
                 <tr>
                     <td><?php echo $comentario['co_id']; ?></td>
-                    <td><?php echo $comentario['parent_id']; ?></td>
                     <td><?php echo $comentario['comentario_nombre']; ?></td>
                     <td><?php echo $comentario['stars']; ?></td>
                     <td><?php echo $comentario['comentarios']; ?></td>
@@ -93,3 +86,4 @@ function borrarComentario($id_comentario, $mysqli) {
 
 </body>
 </html>
+

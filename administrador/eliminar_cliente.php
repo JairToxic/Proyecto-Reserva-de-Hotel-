@@ -1,31 +1,26 @@
 <?php
 // Crear una conexión a la base de datos
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "hotel2";
-
-$mysqli = new mysqli($servername, $username, $password, $dbname);
+include'../basedatos/basedatos.php';
 
 // Verificar la conexión
-if ($mysqli->connect_error) {
-    die("Conexión fallida: " . $mysqli->connect_error);
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
 }
 
 
 // Verificar si se ha enviado una solicitud para borrar un cliente
 if (isset($_GET['borrar_cliente'])) {
     $id_cliente = $_GET['borrar_cliente'];
-    borrarCliente($id_cliente, $mysqli);
+    borrarCliente($id_cliente, $conn);
 }
 
 // Obtener la lista de clientes desde la base de datos
-$clientes = obtenerClientes($mysqli);
+$clientes = obtenerClientes($conn);
 
 // Función para obtener la lista de clientes
-function obtenerClientes($mysqli) {
+function obtenerClientes($conn) {
     $consulta = "SELECT * FROM cliente";
-    $resultado = $mysqli->query($consulta);
+    $resultado = $conn->query($consulta);
 
     $clientes = array();
     while ($cliente = $resultado->fetch_assoc()) {
@@ -36,16 +31,16 @@ function obtenerClientes($mysqli) {
 }
 
 // Función para borrar un cliente por ID y sus referencias relacionadas
-function borrarCliente($id_cliente, $mysqli) {
+function borrarCliente($id_cliente, $conn) {
     // Eliminar las reservas asociadas en reserva
-    $stmt1 = $mysqli->prepare("DELETE FROM reserva WHERE ID_CLIENTE = ?");
+    $stmt1 = $conn->prepare("DELETE FROM reserva WHERE ID_CLIENTE = ?");
     $stmt1->bind_param("i", $id_cliente);
     $stmt1->execute();
     $stmt1->close();
 
 
     // Eliminar al cliente de la tabla cliente
-    $stmt4 = $mysqli->prepare("DELETE FROM cliente WHERE ID_CLIENTE = ?");
+    $stmt4 = $conn->prepare("DELETE FROM cliente WHERE ID_CLIENTE = ?");
     $stmt4->bind_param("i", $id_cliente);
     $stmt4->execute();
     $stmt4->close();

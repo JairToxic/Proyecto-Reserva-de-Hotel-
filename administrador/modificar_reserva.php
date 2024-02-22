@@ -1,12 +1,6 @@
 <?php
 // Configuración de la conexión a la base de datos
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "hotel2";
-
-// Crear conexión
-$conn = new mysqli($servername, $username, $password, $dbname);
+include '../basedatos/basedatos.php';
 
 // Verificar la conexión
 if ($conn->connect_error) {
@@ -29,7 +23,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Error al modificar la reserva: " . $conn->error;
     }
 }
+
+// Obtener reservas existentes
+$sql_reservas = "SELECT r.ID_RESERVA, r.ID_CLIENTE, c.NOMBRE, c.APELLIDO, r.FECHACHECKIN, r.FECHACHECKOUT, r.ESTADORESERVA FROM reserva r INNER JOIN cliente c ON r.ID_CLIENTE = c.ID_CLIENTE";
+$result_reservas = $conn->query($sql_reservas);
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -56,10 +55,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <h2>Modificar Reserva</h2>
-    <div class="container"> <!-- Clase container para mantener la estructura -->
+    <div class="container">
         <form method="post">
-            <label for="id_reserva">ID de Reserva:</label><br>
-            <input type="text" id="id_reserva" name="id_reserva" required><br><br>
+            <!-- Campo oculto para almacenar el id_reserva -->
+            <input type="hidden" id="id_reserva" name="id_reserva">
             <label for="fecha_checkin">Fecha de Check-in:</label><br>
             <input type="datetime-local" id="fecha_checkin" name="fecha_checkin" required><br><br>
             <label for="fecha_checkout">Fecha de Check-out:</label><br>
@@ -75,21 +74,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <tr>
                 <th>ID de Reserva</th>
                 <th>ID de Cliente</th>
+                <th>Nombre del Cliente</th>
                 <th>Fecha de Check-in</th>
                 <th>Fecha de Check-out</th>
                 <th>Estado de Reserva</th>
                 <th>Acción</th> <!-- Agregado -->
             </tr>
             <?php
-            // Obtener reservas existentes
-            $sql_reservas = "SELECT * FROM reserva";
-            $result_reservas = $conn->query($sql_reservas);
-
             if ($result_reservas->num_rows > 0) {
                 while ($row = $result_reservas->fetch_assoc()) {
                     echo "<tr>";
                     echo "<td>" . $row["ID_RESERVA"] . "</td>";
                     echo "<td>" . $row["ID_CLIENTE"] . "</td>";
+                    echo "<td>" . $row["NOMBRE"] . " " . $row["APELLIDO"] . "</td>";
                     echo "<td>" . $row["FECHACHECKIN"] . "</td>";
                     echo "<td>" . $row["FECHACHECKOUT"] . "</td>";
                     echo "<td>" . $row["ESTADORESERVA"] . "</td>";
@@ -98,7 +95,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo "</tr>";
                 }
             } else {
-                echo "<tr><td colspan='6'>No hay reservas.</td></tr>";
+                echo "<tr><td colspan='7'>No hay reservas.</td></tr>";
             }
             ?>
         </table>
@@ -110,3 +107,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Cerrar la conexión
 $conn->close();
 ?>
+
+

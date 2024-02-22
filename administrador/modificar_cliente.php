@@ -1,12 +1,6 @@
 <?php
 // Configuración de la conexión a la base de datos
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "hotel2";
-
-// Crear conexión
-$conn = new mysqli($servername, $username, $password, $dbname);
+include '../basedatos/basedatos.php';
 
 // Verificar la conexión
 if ($conn->connect_error) {
@@ -51,11 +45,11 @@ $result_clientes = $conn->query($sql_clientes);
 
             selectButtons.forEach(button => {
                 button.addEventListener('click', function() {
-                    document.getElementById('id_cliente').value = this.getAttribute('data-id');
                     document.getElementById('nombre').value = this.getAttribute('data-nombre');
                     document.getElementById('apellido').value = this.getAttribute('data-apellido');
                     document.getElementById('celular').value = this.getAttribute('data-celular');
                     document.getElementById('email').value = this.getAttribute('data-email');
+                    document.getElementById('id_cliente').value = this.getAttribute('data-id');
                 });
             });
         });
@@ -65,8 +59,8 @@ $result_clientes = $conn->query($sql_clientes);
     <h2>Modificar Cliente</h2>
     <div class="container">
         <form method="post">
-            <label for="id_cliente">ID de Cliente:</label><br>
-            <input type="text" id="id_cliente" name="id_cliente" required><br><br>
+            <!-- Campo oculto para almacenar el id_cliente -->
+            <input type="hidden" id="id_cliente" name="id_cliente">
             <label for="nombre">Nombre:</label><br>
             <input type="text" id="nombre" name="nombre" required><br><br>
             <label for="apellido">Apellido:</label><br>
@@ -115,5 +109,4 @@ $result_clientes = $conn->query($sql_clientes);
 // Cerrar la conexión
 $conn->close();
 ?>
-
 

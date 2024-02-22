@@ -2,12 +2,12 @@
 include '../basedatos/basedatos.php';
 
 // Obtener datos del formulario
-$username = $_POST['username'];
-$password = $_POST['password'];
+$username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
+$password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
 
 // Consulta SQL para validar las credenciales
 $sql = "SELECT * FROM usuarios WHERE username='$username' AND password='$password'";
-$result = $mysqli->query($sql);
+$result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     // Credenciales válidas, redirigir o realizar otras acciones necesarias

@@ -6,9 +6,9 @@
   -webkit-box-sizing:border-box;
   font-family:arial;
 }
-body{background:#FF9000;}
+body{background:#046bf1;}
 h1{
-  color:#ccc;
+  color:black;
   text-align:center;
   font-family: 'Vibur', cursive;
   font-size: 50px;
@@ -23,7 +23,7 @@ h1{
   position: absolute;
   left: 0;
   right: 0;
-  top:50%;
+  top:20%;
   @include translateY(-50%);
 }
 .form-group{
@@ -58,7 +58,7 @@ h1{
   color: #ed1c24;
 }
 .log-btn{
-  background:#0AC986;
+  background:#046bf1;
   dispaly:inline-block;
   width:100%;
   font-size:16px;
