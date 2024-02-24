@@ -1,12 +1,6 @@
 <?php
 // Configuración de la conexión a la base de datos
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "hotel2";
-
-// Crear conexión
-$conn = new mysqli($servername, $username, $password, $dbname);
+include '../basedatos/basedatos.php';
 
 // Verificar la conexión
 if ($conn->connect_error) {
@@ -52,8 +46,8 @@ $result_habitaciones = $conn->query($sql_habitaciones);
     <h2>Modificar Habitación</h2>
     <div class="container">
         <form method="post">
-            <label for="id_habitacion">ID de Habitación:</label><br>
-            <input type="text" id="id_habitacion" name="id_habitacion" required><br><br>
+            <!-- Campo oculto para almacenar el id_habitacion -->
+            <input type="hidden" id="id_habitacion" name="id_habitacion" required><br><br>
             <label for="tipo">Tipo:</label><br>
             <input type="text" id="tipo" name="tipo"><br><br>
             <label for="descripcion">Descripción:</label><br>
@@ -127,3 +121,4 @@ $result_habitaciones = $conn->query($sql_habitaciones);
 // Cerrar la conexión
 $conn->close();
 ?>
+

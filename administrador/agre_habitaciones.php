@@ -12,7 +12,7 @@
     <h2>Agregar Habitación</h2>
 
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-        <label for="id_habitacion">ID de Habitación:</label><br>
+        <label for="id_habitacion">Número de Habitación:</label><br>
         <input type="text" id="id_habitacion" name="id_habitacion" required><br><br>
 
         <label for="tipo">Tipo:</label><br>
@@ -53,26 +53,27 @@
             <th>IMAGENES DE LA HABITACIÓN</th>
         </tr>
         <?php
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "hotel2";
-        
-        $conn = new mysqli($servername, $username, $password, $dbname);
+        include'../basedatos/basedatos.php';
         if ($conn->connect_error) {
             die("Conexión fallida: " . $conn->connect_error);
         }
         
         // Verificar si se ha enviado el formulario de habitación
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            // Validar que id_habitacion sea un entero
             $id_habitacion = $_POST['id_habitacion'];
-            $tipo = $_POST['tipo'];
-            $descripcion = $_POST['descripcion'];
-            $precio_por_noche = $_POST['precio_por_noche'];
-            $capacidad = $_POST['capacidad'];
-            $camas = $_POST['camas'];
-            $bano = $_POST['bano'];
-            $imagen_principal = $_POST['imagen_principal'];
+            if (!filter_var($id_habitacion, FILTER_VALIDATE_INT)) {
+            echo "<script>alert('El ID de habitación debe ser un número entero.');</script>";
+            exit(); // Salir del script si la validación falla
+            }
+            $id_habitacion = mysqli_real_escape_string($conn, $_POST['id_habitacion']);
+            $tipo = mysqli_real_escape_string($conn, $_POST['tipo']);
+            $descripcion = mysqli_real_escape_string($conn, $_POST['descripcion']);
+            $precio_por_noche = mysqli_real_escape_string($conn, $_POST['precio_por_noche']);
+            $capacidad = mysqli_real_escape_string($conn, $_POST['capacidad']);
+            $camas = mysqli_real_escape_string($conn, $_POST['camas']);
+            $bano = mysqli_real_escape_string($conn, $_POST['bano']);
+            $imagen_principal = mysqli_real_escape_string($conn, $_POST['imagen_principal']);
 
             // Actualizar los datos de la habitación en la base de datos
             $sql = "INSERT INTO habitaciones (ID_HABITACION, TIPO, DESCRIPCION, PRECIOPORNOCHE, CAPACIDAD, CAMAS, BANO) 
