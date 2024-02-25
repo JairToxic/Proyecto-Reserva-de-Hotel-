@@ -102,13 +102,57 @@ body {
   border: solid 0.45rem black;
   border-radius: 15px;
   padding: 1.5rem;
-  margin: 5rem auto;
+  margin: 4rem;
+  margin-bottom: 2rem;
 }
 
 .contenedorDatos h2{
   color: black;
 
 }
+
+#boton_cancelar {
+    font-size: 17px;
+    padding: 0.5em 2em;
+    border: transparent;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    background: #C0392B;
+    color: white;
+    margin: 2em;
+    border-radius: 4px;
+}
+
+#boton_cancelar:hover {
+    background: #E74C3C;
+    
+}
+
+#boton_cancelar:active {
+    transform: translate(0em, 0.2em);
+}
+
+#modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
 
 ul {
     align:center;
@@ -271,6 +315,16 @@ li:is(:hover, :focus-within) + li + li + li + li + li + li {
     ?>
 </div>
 
+<button id="boton_cancelar" onclick="mostrarModal()">Cancelar Reserva</button>
+
+<div id="overlay"></div>
+<div id="modal">
+    <p>Desea Cancelar su Reserva?</p>
+    <p>(Si se cancela en los 2 días posteriores a la misma, se cobrará una multa del 35% del valor de su reserva)</p>
+    <button onclick="confirmarCancelar()">Confirmar</button>
+    <button onclick="cerrarModal()">Cancelar</button>
+</div>
+
 
 <div id="habitaciones-container">
     <?php
@@ -323,5 +377,23 @@ echo "<br><br>";
 }
 ?>
 </div>
+<script>
+    function mostrarModal() {
+        document.getElementById("overlay").style.display = "block";
+        document.getElementById("modal").style.display = "block";
+    }
+
+    function cerrarModal() {
+        document.getElementById("overlay").style.display = "none";
+        document.getElementById("modal").style.display = "none";
+    }
+
+    function confirmarCancelar() {
+        // Aquí puedes agregar la lógica para procesar la cancelación
+        alert("Reserva cancelada");
+        cerrarModal();
+    }
+</script>
+
 </body>
 </html>
