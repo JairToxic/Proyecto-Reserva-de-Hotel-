@@ -1,12 +1,6 @@
 <?php
 // basedatos.php
-$mysqli = new mysqli("localhost", "root", "", "hotel");
-
-// Verificar la conexión
-if ($mysqli->connect_error) {
-    die("La conexión a la base de datos falló: " . $mysqli->connect_error);
-}
-
+include '../../basedatos/basedatos.php';
 
 if (isset($_GET['email']) && isset($_GET['cod_reserva'])) {
     $email = $_GET['email'];
@@ -19,6 +13,38 @@ if (isset($_GET['email']) && isset($_GET['cod_reserva'])) {
 }
 // Obtener todas las habitaciones disponibles
 $habitacionesReservadas = obtenerHabitacionesReservadas($email,$cod_reserva);
+
+$clienteDatos = obtenerDatosCliente($email,$cod_reserva);
+
+function obtenerDatosCliente($email,$cod_reserva){
+    global $mysqli;
+
+    // Consulta SQL para obtener todas las habitaciones
+    $consultaDatosCliente = "SELECT Reserva.ID_RESERVA, Reserva.ID_CLIENTE, Reserva.FECHACHECKIN, Reserva.FECHACHECKOUT,
+    Cliente.NOMBRE, Cliente.APELLIDO, Cliente.EMAIL
+FROM Reserva
+JOIN Cliente ON Reserva.ID_CLIENTE = Cliente.ID_CLIENTE
+WHERE Cliente.EMAIL = '$email'
+AND Reserva.ID_RESERVA = $cod_reserva;";
+
+    // Ejecutar la consulta
+    $resultado = $mysqli->query($consultaDatosCliente);
+
+    // Verificar si hay resultados
+    if ($resultado) {
+        // Obtener las habitaciones como un array asociativo
+        $cliente = $resultado->fetch_all(MYSQLI_ASSOC);
+
+        // Liberar el resultado
+        $resultado->free();
+
+        return $cliente;
+    } else {
+        // Manejar el error si la consulta no fue exitosa
+        echo "Error en la consulta: " . $mysqli->error;
+        return [];
+  }
+}
 
 // Función para obtener todas las habitaciones disponibles
 function obtenerHabitacionesReservadas($email,$cod_reserva) {
@@ -69,11 +95,25 @@ body {
   place-items: center;
   min-height: 100vh;
 }
+.contenedorDatos {
+  display: inline-block;
+  color: black;
+  background: #76D7C4;
+  border: solid 0.45rem black;
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin: 5rem auto;
+}
+
+.contenedorDatos h2{
+  color: black;
+
+}
 
 ul {
     align:center;
   display: flex;
-  width: calc(80% - 2rem);
+  width: calc(100% - 2rem);
   padding: 0;
   margin: 0;
   list-style-type: none;
@@ -148,13 +188,93 @@ li:is(:hover, :focus-within) + li + li + li + li + li + li {
   --active-lerp: var(--lerp-6);
   z-index: 1;
 }
+.cta {
+	--shadowColor: 187 60% 40%;
+	display: flex;
+	margin-left: 80px;
+	background: hsl(187 70% 85%);
+	
+	width: 90%;
+	box-shadow: 0.65rem 0.65rem 0 hsl(var(--shadowColor) / 1);
+	border-radius: 0.8rem;
+	overflow: hidden;
+	border: 0.5rem solid;
+}
+
+
+.cta__text-column {
+    font-family: 'Verdana';
+	padding: min(2rem, 5vw) min(2rem, 5vw) min(2.5rem, 5vw);
+	flex: 1 0 50%;
+}
+
+.cta__text-column > * + * {
+	margin: min(1.5rem, 2.5vw) 0 0 0;
+}
+
+.cta a {
+	display: inline-block;
+	color: black;
+	padding: 0.5rem 1rem;
+    
+	text-decoration: none;
+	
+	border-radius: 0.6rem;
+	font-weight: 700;
+	
+}
+.columnas {
+    column-count: 3; /* Número de columnas que desees */
+    column-gap: 4.4rem; /* Espacio entre columnas */
+}
+
+
     </style>
     <title>Tu Reserva</title>
 </head>
 <body>
 
+<div id="Datos">
+    <?php
+    // Verificar si hay datos en $clienteDatos
+    if ($clienteDatos) {
+        // Obtener el primer nombre para mostrar en el mensaje de bienvenida
+        $primerNombre = $clienteDatos[0]['NOMBRE'];
+        $primerApellido = $clienteDatos[0]['APELLIDO'];
+        $checkin = $clienteDatos[0]['FECHACHECKIN'];
+        $checkout = $clienteDatos[0]['FECHACHECKOUT'];
+        // Iterar sobre los resultados
+        echo "<div class='contenedorDatos'>";
+        echo "<h2>Bienvenido, $primerNombre $primerApellido </h2>";
+        echo "<div class='columnas'>";
+        foreach ($clienteDatos as $row) {
+            echo "<p>ID Reserva: " . $row['ID_RESERVA'] . "</p>";
+            echo "<p>ID Cliente: " . $row['ID_CLIENTE'] . "</p>";
+            echo "<form id=\'formFechas\'>";
+            echo "    <div class=\"form-group\">";
+            echo "        <label for=\"fechaInicio\">Fecha de Check-in:</label>";
+            echo "        <input type=\"date\" class=\"form-control\" id=\"fechaInicio\" name=\"fechaInicio\" value=$checkin required>";
+            echo "    </div>";
+            echo "    <div class=\"form-group\">";
+            echo "        <label for=\"fechaFin\">Fecha de Check-out:</label>";
+            echo "        <input type=\"date\" class=\"form-control\" id=\"fechaFin\" name=\"fechaFin\" value=$checkout required>";
+            echo "    </div>";
+            echo "</form>";
+            echo "<p>Nombre: " . $row['NOMBRE'] . "  " . $row['APELLIDO'] . "</p>";
+            echo "<p>Email: " . $row['EMAIL'] . "</p>";
+        }
+        echo "</div>"; // Cierre de la clase 'columnas'
+        echo "</div>"; // Cierre de la clase 'contenedorDatos'
+    } else {
+        echo "<p>No se encontraron datos para mostrar.</p>";
+    }
+    ?>
+</div>
+
+
 <div id="habitaciones-container">
     <?php
+
 // Mostrar las habitaciones disponibles
 foreach ($habitacionesReservadas as $habitacion) {
     // Consultar la imagen asociada a la habitación
@@ -177,6 +297,9 @@ if ($resultImagen && $resultImagen->num_rows > 0) {
 }
 
     // Mostrar la habitación con sus detalles y la imagen
+
+
+
     echo "<article class='cta'>";
 echo "<a href='#' data-toggle='modal' data-target='#modalImagen{$habitacion['ID_HABITACION']}'>";
 echo "</a>";
@@ -199,6 +322,6 @@ echo "</article>";
 echo "<br><br>";
 }
 ?>
-
+</div>
 </body>
 </html>

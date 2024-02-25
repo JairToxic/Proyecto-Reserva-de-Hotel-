@@ -9,7 +9,7 @@ require 'PHPMailer-master/src/SMTP.php';
 $id_reserva = $_GET['id_reserva']; // Asegúrate de validar y sanitizar este valor
 
 // Consulta SQL para obtener detalles de la reserva y número de habitación
-$consultaReserva = "SELECT c.NOMBRE, c.APELLIDO, c.CELULAR, c.EMAIL, r.FECHACHECKIN, r.FECHACHECKOUT, r.ESTADORESERVA, p.METODOPAGO, p.FECHAPAGO, hr.ID_HABITACION
+$consultaReserva = "SELECT c.NOMBRE, c.APELLIDO, c.CELULAR, c.EMAIL, r.ID_RESERVA, r.FECHACHECKIN, r.FECHACHECKOUT, r.ESTADORESERVA, p.METODOPAGO, p.FECHAPAGO, hr.ID_HABITACION
                    FROM cliente c
                    JOIN reserva r ON c.ID_CLIENTE = r.ID_CLIENTE
                    LEFT JOIN pago p ON r.ID_RESERVA = p.ID_RESERVA
@@ -229,6 +229,7 @@ $mysqli->close();
         
 
         <p><strong>Nombre:</strong> <?php echo $reserva['NOMBRE']; ?></p>
+        <p><strong>Codigo de tu reserva:</strong> <?php echo $reserva['ID_RESERVA']; ?></p>
         <p><strong>Apellido:</strong> <?php echo $reserva['APELLIDO']; ?></p>
         <p><strong>Celular:</strong> <?php echo $reserva['CELULAR']; ?></p>
         <p><strong>Email:</strong> <?php echo $reserva['EMAIL']; ?></p>
@@ -274,6 +275,7 @@ try {
             . "Apellido: " . $reserva['APELLIDO'] . "\n"
             . "Celular: " . $reserva['CELULAR'] . "\n"
             . "Email: " . $reserva['EMAIL'] . "\n"
+            . "Codigo de tu reserva: " . $reserva['ID_RESERVA'] . "\n"
             . "Fecha de Check-in: " . $reserva['FECHACHECKIN'] . "\n"
             . "Fecha de Check-out: " . $reserva['FECHACHECKOUT'] . "\n"
             . "Estado de Reserva: " . $reserva['ESTADORESERVA'] . "\n"
