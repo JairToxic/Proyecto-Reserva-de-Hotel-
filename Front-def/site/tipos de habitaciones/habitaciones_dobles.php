@@ -26,6 +26,8 @@
     <link rel="stylesheet" type="../text/css" href="//fonts.googleapis.com/css?family=Lato:400,700,400italic%7CPoppins:300,400,500,700">
     <link rel="stylesheet" href="../css/bootstrap.css">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
     <style>.ie-panel{display: none;background: #212121;padding: 10px 0;box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3);clear: both;text-align:center;position: relative;z-index: 1;} html.ie-10 .ie-panel, html.lt-ie-10 .ie-panel {display: block;}</style>
   </head>
   <body>
@@ -136,26 +138,56 @@
         </div>
       </header>
       <main>
-        <!-- Mostrar todas las habitaciones -->
-<div class="productos-container">
-    <?php foreach ($habitaciones as $habitacion) : ?>
-        <div class="producto">
-            <!-- Asume que todas las imágenes son .jpg. Modifica según tus necesidades -->
-            <img src="../imagenes/<?php echo $habitacion['ID_HABITACION']; ?>.jpg" alt="Imagen de la habitación" class="producto-imagen">
-            <div class="contenido">
-                <h2 class="producto-titulo"><?php echo $habitacion['TIPO']; ?></h2>
-                <p class="card-title">👥<?php echo $habitacion['CAPACIDAD']; ?> personas</p>
-                <p class="card-title">Precio: $<?php echo $habitacion['PRECIOPORNOCHE']; ?></p>
-                <p class="card-title"><?php echo $habitacion['DESCRIPCION']; ?></p>
-                <!-- Botón de Pago PayPal para cada Habitación -->
-                <form action="../habitaciones/detalle_habitacion_dobles.php" method="get">
-                    <input type="hidden" name="habitacion_id" value="<?php echo $habitacion['ID_HABITACION']; ?>">
-                    <input type="submit" value="Ver" class="btn btn-success">
-                </form>
+  <!-- Mostrar todas las habitaciones -->
+<div class="container mt-4">
+    <div class="row">
+        <?php foreach ($habitaciones as $habitacion) : ?>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="../imagenes/<?php echo $habitacion['ID_HABITACION']; ?>.jpg" alt="Imagen de la habitación" class="card-img-top img-fluid imagen-habitacion" style="object-fit: cover; height: 200px;">
+                    <div class="card-body">
+                        <h5 class="card-title titulo-habitacion"><?php echo $habitacion['TIPO']; ?></h5>
+                        <p class="card-text">Capacidad: <?php echo $habitacion['CAPACIDAD']; ?> personas</p>
+                        <p class="card-text">Precio por noche: $<?php echo $habitacion['PRECIOPORNOCHE']; ?></p>
+                        <p class="card-text descripcion-habitacion"><?php echo $habitacion['DESCRIPCION']; ?></p>
+                    </div>
+                    <div class="card-footer">
+                        <!-- Botón de Pago PayPal para cada Habitación -->
+                        <form action="../habitaciones/detalle_habitacion_individual.php" method="get">
+                            <input type="hidden" name="habitacion_id" value="<?php echo $habitacion['ID_HABITACION']; ?>">
+                            <button type="submit" class="btn btn-success btn-block">Ver Detalles</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-        </div>
-    <?php endforeach; ?>
+        <?php endforeach; ?>
+    </div>
 </div>
+
+<style>
+    .imagen-habitacion:hover {
+        transform: scale(1.05);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .titulo-habitacion {
+        color: #007bff;
+        transition: color 0.3s ease-in-out;
+    }
+
+    .descripcion-habitacion {
+        color: #555;
+        transition: color 0.3s ease-in-out;
+    }
+
+    .titulo-habitacion:hover {
+        color: #0056b3;
+    }
+
+    .descripcion-habitacion:hover {
+        color: #333;
+    }
+</style>
 
         
         <!-- Page Footer-->
@@ -272,6 +304,8 @@
     <!-- Javascript-->
     <script src="../js/core.min.js"></script>
     <script src="../js/script.js"></script>
-    <!--Coded by Drel-->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>    <!--Coded by Drel-->
   </body>
 </html>

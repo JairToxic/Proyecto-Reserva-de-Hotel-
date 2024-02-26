@@ -360,7 +360,7 @@ foreach ($habitacionesDisponibles as $habitacion) {
     echo "<img src='{$imagenURL}' alt='Habitación' style='width: 300px; height: 300px;'>"; // Ajusta las dimensiones según tus necesidades
     echo "</a>";
     echo "<div class='cta__text-column'>";
-    echo "<h2>Habitación ID: " . $habitacion['ID_HABITACION'] . "</h2>";
+    echo "<h2>Numero de habitacion: " . $habitacion['ID_HABITACION'] . "</h2>";
     echo "<p>Tipo: " . $habitacion['TIPO'] . "</p>";
     echo "<p>Descripción: " . $habitacion['DESCRIPCION'] . "</p>";
     echo "<p>Precio por Noche: $" . $habitacion['PRECIOPORNOCHE'] . "</p>";
