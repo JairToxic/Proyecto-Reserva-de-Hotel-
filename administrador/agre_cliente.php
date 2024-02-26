@@ -60,7 +60,8 @@ $result_clientes = $conn->query($sql_clientes);
 </head>
 
 <body>
-    <a href="inicioCRUD.php" class="btn btn-primary position-absolute top-0 start-0 m-4">Regresar al inicio</a>
+    <a href="inicioCRUD.php" class="btn btn-primary position-absolute top-0 start-0 m-4 d-md-block d-lg-block">Regresar</a>
+    <a href="inicioCRUD.php" class="btn btn-primary position-absolute top-0 start-0 m-4 d-md-none">Regresar</a>
     <div class="container">
         <h2 class="text-center mt-4">Agregar Cliente</h2>
 

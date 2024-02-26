@@ -57,8 +57,8 @@ function borrarComentario($id_comentario, $conn) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </head>
 <body>
-    <a href="inicioCRUD.php" class="btn btn-primary position-absolute top-0 start-0 m-4">Regresar al inicio</a>
     <div class="container">
+        <a href="inicioCRUD.php" class="btn btn-primary position-absolute top-0 start-0 m-4">Regresar</a>
         <h1 class="text-center mt-4">Eliminar Comentarios</h1>
         <?php
         
@@ -98,5 +98,3 @@ function borrarComentario($id_comentario, $conn) {
     </div>
 </body>
 </html>
-
-

@@ -64,12 +64,11 @@ $result_clientes = $conn->query($sql_clientes);
     </script>
 </head>
 <body>
-    <a href="inicioCRUD.php" class="btn btn-primary position-absolute top-0 start-0 m-4">Regresar al inicio</a>
     <div class="container">
+        <a href="inicioCRUD.php" class="btn btn-primary position-absolute top-0 start-0 m-4">Regresar</a>
         <h2 class="mt-4">Modificar Cliente</h2>
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <form method="post">
                     <!-- Campo oculto para almacenar el id_cliente -->
                     <input type="hidden" id="id_cliente" name="id_cliente">
                     <div class="mb-3">
