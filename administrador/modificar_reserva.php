@@ -35,7 +35,6 @@ $result_reservas = $conn->query($sql_reservas);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modificar Reserva</title>
-    <link rel="stylesheet" href="styles2.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script>
@@ -54,51 +53,67 @@ $result_reservas = $conn->query($sql_reservas);
     </script>
 </head>
 <body>
-    <h2>Modificar Reserva</h2>
     <div class="container">
-        <form method="post">
-            <!-- Campo oculto para almacenar el id_reserva -->
-            <input type="hidden" id="id_reserva" name="id_reserva">
-            <label for="fecha_checkin">Fecha de Check-in:</label><br>
-            <input type="datetime-local" id="fecha_checkin" name="fecha_checkin" required><br><br>
-            <label for="fecha_checkout">Fecha de Check-out:</label><br>
-            <input type="datetime-local" id="fecha_checkout" name="fecha_checkout" required><br><br>
-            <label for="estado_reserva">Estado de Reserva:</label><br>
-            <input type="text" id="estado_reserva" name="estado_reserva"><br><br>
-            <input type="submit" value="Modificar Reserva">
-        </form>
+        <h2 class="text-center">Modificar Reserva</h2>
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <form method="post">
+                    <!-- Campo oculto para almacenar el id_reserva -->
+                    <input type="hidden" id="id_reserva" name="id_reserva">
+                    <div class="mb-3">
+                        <label for="fecha_checkin" class="form-label">Fecha de Check-in:</label>
+                        <input type="datetime-local" class="form-control" id="fecha_checkin" name="fecha_checkin" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="fecha_checkout" class="form-label">Fecha de Check-out:</label>
+                        <input type="datetime-local" class="form-control" id="fecha_checkout" name="fecha_checkout" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="estado_reserva" class="form-label">Estado de Reserva:</label>
+                        <input type="text" class="form-control" id="estado_reserva" name="estado_reserva">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Modificar Reserva</button>
+                </form>
+            </div>
+        </div>
 
         <!-- Tabla para mostrar las reservas existentes -->
-        <h2>Reservas Existentes</h2>
-        <table>
-            <tr>
-                <th>ID de Reserva</th>
-                <th>ID de Cliente</th>
-                <th>Nombre del Cliente</th>
-                <th>Fecha de Check-in</th>
-                <th>Fecha de Check-out</th>
-                <th>Estado de Reserva</th>
-                <th>Acción</th> <!-- Agregado -->
-            </tr>
-            <?php
-            if ($result_reservas->num_rows > 0) {
-                while ($row = $result_reservas->fetch_assoc()) {
-                    echo "<tr>";
-                    echo "<td>" . $row["ID_RESERVA"] . "</td>";
-                    echo "<td>" . $row["ID_CLIENTE"] . "</td>";
-                    echo "<td>" . $row["NOMBRE"] . " " . $row["APELLIDO"] . "</td>";
-                    echo "<td>" . $row["FECHACHECKIN"] . "</td>";
-                    echo "<td>" . $row["FECHACHECKOUT"] . "</td>";
-                    echo "<td>" . $row["ESTADORESERVA"] . "</td>";
-                    // Agregando botón de selección
-                    echo "<td><button class='select-btn' data-id='" . $row["ID_RESERVA"] . "' data-checkin='" . $row["FECHACHECKIN"] . "' data-checkout='" . $row["FECHACHECKOUT"] . "' data-estado='" . $row["ESTADORESERVA"] . "'>Seleccionar</button></td>";
-                    echo "</tr>";
-                }
-            } else {
-                echo "<tr><td colspan='7'>No hay reservas.</td></tr>";
-            }
-            ?>
-        </table>
+        <h2 class="text-center mt-4">Reservas Existentes</h2>
+        <div class="table-responsive mt-2">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID de Reserva</th>
+                        <th>ID de Cliente</th>
+                        <th>Nombre del Cliente</th>
+                        <th>Fecha de Check-in</th>
+                        <th>Fecha de Check-out</th>
+                        <th>Estado de Reserva</th>
+                        <th>Acción</th> <!-- Agregado -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    if ($result_reservas->num_rows > 0) {
+                        while ($row = $result_reservas->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td>" . $row["ID_RESERVA"] . "</td>";
+                            echo "<td>" . $row["ID_CLIENTE"] . "</td>";
+                            echo "<td>" . $row["NOMBRE"] . " " . $row["APELLIDO"] . "</td>";
+                            echo "<td>" . $row["FECHACHECKIN"] . "</td>";
+                            echo "<td>" . $row["FECHACHECKOUT"] . "</td>";
+                            echo "<td>" . $row["ESTADORESERVA"] . "</td>";
+                            // Agregando botón de selección
+                            echo "<td><button class='btn btn-info select-btn' data-id='" . $row["ID_RESERVA"] . "' data-checkin='" . $row["FECHACHECKIN"] . "' data-checkout='" . $row["FECHACHECKOUT"] . "' data-estado='" . $row["ESTADORESERVA"] . "'>Seleccionar</button></td>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='7'>No hay reservas.</td></tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 </html>
@@ -107,5 +122,6 @@ $result_reservas = $conn->query($sql_reservas);
 // Cerrar la conexión
 $conn->close();
 ?>
+
 
 

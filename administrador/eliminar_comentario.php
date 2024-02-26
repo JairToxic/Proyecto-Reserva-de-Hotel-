@@ -1,6 +1,6 @@
 <?php
 // Crear una conexión a la base de datos
-include'../basedatos/basedatos.php';
+include '../basedatos/basedatos.php';
 
 // Verificar la conexión
 if ($conn->connect_error) {
@@ -37,7 +37,7 @@ function borrarComentario($id_comentario, $conn) {
     $stmt->close();
 
     // Redirigir a la misma página después de borrar
-    header("Location: eliminar_comentario.php");
+    header("Location: eliminar_comentario.php?borrado=1");
     exit();
 }
 ?>
@@ -53,37 +53,47 @@ function borrarComentario($id_comentario, $conn) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>Administrador de Comentarios</h1>
+    <div class="container">
+        <h1 class="text-center mt-4">Administrador de Comentarios</h1>
+        <?php
+        // Mostrar la alerta si se ha borrado un comentario
+        if (isset($_GET['borrado']) && $_GET['borrado'] == 1) {
+            echo "<div class='alert alert-success' role='alert'>Comentario eliminado correctamente.</div>";
+        }
+        ?>
 
-    <!-- Mostrar la lista de comentarios -->
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Calificación</th>
-                <th>Comentario</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($comentarios as $comentario): ?>
-                <tr>
-                    <td><?php echo $comentario['co_id']; ?></td>
-                    <td><?php echo $comentario['comentario_nombre']; ?></td>
-                    <td><?php echo $comentario['stars']; ?></td>
-                    <td><?php echo $comentario['comentarios']; ?></td>
-                    <td>
-                        <a href="?borrar_comentario=<?php echo $comentario['co_id']; ?>" onclick="return confirm('¿Seguro que deseas borrar este comentario?')">Borrar</a>
-                        <!-- Puedes agregar más acciones como editar -->
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+        <!-- Mostrar la lista de comentarios -->
+        <div class="table-responsive mt-4">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Calificación</th>
+                        <th>Comentario</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($comentarios as $comentario): ?>
+                        <tr>
+                            <td><?php echo $comentario['co_id']; ?></td>
+                            <td><?php echo $comentario['comentario_nombre']; ?></td>
+                            <td><?php echo $comentario['stars']; ?></td>
+                            <td><?php echo $comentario['comentarios']; ?></td>
+                            <td>
+                                <a href="?borrar_comentario=<?php echo $comentario['co_id']; ?>" class="btn btn-danger" onclick="return confirm('¿Seguro que deseas borrar este comentario?')">Borrar</a>
+                                <!-- Puedes agregar más acciones como editar -->
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
 
-    <!-- Puedes agregar enlaces o botones para agregar nuevos comentarios, editar, etc. -->
-
+        <!-- Puedes agregar enlaces o botones para agregar nuevos comentarios, editar, etc. -->
+    </div>
 </body>
 </html>
+
 

@@ -15,16 +15,12 @@ h1{
 }
 
 .login-form{
-  width:350px;
+  width:100%; /* Cambié el ancho a 100% para ocupar todo el ancho disponible */
+  max-width: 400px; /* Establecí un ancho máximo para evitar que el formulario sea demasiado ancho en pantallas grandes */
   padding:40px 30px;
   background:#eee;
-  @include border-radius(4px);
-  margin:auto;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top:20%;
-  @include translateY(-50%);
+  margin:auto; /* Centro el formulario horizontalmente */
+  margin-top: 10%; /* Ajusté el margen superior para centrar verticalmente */
 }
 .form-group{
   position: relative;
@@ -91,4 +87,5 @@ h1{
   20% , 60%{left: 15px;}
   40% , 80%{left: -15px;}
 }
+
 

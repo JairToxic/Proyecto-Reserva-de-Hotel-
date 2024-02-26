@@ -1,96 +1,164 @@
 /* Estilos para el formulario */
 form {
-    margin: 0 auto;
-    max-width: 500px;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  max-width: 500px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 label {
-    margin: 0 0 10px;
-    display: block;
-    font-size: 1.25em;
-    color: #217093;
-    font-weight: 600;
-    font-family: inherit;
+  margin: 0 0 10px;
+  display: block;
+  font-size: 1.25em;
+  color: #217093;
+  font-weight: 600;
+  font-family: inherit;
 }
-
-
-
 
 input[type="text"],
 input[type="email"] {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
 }
 
 input[type="submit"] {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 input[type="submit"]:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
 
+/* Estilos para el contenedor del botón */
+.btn-container {
+  text-align: center;
+  margin-top: 20px; /* Espaciado superior */
+  position: relative; /* Añadir posición relativa al contenedor */
+  z-index: 1; /* Asegurar que el contenedor esté por debajo del carrusel */
+}
+
+/* Estilo para el botón */
+button#toggleRoomsBtn {
+  width: 100%;
+  max-width: 500px; /* Mismo ancho máximo que el formulario */
+  padding: 10px;
+  background-color: transparent; /* Cambiar el fondo a transparente */
+  color: #007bff; /* Cambiar el color del texto al azul */
+  border: 1px solid #007bff; /* Añadir borde azul */
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 2; /* Asegurar que el botón esté por encima del carrusel */
+}
+
+button#toggleRoomsBtn:hover {
+  background-color: #007bff; /* Cambiar el fondo al color azul al pasar el mouse */
+  color: #fff; /* Cambiar el color del texto a blanco */
+}
+
+/* Estilos para el carrusel */
+.carousel {
+  z-index: 0; /* Asegurar que el carrusel esté detrás del botón */
+}
+
+/* Estilos para las flechas del carrusel */
+.carousel-control-prev,
+.carousel-control-next {
+  /* Estilos para evitar superposición con los botones */
+  z-index: 1; /* Asegurar que las flechas estén sobre el botón */
+  position: relative; /* Establecer posición relativa */
+  width: auto; /* Ancho automático */
+  background: transparent; /* Fondo transparente */
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-image: none; /* No se aplica ninguna imagen */
+  width: 50px; /* Tamaño de las flechas */
+  height: 50px;
+  color: #007bff; /* Color de las flechas */
+  font-size: 30px; /* Tamaño de fuente */
+}
+
+.carousel-control-prev {
+  margin-left: 260px;  /* Ajustar margen izquierdo para acercar la flecha izquierda */
+}
+
+.carousel-control-next {
+  left: 60%; /* Ajustar la posición horizontalmente */
+  margin-left: -10px; /* Ajustar margen horizontal */
+}
+
+.carousel-item img {
+  width: 400px; /* Ancho fijo */
+  height: 300px; /* Alto fijo */
+  object-fit: cover; /* Ajustar imagen dentro del contenedor manteniendo la relación de aspecto */
+}
+@media (max-width: 768px) {
+  /* Ajustar estilos para pantallas más pequeñas */
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: 30px; /* Reducir el tamaño de las flechas */
+    height: 30px;
+    font-size: 20px; /* Reducir el tamaño de la fuente */
+  }
+}
+/* Estilos adicionales */
+h2 {
+  text-align: center;
+  margin-top: 20px; /* Mantener el margen superior original */
+  margin-bottom: 20px; /* Agregar margen inferior */
+}
 /*ESTILO TABLA*/
 table {
-    background: white;
-    width: 50%;
-    margin: 2% auto;
-    margin-top: 2%;
-    border-collapse: collapse;
-    text-align: center;
-    margin-bottom: 10px;
-  }
-  
-  th {
-    background-color: #4eb8dd;
-    height: 35px;
-    border-bottom: 1px solid rgb(210, 220, 250);
-    color: black;
-    padding: 8px;
-    padding-top: 15px; /* Ajustar el espaciado en la parte superior */
+  background: white;
+  width: 80%;
+  margin: 2% auto;
+  margin-top: 2%;
+  border-collapse: collapse;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+th {
+  background-color: #4eb8dd;
+  height: 50px;
+  border-bottom: 1px solid rgb(210, 220, 250);
+  color: black;
+  padding: 8px;
+  padding-top: 15px; /* Ajustar el espaciado en la parte superior */
 }
 
 td {
-    color: rgba(100, 100, 100, 60);
-    height: 30px;
-    border: 0.5px solid rgba(240, 240, 240, 10);
-    padding: 8px; /* Agregar espaciado alrededor del contenido de la celda */
+  color: rgba(100, 100, 100, 60);
+  height: 30px;
+  border: 0.5px solid rgba(240, 240, 240, 10);
+  padding: 15px; /* Agregar espaciado alrededor del contenido de la celda */
 }
 
-  
-  tfoot {
-    font-weight: bold;
-  }
-  
-  /*Pseudo-clases*/
-  th:hover {
-    background-color: #7AA6BF;
-  }
-  
-  tr:hover {
-    background-color: #7AA6BF;
-  }
 
-/* Estilos adicionales */
-h2 {
-    text-align: center;
+tfoot {
+  font-weight: bold;
 }
 
-body {
-    background-color: #f5f5f5;
-    font-family: Arial, sans-serif;
-    padding-top: 20px;
+/*Pseudo-clases*/
+th:hover {
+  background-color: #7AA6BF;
 }
+
+tr:hover {
+  background-color: #7AA6BF;
+}
+
+
+

@@ -4,25 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css"> <!-- Tu archivo de estilos personalizado -->
 </head>
 <body>
-    <div class="login-form">
-        <h1>Hotel Copo <br> de Nieve</h1>
-        <form method="post" action="login.php"> <!-- Agregamos un formulario y especificamos un archivo PHP para manejar el inicio de sesión -->
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Username" name="username" id="UserName">
-                <i class="fa fa-user"></i>
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-6">
+                <div class="login-form p-4">
+                    <h1 class="text-center mb-4">Hotel Copo de Nieve</h1>
+                    <form method="post" action="login.php">
+                        <div class="mb-3">
+                            <label for="UserName" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="UserName" name="username">
+                        </div>
+                        <div class="mb-3">
+                            <label for="Password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="Password" name="password">
+                        </div>
+                        <span class="alert">Invalid Credentials</span>
+                        <div class="mb-3 d-flex justify-content-between align-items-center">
+                            <a href="#" class="link">Lost your password?</a>
+                            <button type="submit" class="btn btn-primary">Log in</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group log-status">
-                <input type="password" class="form-control" placeholder="Password" name="password" id="Password">
-                <i class="fa fa-lock"></i>
-            </div>
-            <span class="alert">Invalid Credentials</span>
-            <a class="link" href="#">Lost your password?</a>
-            <button type="submit" class="log-btn">Log in</button> <!-- Cambiamos el tipo de botón a "submit" para enviar el formulario -->
-        </form>
+        </div>
     </div>
-    <script src="main.js"></script>
 </body>
 </html>
+
