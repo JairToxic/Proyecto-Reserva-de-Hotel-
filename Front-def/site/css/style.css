@@ -12598,7 +12598,7 @@ html:not(.lt-ie10) .not-animated {
 */
 .rd-navbar {
 	display: none;
-	background: #fff;
+	background: white;
 }
 
 .rd-navbar-toggle,
@@ -12653,7 +12653,7 @@ html:not(.lt-ie10) .not-animated {
 .rd-navbar-sidebar-toggle-custom span:before,
 .rd-navbar-sidebar-toggle-custom span {
 	height: 3px;
-	background-color: #c0c0c0;
+	background-color: gray;
 	border-radius: 0;
 }
 
