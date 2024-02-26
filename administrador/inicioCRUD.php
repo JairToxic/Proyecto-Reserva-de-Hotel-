@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+// Verificar si el usuario ha iniciado sesión
+if (!isset($_SESSION['username'])) {
+    header("Location: index.php");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,8 +55,6 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Reservas</a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="agre_reservas.php?type=reserva">Agregar</a></li>
-                                <li><a class="dropdown-item" href="modificar_reserva.php?type=reserva">Modificar</a></li>
                                 <li><a class="dropdown-item" href="eliminar_reserva.php?type=reserva">Eliminar</a></li>
                             </ul>
                         </li>

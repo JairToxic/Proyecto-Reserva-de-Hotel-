@@ -1,5 +1,13 @@
 <?php
-include '../basedatos/basedatos.php';
+session_start();
+
+// Verificar si el usuario ha iniciado sesión
+if (!isset($_SESSION['username'])) {
+    // El usuario no ha iniciado sesión, redirigir a la página de inicio de sesión
+    header("Location: index.php");
+    exit;
+}
+include 'basedatos/basedatos.php';
 
 // Verificar si se ha enviado el formulario de reserva
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -7,11 +15,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Conexión fallida: " . $conn->connect_error);
     }
 
-    // Recibir los datos del formulario
-    $id_cliente = $_POST['id_cliente'];
-    $fecha_checkin = $_POST['fecha_checkin'];
-    $fecha_checkout = $_POST['fecha_checkout'];
-    $estado_reserva = $_POST['estado_reserva'];
+    // Recibir los datos del formulario y escaparlos
+    $id_cliente = mysqli_real_escape_string($conn, $_POST['id_cliente']);
+    $fecha_checkin = mysqli_real_escape_string($conn, $_POST['fecha_checkin']);
+    $fecha_checkout = mysqli_real_escape_string($conn, $_POST['fecha_checkout']);
+    $estado_reserva = mysqli_real_escape_string($conn, $_POST['estado_reserva']);
 
     // Insertar los datos en la tabla reserva
     $sql = "INSERT INTO reserva (ID_CLIENTE, FECHACHECKIN, FECHACHECKOUT, ESTADORESERVA) 
@@ -25,6 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->close();
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -96,7 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <table class="table">
                 <?php
                 // Mostrar reservas existentes en una tabla
-                include '../basedatos/basedatos.php';
+                include 'basedatos/basedatos.php';
                 if ($conn->connect_error) {
                     die("Conexión fallida: " . $conn->connect_error);
                 }

@@ -1,8 +1,16 @@
 <?php
-// Configuración de la conexión a la base de datos
-include '../basedatos/basedatos.php';
+session_start();
 
-// Verificar la conexión
+// Verificar si el usuario ha iniciado sesión
+if (!isset($_SESSION['username'])) {
+    // El usuario no ha iniciado sesión, redirigir a la página de inicio de sesión
+    header("Location: index.php");
+    exit;
+}
+
+include 'basedatos/basedatos.php';
+
+
 if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
@@ -21,21 +29,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Preparar la declaración
     $stmt = $conn->prepare($sql);
 
-    // Vincular parámetros
+    
     $stmt->bind_param("ssss", $nombre, $apellido, $celular, $email);
 
     // Ejecutar la declaración
     if ($stmt->execute()) {
-        echo "Cliente agregado exitosamente.";
+        $alert_success = "<div class='alert alert-success' role='alert'>Cliente agregado correctamente.</div>";
     } else {
-        echo "Error al agregar el cliente: " . $conn->error;
+        $alert_error = "<div class='alert alert-danger' role='alert'>Error al agregar el cliente: " . $conn->error . "</div>";
     }
 
-    // Cerrar la declaración
+    
     $stmt->close();
 }
 
-// Obtener clientes existentes
+
 $sql_clientes = "SELECT * FROM cliente";
 $result_clientes = $conn->query($sql_clientes);
 ?>
@@ -50,7 +58,10 @@ $result_clientes = $conn->query($sql_clientes);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </head>
+
 <body>
+    <a href="inicioCRUD.php" class="btn btn-primary position-absolute top-0 start-0 m-4 d-md-block d-lg-block">Regresar</a>
+    <a href="inicioCRUD.php" class="btn btn-primary position-absolute top-0 start-0 m-4 d-md-none">Regresar</a>
     <div class="container">
         <h2 class="text-center mt-4">Agregar Cliente</h2>
 
@@ -81,6 +92,11 @@ $result_clientes = $conn->query($sql_clientes);
                 </form>
             </div>
         </div>
+        <!-- Alertas -->
+        <div class="mt-4">
+            <?php echo isset($alert_success) ? $alert_success : ''; ?>
+            <?php echo isset($alert_error) ? $alert_error : ''; ?>
+        </div> 
 
         <h2 class="text-center mt-5">Clientes Existentes</h2>
         <div class="table-responsive mt-4">
