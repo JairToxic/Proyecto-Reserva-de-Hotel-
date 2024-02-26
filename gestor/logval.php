@@ -1,11 +1,6 @@
 <?php
 
-$mysqli = new mysqli("localhost", "root", "", "hotel");
-
-// Verificar la conexión
-if ($mysqli->connect_error) {
-    die("La conexión a la base de datos falló: " . $mysqli->connect_error);
-}
+include '../basedatos/basedatos.php';
 
 
 // Función para limpiar y validar la entrada del usuario
