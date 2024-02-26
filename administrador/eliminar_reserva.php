@@ -74,41 +74,50 @@ if ($result->num_rows > 0) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>Administrador de Reservas</h1>
+    <div class="container">
+        <h1 class="text-center mt-4">Administrador de Reservas</h1>
+        <?php
+        // Mostrar la alerta si se ha borrado una habitación
+        if (isset($_GET['borrado']) && $_GET['borrado'] == 1) {
+            echo "<div class='alert alert-success' role='alert'>Reserva eliminada correctamente.</div>";
+        }
+        ?>
 
-    <!-- Mostrar la lista de reservas -->
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID de Reserva</th>
-                <th>ID de Cliente</th>
-                <th>Nombre del Cliente</th>
-                <th>Fecha de Check-in</th>
-                <th>Fecha de Check-out</th>
-                <th>Estado de Reserva</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($reservas as $reserva): ?>
-                <tr>
-                    <td><?php echo $reserva['ID_RESERVA']; ?></td>
-                    <td><?php echo $reserva['ID_CLIENTE']; ?></td>
-                    <td><?php echo $reserva['NOMBRE'] . ' ' . $reserva['APELLIDO']; ?></td>
-                    <td><?php echo $reserva['FECHACHECKIN']; ?></td>
-                    <td><?php echo $reserva['FECHACHECKOUT']; ?></td>
-                    <td><?php echo $reserva['ESTADORESERVA']; ?></td>
-                    <td>
-                        <a href="?borrar_reserva=<?php echo $reserva['ID_RESERVA']; ?>" onclick="return confirm('¿Seguro que deseas borrar esta reserva?')">Borrar</a>
-                        <!-- Puedes agregar más acciones como editar -->
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+        <!-- Mostrar la lista de reservas -->
+        <div class="table-responsive mt-4">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID de Reserva</th>
+                        <th>ID de Cliente</th>
+                        <th>Nombre del Cliente</th>
+                        <th>Fecha de Check-in</th>
+                        <th>Fecha de Check-out</th>
+                        <th>Estado de Reserva</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($reservas as $reserva): ?>
+                        <tr>
+                            <td><?php echo $reserva['ID_RESERVA']; ?></td>
+                            <td><?php echo $reserva['ID_CLIENTE']; ?></td>
+                            <td><?php echo $reserva['NOMBRE'] . ' ' . $reserva['APELLIDO']; ?></td>
+                            <td><?php echo $reserva['FECHACHECKIN']; ?></td>
+                            <td><?php echo $reserva['FECHACHECKOUT']; ?></td>
+                            <td><?php echo $reserva['ESTADORESERVA']; ?></td>
+                            <td>
+                                <a href="?borrar_reserva=<?php echo $reserva['ID_RESERVA']; ?>" class="btn btn-danger" onclick="return confirm('¿Seguro que deseas borrar esta reserva?')">Borrar</a>
+                                <!-- Puedes agregar más acciones como editar -->
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
 
-    <!-- Puedes agregar enlaces o botones para agregar nuevas reservas, editar, etc. -->
-
+        <!-- Puedes agregar enlaces o botones para agregar nuevas reservas, editar, etc. -->
+    </div>
 </body>
 </html>
 
@@ -116,5 +125,6 @@ if ($result->num_rows > 0) {
 // Cerrar la conexión
 $conn->close();
 ?>
+
 
 

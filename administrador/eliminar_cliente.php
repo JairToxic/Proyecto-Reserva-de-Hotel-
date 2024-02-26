@@ -1,6 +1,6 @@
 <?php
 // Crear una conexión a la base de datos
-include'../basedatos/basedatos.php';
+include '../basedatos/basedatos.php';
 
 // Verificar la conexión
 if ($conn->connect_error) {
@@ -46,7 +46,7 @@ function borrarCliente($id_cliente, $conn) {
     $stmt4->close();
 
     // Redirigir a la misma página después de borrar
-    header("Location: eliminar_cliente.php");
+    header("Location: eliminar_cliente.php?borrado=1");
     exit();
 }
 ?>
@@ -62,38 +62,47 @@ function borrarCliente($id_cliente, $conn) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>Administrador de Clientes</h1>
+    <div class="container">
+        <h1 class="text-center mt-4">Administrador de Clientes</h1>
+        <?php
+        // Mostrar la alerta si se ha borrado un cliente
+        if (isset($_GET['borrado']) && $_GET['borrado'] == 1) {
+            echo "<div class='alert alert-success' role='alert'>Cliente eliminado correctamente.</div>";
+        }
+        ?>
 
-    <!-- Mostrar la lista de clientes -->
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Celular</th>
-                <th>Email</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($clientes as $cliente): ?>
-                <tr>
-                    <td><?php echo $cliente['ID_CLIENTE']; ?></td>
-                    <td><?php echo $cliente['NOMBRE']; ?></td>
-                    <td><?php echo $cliente['APELLIDO']; ?></td>
-                    <td><?php echo $cliente['CELULAR']; ?></td>
-                    <td><?php echo $cliente['EMAIL']; ?></td>
-                    <td>
-                        <a href="?borrar_cliente=<?php echo $cliente['ID_CLIENTE']; ?>" onclick="return confirm('¿Seguro que deseas borrar este cliente?')">Borrar</a>
-                        <!-- Puedes agregar más acciones como editar -->
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+        <!-- Mostrar la lista de clientes -->
+        <div class="table-responsive mt-4">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Celular</th>
+                        <th>Email</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($clientes as $cliente): ?>
+                        <tr>
+                            <td><?php echo $cliente['ID_CLIENTE']; ?></td>
+                            <td><?php echo $cliente['NOMBRE']; ?></td>
+                            <td><?php echo $cliente['APELLIDO']; ?></td>
+                            <td><?php echo $cliente['CELULAR']; ?></td>
+                            <td><?php echo $cliente['EMAIL']; ?></td>
+                            <td>
+                                <a href="?borrar_cliente=<?php echo $cliente['ID_CLIENTE']; ?>" class="btn btn-danger" onclick="return confirm('¿Seguro que deseas borrar este cliente?')">Borrar</a>
+                                <!-- Puedes agregar más acciones como editar -->
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
 
-    <!-- Puedes agregar enlaces o botones para agregar nuevos clientes, editar, etc. -->
-
+        <!-- Puedes agregar enlaces o botones para agregar nuevos clientes, editar, etc. -->
+    </div>
 </body>
 </html>

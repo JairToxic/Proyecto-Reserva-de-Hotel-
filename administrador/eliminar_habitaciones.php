@@ -1,12 +1,11 @@
 <?php
 // Crear una conexión a la base de datos
-include'../basedatos/basedatos.php';
+include '../basedatos/basedatos.php';
 
 // Verificar la conexión
 if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
-
 
 // Verificar si se ha enviado una solicitud para borrar una habitación
 if (isset($_GET['borrar_habitacion'])) {
@@ -52,7 +51,7 @@ function borrarHabitacion($id_habitacion, $conn) {
     $stmt5->close();
 
     // Redirigir a la misma página después de borrar
-    header("Location: eliminar_habitaciones.php");
+    header("Location: eliminar_habitaciones.php?borrado=1");
     exit();
 }
 ?>
@@ -68,43 +67,53 @@ function borrarHabitacion($id_habitacion, $conn) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>Administrador de Habitaciones</h1>
+    <div class="container">
+        <h1 class="text-center mt-4">Administrador de Habitaciones</h1>
+        <?php
+        // Mostrar la alerta si se ha borrado una habitación
+        if (isset($_GET['borrado']) && $_GET['borrado'] == 1) {
+            echo "<div class='alert alert-success' role='alert'>Habitación eliminada correctamente.</div>";
+        }
+        ?>
 
-    <!-- Mostrar la lista de habitaciones -->
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Tipo</th>
-                <th>Descripción</th>
-                <th>Precio por Noche</th>
-                <th>Capacidad</th>
-                <th>Camas</th>
-                <th>Baño</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($habitaciones as $habitacion): ?>
-                <tr>
-                    <td><?php echo $habitacion['ID_HABITACION']; ?></td>
-                    <td><?php echo $habitacion['TIPO']; ?></td>
-                    <td><?php echo $habitacion['DESCRIPCION']; ?></td>
-                    <td><?php echo $habitacion['PRECIOPORNOCHE']; ?></td>
-                    <td><?php echo $habitacion['CAPACIDAD']; ?></td>
-                    <td><?php echo $habitacion['CAMAS']; ?></td>
-                    <td><?php echo $habitacion['BANO']; ?></td>
-                    <td>
-                        <a href="?borrar_habitacion=<?php echo $habitacion['ID_HABITACION']; ?>" onclick="return confirm('¿Seguro que deseas borrar esta habitación?')">Borrar</a>
-                        <!-- Puedes agregar más acciones como editar -->
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+        <!-- Mostrar la lista de habitaciones -->
+        <div class="table-responsive mt-4">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tipo</th>
+                        <th>Descripción</th>
+                        <th>Precio por Noche</th>
+                        <th>Capacidad</th>
+                        <th>Camas</th>
+                        <th>Baño</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($habitaciones as $habitacion): ?>
+                        <tr>
+                            <td><?php echo $habitacion['ID_HABITACION']; ?></td>
+                            <td><?php echo $habitacion['TIPO']; ?></td>
+                            <td><?php echo $habitacion['DESCRIPCION']; ?></td>
+                            <td><?php echo $habitacion['PRECIOPORNOCHE']; ?></td>
+                            <td><?php echo $habitacion['CAPACIDAD']; ?></td>
+                            <td><?php echo $habitacion['CAMAS']; ?></td>
+                            <td><?php echo $habitacion['BANO']; ?></td>
+                            <td>
+                                <a href="?borrar_habitacion=<?php echo $habitacion['ID_HABITACION']; ?>" class="btn btn-danger" onclick="return confirm('¿Seguro que deseas borrar esta habitación?')">Borrar</a>
+                                <!-- Puedes agregar más acciones como editar -->
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
 
-    <!-- Puedes agregar enlaces o botones para agregar nuevas habitaciones, editar, etc. -->
-
+        <!-- Puedes agregar enlaces o botones para agregar nuevas habitaciones, editar, etc. -->
+    </div>
 </body>
 </html>
+
 

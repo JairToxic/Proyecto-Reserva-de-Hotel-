@@ -11,7 +11,7 @@
 <body>
     <h2>Agregar Habitación</h2>
 
-    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+    <form id="habitacionForm" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
         <label for="id_habitacion">Número de Habitación:</label><br>
         <input type="text" id="id_habitacion" name="id_habitacion" required><br><br>
 
@@ -39,20 +39,13 @@
         
         <input type="submit" value="Agregar Habitación">
     </form>
+    <div class="btn-container">
+        <button id="toggleRoomsBtn" type="button" onclick="toggleRooms()">Mostrar Habitaciones</button>
+    </div>
 
     <h2>Habitaciones Agregadas</h2>
-    <table>
-        <tr>
-            <th>ID_HABITACION</th>
-            <th>TIPO</th>
-            <th>DESCRIPCION</th>
-            <th>PRECIOPORNOCHE</th>
-            <th>CAPACIDAD</th>
-            <th>CAMAS</th>
-            <th>BANO</th>
-            <th>IMAGENES DE LA HABITACIÓN</th>
-        </tr>
-        <?php
+    <div id="habitacionesContainer" style="display: none;"> <!-- Contenedor de las habitaciones oculto por defecto -->
+    <?php
         include'../basedatos/basedatos.php';
         if ($conn->connect_error) {
             die("Conexión fallida: " . $conn->connect_error);
@@ -63,10 +56,10 @@
             // Validar que id_habitacion sea un entero
             $id_habitacion = $_POST['id_habitacion'];
             if (!filter_var($id_habitacion, FILTER_VALIDATE_INT)) {
-            echo "<script>alert('El ID de habitación debe ser un número entero.');</script>";
-            exit(); // Salir del script si la validación falla
+                echo "<script>alert('El ID de habitación debe ser un número entero.');</script>";
+                exit(); // Salir del script si la validación falla
             }
-            $id_habitacion = mysqli_real_escape_string($conn, $_POST['id_habitacion']);
+            $id_habitacion = mysqli_real_escape_string($conn, $id_habitacion);
             $tipo = mysqli_real_escape_string($conn, $_POST['tipo']);
             $descripcion = mysqli_real_escape_string($conn, $_POST['descripcion']);
             $precio_por_noche = mysqli_real_escape_string($conn, $_POST['precio_por_noche']);
@@ -80,7 +73,7 @@
                     VALUES ('$id_habitacion', '$tipo', '$descripcion', '$precio_por_noche', '$capacidad', '$camas', '$bano')";
 
             if ($conn->query($sql) === TRUE) {
-                echo "Habitación agregada exitosamente.";
+                echo "<script>alert('Habitación agregada exitosamente.');</script>"; // Mostrar alerta de éxito
             } else {
                 echo "Error al agregar la habitación: " . $conn->error;
             }
@@ -88,11 +81,11 @@
             $sql_imagen = "INSERT INTO imagenes_habitaciones (id_habitacion, url) 
             VALUES ('$id_habitacion', '$imagen_principal')";
             if ($conn->query($sql_imagen) === TRUE) {
-            echo "Imagen agregada exitosamente.";
+                //echo "Imagen agregada exitosamente.";
             } else {
                 echo "Error al agregar la imagen: " . $conn->error;
             }
-    }
+        }
         
          // Consulta para obtener las habitaciones y sus imágenes
          $sql = "SELECT habitaciones.*, GROUP_CONCAT(imagenes_habitaciones.url) AS imagenes_principales 
@@ -103,24 +96,40 @@
 
          if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                echo "<tr>";
-                echo "<td>" . $row["ID_HABITACION"] . "</td>";
-                echo "<td>" . $row["TIPO"] . "</td>";
-                echo "<td>" . $row["DESCRIPCION"] . "</td>";
-                echo "<td>" . $row["PRECIOPORNOCHE"] . "</td>";
-                echo "<td>" . $row["CAPACIDAD"] . "</td>";
-                echo "<td>" . $row["CAMAS"] . "</td>";
-                echo "<td>" . $row["BANO"] . "</td>";
+                echo "<div class='container'>";
+                echo "<h3>Habitación : " . $row["ID_HABITACION"] . " - " . $row["TIPO"] . "</h3>"; // Mostrar el ID de la habitación junto con el tipo
                 
-                // Mostrar las imágenes como imágenes en la tabla
+                // Carrusel de imágenes
+                echo "<div id='carouselContainer" . $row['ID_HABITACION'] . "' class='carousel slide' data-bs-ride='carousel'>";
+                echo "<div class='carousel-inner'>";
+                
                 $imagenes_principales = explode(",", $row["imagenes_principales"]);
-                echo "<td>";
+                $first = true;
                 foreach ($imagenes_principales as $imagen) {
-                    echo "<img src='$imagen' alt='Imagen' style='width: 150px; height: auto;'>";
+                    echo "<div class='carousel-item" . ($first ? " active" : "") . "'>";
+                    echo "<img src='$imagen' class='d-block w-50 mx-auto' alt='Imagen'>"; // Se cambió la clase para reducir aún más el tamaño de la imagen
+                    echo "</div>";
+                    $first = false;
                 }
-                echo "</td>";
                 
-                echo "</tr>";
+                echo "</div>";
+                echo "<button class='carousel-control-prev' type='button' data-bs-target='#carouselContainer" . $row['ID_HABITACION'] . "' data-bs-slide='prev'>";
+                echo "<span class='carousel-control-prev-icon' aria-hidden='true'></span>";
+                echo "<span class='visually-hidden'>Previous</span>";
+                echo "</button>";
+                echo "<button class='carousel-control-next' type='button' data-bs-target='#carouselContainer" . $row['ID_HABITACION'] . "' data-bs-slide='next'>";
+                echo "<span class='carousel-control-next-icon' aria-hidden='true'></span>";
+                echo "<span class='visually-hidden'>Next</span>";
+                echo "</button>";
+                echo "</div>";
+                
+                echo "<p>" . $row["DESCRIPCION"] . "</p>";
+                echo "<p>Precio por noche: $" . $row["PRECIOPORNOCHE"] . "</p>";
+                echo "<p>Capacidad: " . $row["CAPACIDAD"] . "</p>";
+                echo "<p>Camas: " . $row["CAMAS"] . "</p>";
+                echo "<p>Baño: " . $row["BANO"] . "</p>";
+                
+                echo "</div>";
             }
         } else {
             echo "No hay habitaciones agregadas.";
@@ -128,8 +137,24 @@
         
  
         $conn->close();
-        ?>
-    </table>
+    ?>
+    </div>
+<script>
+    function toggleRooms() {
+        var roomsContainer = document.getElementById("habitacionesContainer");
+        var toggleBtn = document.getElementById("toggleRoomsBtn");
+
+        if (roomsContainer.style.display === "none") {
+            roomsContainer.style.display = "block";
+            toggleBtn.textContent = "Ocultar Habitaciones";
+        } else {
+            roomsContainer.style.display = "none";
+            toggleBtn.textContent = "Mostrar Habitaciones";
+        }
+    }
+</script>
 </body>
 </html>
+
+
 

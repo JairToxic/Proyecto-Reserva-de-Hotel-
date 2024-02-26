@@ -1,6 +1,6 @@
 <?php
 // Configuración de la conexión a la base de datos
-include'../basedatos/basedatos.php';
+include '../basedatos/basedatos.php';
 
 // Verificar la conexión
 if ($conn->connect_error) {
@@ -51,55 +51,70 @@ $result_clientes = $conn->query($sql_clientes);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h2>Agregar Cliente</h2>
     <div class="container">
-        <form method="post">
-            <label for="nombre">Nombre:</label><br>
-            <input type="text" id="nombre" name="nombre" required><br><br>
-            <label for="apellido">Apellido:</label><br>
-            <input type="text" id="apellido" name="apellido" required><br><br>
-            <label for="celular">Celular:</label><br>
-            <input type="text" id="celular" name="celular" required><br><br>
-            <label for="email">Email:</label><br>
-            <input type="email" id="email" name="email" required><br><br>
-            <input type="submit" value="Agregar Cliente">
-        </form>
+        <h2 class="text-center mt-4">Agregar Cliente</h2>
 
-        <!-- Tabla para mostrar los clientes existentes -->
-        <h2>Clientes Existentes</h2>
-        <table>
-            <tr>
-                <th>ID de Cliente</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Celular</th>
-                <th>Email</th>
-            </tr>
-            <?php
-            if ($result_clientes->num_rows > 0) {
-                while ($row = $result_clientes->fetch_assoc()) {
-                    echo "<tr>";
-                    echo "<td>" . $row["ID_CLIENTE"] . "</td>";
-                    echo "<td>" . $row["NOMBRE"] . "</td>";
-                    echo "<td>" . $row["APELLIDO"] . "</td>";
-                    echo "<td>" . $row["CELULAR"] . "</td>";
-                    echo "<td>" . $row["EMAIL"] . "</td>";
-                    echo "</tr>";
-                }
-            } else {
-                echo "<tr><td colspan='5'>No hay clientes.</td></tr>";
-            }
-            ?>
-        </table>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form method="post" class="mt-4">
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre:</label>
+                        <input type="text" id="nombre" name="nombre" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="apellido" class="form-label">Apellido:</label>
+                        <input type="text" id="apellido" name="apellido" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="celular" class="form-label">Celular:</label>
+                        <input type="text" id="celular" name="celular" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email:</label>
+                        <input type="email" id="email" name="email" class="form-control" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Agregar Cliente</button>
+                </form>
+            </div>
+        </div>
+
+        <h2 class="text-center mt-5">Clientes Existentes</h2>
+        <div class="table-responsive mt-4">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID de Cliente</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Celular</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    if ($result_clientes->num_rows > 0) {
+                        while ($row = $result_clientes->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td>" . $row["ID_CLIENTE"] . "</td>";
+                            echo "<td>" . $row["NOMBRE"] . "</td>";
+                            echo "<td>" . $row["APELLIDO"] . "</td>";
+                            echo "<td>" . $row["CELULAR"] . "</td>";
+                            echo "<td>" . $row["EMAIL"] . "</td>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='5'>No hay clientes.</td></tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 </html>
 
-<?php
-// Cerrar la conexión
-$conn->close();
-?>
-
-
-
-
+<?php $conn->close(); ?>

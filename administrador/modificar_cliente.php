@@ -54,53 +54,76 @@ $result_clientes = $conn->query($sql_clientes);
             });
         });
     </script>
+    
 </head>
 <body>
-    <h2>Modificar Cliente</h2>
     <div class="container">
-        <form method="post">
-            <!-- Campo oculto para almacenar el id_cliente -->
-            <input type="hidden" id="id_cliente" name="id_cliente">
-            <label for="nombre">Nombre:</label><br>
-            <input type="text" id="nombre" name="nombre" required><br><br>
-            <label for="apellido">Apellido:</label><br>
-            <input type="text" id="apellido" name="apellido" required><br><br>
-            <label for="celular">Celular:</label><br>
-            <input type="text" id="celular" name="celular" required><br><br>
-            <label for="email">Email:</label><br>
-            <input type="email" id="email" name="email" required><br><br>
-            <input type="submit" value="Modificar Cliente">
-        </form>
+        <h2 class="mt-4">Modificar Cliente</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form method="post">
+                    <!-- Campo oculto para almacenar el id_cliente -->
+                    <input type="hidden" id="id_cliente" name="id_cliente">
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre:</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="apellido" class="form-label">Apellido:</label>
+                        <input type="text" class="form-control" id="apellido" name="apellido" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="celular" class="form-label">Celular:</label>
+                        <input type="text" class="form-control" id="celular" name="celular" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email:</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Modificar Cliente</button>
+                </form>
+            </div>
+        </div>
 
         <!-- Tabla para mostrar los clientes existentes -->
-        <h2>Clientes Existentes</h2>
-        <table>
-            <tr>
-                <th>ID de Cliente</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Celular</th>
-                <th>Email</th>
-                <th>Acción</th> <!-- Agregado -->
-            </tr>
-            <?php
-            if ($result_clientes->num_rows > 0) {
-                while ($row = $result_clientes->fetch_assoc()) {
-                    echo "<tr>";
-                    echo "<td>" . $row["ID_CLIENTE"] . "</td>";
-                    echo "<td>" . $row["NOMBRE"] . "</td>";
-                    echo "<td>" . $row["APELLIDO"] . "</td>";
-                    echo "<td>" . $row["CELULAR"] . "</td>";
-                    echo "<td>" . $row["EMAIL"] . "</td>";
-                    // Agregando botón de selección
-                    echo "<td><button class='select-btn' data-id='" . $row["ID_CLIENTE"] . "' data-nombre='" . $row["NOMBRE"] . "' data-apellido='" . $row["APELLIDO"] . "' data-celular='" . $row["CELULAR"] . "' data-email='" . $row["EMAIL"] . "'>Seleccionar</button></td>";
-                    echo "</tr>";
-                }
-            } else {
-                echo "<tr><td colspan='6'>No hay clientes.</td></tr>";
-            }
-            ?>
-        </table>
+        <h2 class="mt-4">Clientes Existentes</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="table-responsive mt-2">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>ID de Cliente</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Celular</th>
+                                <th>Email</th>
+                                <th>Acción</th> <!-- Agregado -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            if ($result_clientes->num_rows > 0) {
+                                while ($row = $result_clientes->fetch_assoc()) {
+                                    echo "<tr>";
+                                    echo "<td>" . $row["ID_CLIENTE"] . "</td>";
+                                    echo "<td>" . $row["NOMBRE"] . "</td>";
+                                    echo "<td>" . $row["APELLIDO"] . "</td>";
+                                    echo "<td>" . $row["CELULAR"] . "</td>";
+                                    echo "<td>" . $row["EMAIL"] . "</td>";
+                                    // Agregando botón de selección
+                                    echo "<td><button class='btn btn-info select-btn' data-id='" . $row["ID_CLIENTE"] . "' data-nombre='" . $row["NOMBRE"] . "' data-apellido='" . $row["APELLIDO"] . "' data-celular='" . $row["CELULAR"] . "' data-email='" . $row["EMAIL"] . "'>Seleccionar</button></td>";
+                                    echo "</tr>";
+                                }
+                            } else {
+                                echo "<tr><td colspan='6'>No hay clientes.</td></tr>";
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
