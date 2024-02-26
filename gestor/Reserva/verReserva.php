@@ -16,6 +16,8 @@ $habitacionesReservadas = obtenerHabitacionesReservadas($email,$cod_reserva);
 
 $clienteDatos = obtenerDatosCliente($email,$cod_reserva);
 
+
+
 function obtenerDatosCliente($email,$cod_reserva){
     global $mysqli;
 
@@ -76,6 +78,7 @@ function obtenerHabitacionesReservadas($email,$cod_reserva) {
         return [];
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -83,6 +86,10 @@ function obtenerHabitacionesReservadas($email,$cod_reserva) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        // Incluye el valor de $cod_reserva en el código JavaScript
+        var cod_reserva = <?php echo json_encode($cod_reserva); ?>;
+    </script>
     <style>
         * {
   box-sizing: border-box;
@@ -284,6 +291,7 @@ li:is(:hover, :focus-within) + li + li + li + li + li + li {
     if ($clienteDatos) {
         // Obtener el primer nombre para mostrar en el mensaje de bienvenida
         $primerNombre = $clienteDatos[0]['NOMBRE'];
+        $id_res = $clienteDatos[0]['ID_RESERVA'];
         $primerApellido = $clienteDatos[0]['APELLIDO'];
         $checkin = $clienteDatos[0]['FECHACHECKIN'];
         $checkout = $clienteDatos[0]['FECHACHECKOUT'];
@@ -309,20 +317,12 @@ li:is(:hover, :focus-within) + li + li + li + li + li + li {
         }
         echo "</div>"; // Cierre de la clase 'columnas'
         echo "</div>"; // Cierre de la clase 'contenedorDatos'
+        echo "<button id='boton_cancelar' onclick=\"window.location.href='cancelar_reserva.php?cod_reserva=" . $id_res . "'\">Cancelar Reserva</button>";
+
     } else {
         echo "<p>No se encontraron datos para mostrar.</p>";
     }
     ?>
-</div>
-
-<button id="boton_cancelar" onclick="mostrarModal()">Cancelar Reserva</button>
-
-<div id="overlay"></div>
-<div id="modal">
-    <p>Desea Cancelar su Reserva?</p>
-    <p>(Si se cancela en los 2 días posteriores a la misma, se cobrará una multa del 35% del valor de su reserva)</p>
-    <button onclick="confirmarCancelar()">Confirmar</button>
-    <button onclick="cerrarModal()">Cancelar</button>
 </div>
 
 
@@ -377,23 +377,7 @@ echo "<br><br>";
 }
 ?>
 </div>
-<script>
-    function mostrarModal() {
-        document.getElementById("overlay").style.display = "block";
-        document.getElementById("modal").style.display = "block";
-    }
 
-    function cerrarModal() {
-        document.getElementById("overlay").style.display = "none";
-        document.getElementById("modal").style.display = "none";
-    }
-
-    function confirmarCancelar() {
-        // Aquí puedes agregar la lógica para procesar la cancelación
-        alert("Reserva cancelada");
-        cerrarModal();
-    }
-</script>
 
 </body>
 </html>
