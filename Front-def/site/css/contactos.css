@@ -24,9 +24,7 @@
     margin-left: 30px;
     margin-right: 30px;
 }
-.page-footer-minimal-inner .button {
-    color: black; /* Color del texto blanco */
-}
-#botonC{
-    color: black;
+
+#map-container{
+    padding-top: 1000px;
 }
