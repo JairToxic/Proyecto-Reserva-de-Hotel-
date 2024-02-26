@@ -123,17 +123,18 @@ h2 {
 table {
   background: white;
   width: 80%;
-  margin: 2% auto;
+  margin: 4% auto;
   margin-top: 2%;
   border-collapse: collapse;
   text-align: center;
   margin-bottom: 10px;
+  border: 2px solid black;
 }
 
 th {
   background-color: #4eb8dd;
   height: 50px;
-  border-bottom: 1px solid rgb(210, 220, 250);
+  border-bottom: 2px solid rgb(210, 220, 250);
   color: black;
   padding: 8px;
   padding-top: 15px; /* Ajustar el espaciado en la parte superior */
@@ -142,7 +143,7 @@ th {
 td {
   color: rgba(100, 100, 100, 60);
   height: 30px;
-  border: 0.5px solid rgba(240, 240, 240, 10);
+  border: 2px solid rgba(240, 240, 240, 10);
   padding: 15px; /* Agregar espaciado alrededor del contenido de la celda */
 }
 

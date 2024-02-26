@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </head>
 <body>
+    <a href="inicioCRUD.php" class="btn btn-primary position-absolute top-0 start-0 m-4">Regresar al inicio</a>
     <h2>Agregar Habitación</h2>
 
     <form id="habitacionForm" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
@@ -42,16 +43,28 @@
     <div class="btn-container">
         <button id="toggleRoomsBtn" type="button" onclick="toggleRooms()">Mostrar Habitaciones</button>
     </div>
+    <div class="mt-4">
+            <?php echo isset($alert_success) ? $alert_success : ''; ?>
+            <?php echo isset($alert_error) ? $alert_error : ''; ?>
+    </div> 
 
     <h2>Habitaciones Agregadas</h2>
     <div id="habitacionesContainer" style="display: none;"> <!-- Contenedor de las habitaciones oculto por defecto -->
     <?php
-        include'../basedatos/basedatos.php';
+    session_start();
+
+    // Verificar si el usuario ha iniciado sesión
+    if (!isset($_SESSION['username'])) {
+        // El usuario no ha iniciado sesión, redirigir a la página de inicio de sesión
+        header("Location: index.php");
+        exit;
+    }
+        include'basedatos/basedatos.php';
         if ($conn->connect_error) {
             die("Conexión fallida: " . $conn->connect_error);
         }
         
-        // Verificar si se ha enviado el formulario de habitación
+    
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Validar que id_habitacion sea un entero
             $id_habitacion = $_POST['id_habitacion'];
@@ -73,9 +86,9 @@
                     VALUES ('$id_habitacion', '$tipo', '$descripcion', '$precio_por_noche', '$capacidad', '$camas', '$bano')";
 
             if ($conn->query($sql) === TRUE) {
-                echo "<script>alert('Habitación agregada exitosamente.');</script>"; // Mostrar alerta de éxito
+              $alert_success = "<div class='alert alert-success' role='alert'>Habitación agregada correctamente.</div>";
             } else {
-                echo "Error al agregar la habitación: " . $conn->error;
+                $alert_error = "<div class='alert alert-danger' role='alert'>Error al agregar la habitación: " . $conn->error . "</div>";
             }
              // Insertar la URL de la imagen en la tabla imagenes_habitaciones
             $sql_imagen = "INSERT INTO imagenes_habitaciones (id_habitacion, url) 
@@ -87,7 +100,7 @@
             }
         }
         
-         // Consulta para obtener las habitaciones y sus imágenes
+         
          $sql = "SELECT habitaciones.*, GROUP_CONCAT(imagenes_habitaciones.url) AS imagenes_principales 
          FROM habitaciones 
          LEFT JOIN imagenes_habitaciones ON habitaciones.ID_HABITACION = imagenes_habitaciones.id_habitacion 

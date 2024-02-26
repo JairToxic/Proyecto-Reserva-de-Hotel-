@@ -1,6 +1,14 @@
 <?php
-// Configuración de la conexión a la base de datos
-include '../basedatos/basedatos.php';
+session_start();
+
+// Verificar si el usuario ha iniciado sesión
+if (!isset($_SESSION['username'])) {
+    // El usuario no ha iniciado sesión, redirigir a la página de inicio de sesión
+    header("Location: index.php");
+    exit;
+}
+
+include 'basedatos/basedatos.php';
 
 // Verificar la conexión
 if ($conn->connect_error) {
@@ -10,18 +18,18 @@ if ($conn->connect_error) {
 // Verificar si se ha enviado el formulario para modificar un cliente
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Procesar el formulario y actualizar el cliente en la base de datos
-    $id_cliente = $_POST['id_cliente'];
-    $nombre = $_POST['nombre'];
-    $apellido = $_POST['apellido'];
-    $celular = $_POST['celular'];
-    $email = $_POST['email'];
+    $id_cliente = mysqli_real_escape_string($conn, $_POST['id_cliente']);
+    $nombre = mysqli_real_escape_string($conn, $_POST['nombre']);
+    $apellido = mysqli_real_escape_string($conn, $_POST['apellido']);
+    $celular = mysqli_real_escape_string($conn, $_POST['celular']);
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
 
     $sql = "UPDATE cliente SET NOMBRE='$nombre', APELLIDO='$apellido', CELULAR='$celular', EMAIL='$email' WHERE ID_CLIENTE='$id_cliente'";
 
     if ($conn->query($sql) === TRUE) {
-        echo "Cliente modificado exitosamente.";
+        $alert_success = "<div class='alert alert-success' role='alert'>Cliente modificado correctamente.</div>";
     } else {
-        echo "Error al modificar el cliente: " . $conn->error;
+        $alert_error = "<div class='alert alert-danger' role='alert'>Error al modificar el cliente: " . $conn->error . "</div>";
     }
 }
 
@@ -54,9 +62,9 @@ $result_clientes = $conn->query($sql_clientes);
             });
         });
     </script>
-    
 </head>
 <body>
+    <a href="inicioCRUD.php" class="btn btn-primary position-absolute top-0 start-0 m-4">Regresar al inicio</a>
     <div class="container">
         <h2 class="mt-4">Modificar Cliente</h2>
         <div class="row justify-content-center">
@@ -85,7 +93,13 @@ $result_clientes = $conn->query($sql_clientes);
             </div>
         </div>
 
-        <!-- Tabla para mostrar los clientes existentes -->
+        <!-- Alertas -->
+        <div class="mt-4">
+            <?php echo isset($alert_success) ? $alert_success : ''; ?>
+            <?php echo isset($alert_error) ? $alert_error : ''; ?>
+        </div>
+
+        <!-- Encabezado de "Clientes Existentes" -->
         <h2 class="mt-4">Clientes Existentes</h2>
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -98,7 +112,7 @@ $result_clientes = $conn->query($sql_clientes);
                                 <th>Apellido</th>
                                 <th>Celular</th>
                                 <th>Email</th>
-                                <th>Acción</th> <!-- Agregado -->
+                                <th>Acción</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -111,7 +125,6 @@ $result_clientes = $conn->query($sql_clientes);
                                     echo "<td>" . $row["APELLIDO"] . "</td>";
                                     echo "<td>" . $row["CELULAR"] . "</td>";
                                     echo "<td>" . $row["EMAIL"] . "</td>";
-                                    // Agregando botón de selección
                                     echo "<td><button class='btn btn-info select-btn' data-id='" . $row["ID_CLIENTE"] . "' data-nombre='" . $row["NOMBRE"] . "' data-apellido='" . $row["APELLIDO"] . "' data-celular='" . $row["CELULAR"] . "' data-email='" . $row["EMAIL"] . "'>Seleccionar</button></td>";
                                     echo "</tr>";
                                 }
@@ -132,4 +145,6 @@ $result_clientes = $conn->query($sql_clientes);
 // Cerrar la conexión
 $conn->close();
 ?>
+
+
 

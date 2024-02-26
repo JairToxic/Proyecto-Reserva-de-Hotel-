@@ -1,6 +1,13 @@
 <?php
-// Crear una conexión a la base de datos
-include '../basedatos/basedatos.php';
+session_start();
+
+// Verificar si el usuario ha iniciado sesión
+if (!isset($_SESSION['username'])) {
+    // El usuario no ha iniciado sesión, redirigir a la página de inicio de sesión
+    header("Location: index.php");
+    exit;
+}
+include 'basedatos/basedatos.php';
 
 // Verificar la conexión
 if ($conn->connect_error) {
@@ -67,6 +74,7 @@ function borrarHabitacion($id_habitacion, $conn) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </head>
 <body>
+    <a href="inicioCRUD.php" class="btn btn-primary position-absolute top-0 start-0 m-4">Regresar al inicio</a>
     <div class="container">
         <h1 class="text-center mt-4">Administrador de Habitaciones</h1>
         <?php
@@ -103,15 +111,12 @@ function borrarHabitacion($id_habitacion, $conn) {
                             <td><?php echo $habitacion['BANO']; ?></td>
                             <td>
                                 <a href="?borrar_habitacion=<?php echo $habitacion['ID_HABITACION']; ?>" class="btn btn-danger" onclick="return confirm('¿Seguro que deseas borrar esta habitación?')">Borrar</a>
-                                <!-- Puedes agregar más acciones como editar -->
                             </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
-
-        <!-- Puedes agregar enlaces o botones para agregar nuevas habitaciones, editar, etc. -->
     </div>
 </body>
 </html>
