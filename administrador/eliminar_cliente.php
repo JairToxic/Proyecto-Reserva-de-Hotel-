@@ -1,8 +1,15 @@
 <?php
-// Crear una conexión a la base de datos
+session_start();
+
+// Verificar si el usuario ha iniciado sesión
+if (!isset($_SESSION['username'])) {
+    // El usuario no ha iniciado sesión, redirigir a la página de inicio de sesión
+    header("Location: index.php");
+    exit;
+}
 include 'basedatos/basedatos.php';
 
-// Verificar la conexión
+
 if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
@@ -17,7 +24,6 @@ if (isset($_GET['borrar_cliente'])) {
 // Obtener la lista de clientes desde la base de datos
 $clientes = obtenerClientes($conn);
 
-// Función para obtener la lista de clientes
 function obtenerClientes($conn) {
     $consulta = "SELECT * FROM cliente";
     $resultado = $conn->query($consulta);
@@ -63,15 +69,15 @@ function borrarCliente($id_cliente, $conn) {
 </head>
 <body>
     <div class="container">
-        <h1 class="text-center mt-4">Administrador de Clientes</h1>
+        <a href="inicioCRUD.php" class="btn btn-primary mb-4">Regresar</a>
+        <h1 class="text-center mt-4">Eliminar Cliente</h1>
         <?php
-        // Mostrar la alerta si se ha borrado un cliente
+        
         if (isset($_GET['borrado']) && $_GET['borrado'] == 1) {
             echo "<div class='alert alert-success' role='alert'>Cliente eliminado correctamente.</div>";
         }
         ?>
 
-        <!-- Mostrar la lista de clientes -->
         <div class="table-responsive mt-4">
             <table class="table table-bordered">
                 <thead>
@@ -94,15 +100,13 @@ function borrarCliente($id_cliente, $conn) {
                             <td><?php echo $cliente['EMAIL']; ?></td>
                             <td>
                                 <a href="?borrar_cliente=<?php echo $cliente['ID_CLIENTE']; ?>" class="btn btn-danger" onclick="return confirm('¿Seguro que deseas borrar este cliente?')">Borrar</a>
-                                <!-- Puedes agregar más acciones como editar -->
+                               
                             </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
-
-        <!-- Puedes agregar enlaces o botones para agregar nuevos clientes, editar, etc. -->
     </div>
 </body>
 </html>

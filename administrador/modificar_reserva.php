@@ -1,5 +1,12 @@
 <?php
-// Configuración de la conexión a la base de datos
+session_start();
+
+// Verificar si el usuario ha iniciado sesión
+if (!isset($_SESSION['username'])) {
+    // El usuario no ha iniciado sesión, redirigir a la página de inicio de sesión
+    header("Location: login.php");
+    exit;
+}
 include 'basedatos/basedatos.php';
 
 // Verificar la conexión
@@ -18,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "UPDATE reserva SET FECHACHECKIN='$fecha_checkin', FECHACHECKOUT='$fecha_checkout', ESTADORESERVA='$estado_reserva' WHERE ID_RESERVA='$id_reserva'";
 
     if ($conn->query($sql) === TRUE) {
-        echo "Reserva modificada exitosamente.";
+        echo "<div class='alert alert-success' role='alert'>Reserva modificada correctamente.</div>";
     } else {
         echo "Error al modificar la reserva: " . $conn->error;
     }
@@ -53,6 +60,7 @@ $result_reservas = $conn->query($sql_reservas);
     </script>
 </head>
 <body>
+    <a href="inicioCRUD.php" class="btn btn-primary position-absolute top-0 start-0 m-4">Regresar al inicio</a>
     <div class="container">
         <h2 class="text-center">Modificar Reserva</h2>
         <div class="row">

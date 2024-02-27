@@ -1,8 +1,14 @@
 <?php
-// Crear una conexión a la base de datos
+session_start();
+
+// Verificar si el usuario ha iniciado sesión
+if (!isset($_SESSION['username'])) {
+    // El usuario no ha iniciado sesión, redirigir a la página de inicio de sesión
+    header("Location: index.php");
+    exit;
+}
 include 'basedatos/basedatos.php';
 
-// Verificar la conexión
 if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
@@ -16,7 +22,6 @@ if (isset($_GET['borrar_comentario'])) {
 // Obtener la lista de comentarios desde la base de datos
 $comentarios = obtenerComentarios($conn);
 
-// Función para obtener la lista de comentarios
 function obtenerComentarios($conn) {
     $consulta = "SELECT co_id, comentario_nombre, stars, comentarios FROM comentarios";
     $resultado = $conn->query($consulta);
@@ -36,7 +41,6 @@ function borrarComentario($id_comentario, $conn) {
     $stmt->execute();
     $stmt->close();
 
-    // Redirigir a la misma página después de borrar
     header("Location: eliminar_comentario.php?borrado=1");
     exit();
 }
@@ -54,15 +58,16 @@ function borrarComentario($id_comentario, $conn) {
 </head>
 <body>
     <div class="container">
-        <h1 class="text-center mt-4">Administrador de Comentarios</h1>
+        <a href="inicioCRUD.php" class="btn btn-primary position-absolute top-0 start-0 m-4">Regresar</a>
+        <h1 class="text-center mt-4">Eliminar Comentarios</h1>
         <?php
-        // Mostrar la alerta si se ha borrado un comentario
+        
         if (isset($_GET['borrado']) && $_GET['borrado'] == 1) {
             echo "<div class='alert alert-success' role='alert'>Comentario eliminado correctamente.</div>";
         }
         ?>
 
-        <!-- Mostrar la lista de comentarios -->
+        
         <div class="table-responsive mt-4">
             <table class="table table-bordered">
                 <thead>
@@ -90,10 +95,6 @@ function borrarComentario($id_comentario, $conn) {
                 </tbody>
             </table>
         </div>
-
-        <!-- Puedes agregar enlaces o botones para agregar nuevos comentarios, editar, etc. -->
     </div>
 </body>
 </html>
-
-

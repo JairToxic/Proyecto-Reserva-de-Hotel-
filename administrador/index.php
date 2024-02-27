@@ -7,16 +7,16 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-</head>
 <body>
 
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     include "login.php"; // Incluye el archivo login.php si se envió un formulario POST
 } else {
-    include "admin.html"; // Incluye el archivo admin.html si no se envió un formulario POST
+    include "admin.html"; // Incluye el formulario de inicio de sesión si no se envió un formulario POST
 }
 ?>
 
 </body>
 </html>
+

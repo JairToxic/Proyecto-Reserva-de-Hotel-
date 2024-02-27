@@ -1,5 +1,12 @@
 <?php
-// Configuración de la conexión a la base de datos
+session_start();
+
+// Verificar si el usuario ha iniciado sesión
+if (!isset($_SESSION['username'])) {
+    // El usuario no ha iniciado sesión, redirigir a la página de inicio de sesión
+    header("Location: index.php");
+    exit;
+}
 include 'basedatos/basedatos.php';
 
 // Verificar la conexión
@@ -10,20 +17,20 @@ if ($conn->connect_error) {
 // Verificar si se ha enviado el formulario para modificar una habitación
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Procesar el formulario y actualizar la habitación en la base de datos
-    $id_habitacion = $_POST['id_habitacion'];
-    $tipo = $_POST['tipo'];
-    $descripcion = $_POST['descripcion'];
-    $precio_por_noche = $_POST['precio_por_noche'];
-    $capacidad = $_POST['capacidad'];
-    $camas = $_POST['camas'];
-    $bano = $_POST['bano'];
+    $id_habitacion = mysqli_real_escape_string($conn, $_POST['id_habitacion']);
+    $tipo = mysqli_real_escape_string($conn, $_POST['tipo']);
+    $descripcion = mysqli_real_escape_string($conn, $_POST['descripcion']);
+    $precio_por_noche = mysqli_real_escape_string($conn, $_POST['precio_por_noche']);
+    $capacidad = mysqli_real_escape_string($conn, $_POST['capacidad']);
+    $camas = mysqli_real_escape_string($conn, $_POST['camas']);
+    $bano = mysqli_real_escape_string($conn, $_POST['bano']);
 
     $sql = "UPDATE habitaciones SET TIPO='$tipo', DESCRIPCION='$descripcion', PRECIOPORNOCHE='$precio_por_noche', CAPACIDAD='$capacidad', CAMAS='$camas', BANO='$bano' WHERE ID_HABITACION='$id_habitacion'";
 
     if ($conn->query($sql) === TRUE) {
-        echo "Habitación modificada exitosamente.";
+        $alert_success ="<div class='alert alert-success' role='alert'>Habitación modificada correctamente.</div>";
     } else {
-        echo "Error al modificar la habitación: " . $conn->error;
+        $alert_error= "<div class='alert alert-danger' role='alert'>Comentario no eliminado.</div>" . $conn->error;
     }
 }
 
@@ -31,6 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $sql_habitaciones = "SELECT * FROM habitaciones";
 $result_habitaciones = $conn->query($sql_habitaciones);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -41,8 +49,9 @@ $result_habitaciones = $conn->query($sql_habitaciones);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <body>
-    <h2 class="text-center">Modificar Habitación</h2>
     <div class="container">
+        <a href="inicioCRUD.php" class="btn btn-primary position-absolute top-0 start-0 m-4">Regresar</a>
+        <h2 class="text-center">Modificar Habitación</h2>
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <form method="post">
@@ -75,6 +84,11 @@ $result_habitaciones = $conn->query($sql_habitaciones);
                     <button type="submit" class="btn btn-primary">Modificar Habitación</button>
                 </form>
             </div>
+        </div>
+         <!-- Alertas -->
+         <div class="mt-4">
+            <?php echo isset($alert_success) ? $alert_success : ''; ?>
+            <?php echo isset($alert_error) ? $alert_error : ''; ?>
         </div>
 
         <!-- Tabla para mostrar las habitaciones existentes -->
@@ -121,10 +135,11 @@ $result_habitaciones = $conn->query($sql_habitaciones);
         </div>
     </div>
 
+    <!-- JavaScript y biblioteca Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const selectButtons = document.querySelectorAll('.select-btn');
+             const selectButtons = document.querySelectorAll('.select-btn');
 
             selectButtons.forEach(button => {
                 button.addEventListener('click', function() {
@@ -146,3 +161,4 @@ $result_habitaciones = $conn->query($sql_habitaciones);
 // Cerrar la conexión
 $conn->close();
 ?>
+
