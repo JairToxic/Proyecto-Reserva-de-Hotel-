@@ -1,3 +1,4 @@
+verReserva
 <?php
 // basedatos.php
 include '../../basedatos/basedatos.php';
@@ -86,6 +87,7 @@ function obtenerHabitacionesReservadas($email,$cod_reserva) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script>
         // Incluye el valor de $cod_reserva en el código JavaScript
         var cod_reserva = <?php echo json_encode($cod_reserva); ?>;
@@ -278,7 +280,115 @@ li:is(:hover, :focus-within) + li + li + li + li + li + li {
     column-count: 3; /* Número de columnas que desees */
     column-gap: 4.4rem; /* Espacio entre columnas */
 }
+/*form*/
+.main {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: #240046;
+  max-height: 420px;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 7px 7px 10px 3px #24004628;
+}
 
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 24px;
+}
+
+/*checkbox to switch from sign up to login*/
+#chk {
+  display: none;
+}
+
+/*Login*/
+.login {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.login label {
+  margin: 25% 0 5%;
+}
+
+label {
+  color: #fff;
+  font-size: 2rem;
+  justify-content: center;
+  display: flex;
+  font-weight: bold;
+  cursor: pointer;
+  transition: .5s ease-in-out;
+}
+
+.input {
+  width: 100%;
+  height: 40px;
+  background: #e0dede;
+  padding: 10px;
+  border: none;
+  outline: none;
+  border-radius: 4px;
+}
+
+/*Register*/
+.register {
+  background: #eee;
+  border-radius: 60% / 10%;
+  transform: translateY(5%);
+  transition: .8s ease-in-out;
+}
+
+.register label {
+  color: #573b8a;
+  transform: scale(.6);
+}
+
+#chk:checked ~ .register {
+  transform: translateY(-60%);
+}
+
+#chk:checked ~ .register label {
+  transform: scale(1);
+  margin: 10% 0 5%;
+}
+
+#chk:checked ~ .login label {
+  transform: scale(.6);
+  margin: 5% 0 5%;
+}   
+/*Button*/
+.form button {
+  width: 85%;
+  height: 40px;
+  margin: 12px auto 10%;
+  color: #fff;
+  background: #573b8a;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: .2s ease-in;
+}
+
+.form button:hover {
+  background-color: #6d44b8;
+}
+
+.formulario {
+    margin-top: 0px; /* Ajusta el margen superior según sea necesario */
+}
+.main.form {
+    background-color: #68b0a2;
+}
+.main.form button {
+    background-color: #4b7554;
+}
 
     </style>
     <title>Tu Reserva</title>
@@ -302,16 +412,8 @@ li:is(:hover, :focus-within) + li + li + li + li + li + li {
         foreach ($clienteDatos as $row) {
             echo "<p>ID Reserva: " . $row['ID_RESERVA'] . "</p>";
             echo "<p>ID Cliente: " . $row['ID_CLIENTE'] . "</p>";
-            echo "<form id=\'formFechas\'>";
-            echo "    <div class=\"form-group\">";
-            echo "        <label for=\"fechaInicio\">Fecha de Check-in:</label>";
-            echo "        <input type=\"date\" class=\"form-control\" id=\"fechaInicio\" name=\"fechaInicio\" value=$checkin required>";
-            echo "    </div>";
-            echo "    <div class=\"form-group\">";
-            echo "        <label for=\"fechaFin\">Fecha de Check-out:</label>";
-            echo "        <input type=\"date\" class=\"form-control\" id=\"fechaFin\" name=\"fechaFin\" value=$checkout required>";
-            echo "    </div>";
-            echo "</form>";
+            echo "<p>Check in: " . $row['FECHACHECKIN'] . "</p>";
+            echo "<p>Check out: " . $row['FECHACHECKOUT'] . "</p>";
             echo "<p>Nombre: " . $row['NOMBRE'] . "  " . $row['APELLIDO'] . "</p>";
             echo "<p>Email: " . $row['EMAIL'] . "</p>";
         }
@@ -377,6 +479,53 @@ echo "<br><br>";
 }
 ?>
 </div>
+<h1>Modifica tu reserva si asi lo necesitas</h1>
+<p>Si necesitas modificar tu reserva ten en cuenta que solo puedes hacerlo con el mismo numero de noches que has reservado previamente</p>
+
+<br>
+<!-- Agrega este formulario dentro del bloque PHP donde muestras los datos del cliente -->
+<div class="formulario">
+    <form id="formFechas" method="post" action="modificar_reserva.php" class="mt-3 main form">
+        <div class="checkinDate">
+            <label for="fechaInicio">Fecha de Check-in:</label>
+            <input type="date" class="form-control input"  required id="checkinDate" name="checkinDate" value="<?php echo $checkin; ?>" required>
+        </div>
+        <div class="form-group">
+            <label for="checkoutDate">Fecha de Check-out:</label>
+            <input type="date" class="form-control input" required id="checkoutDate" name="checkoutDate" value="<?php echo $checkout; ?>" required>
+        </div>
+        <input type="hidden" name="cod_reserva" value="<?php echo $id_res; ?>">
+        <button type="submit" class="btn btn-primary">Modificar Reserva</button>
+    </form>
+</div>
+
+<!-- Script para establecer la fecha mínima para los campos de fecha -->
+<script>
+    // Obtener la fecha actual en formato yyyy-mm-dd
+    function getCurrentDate() {
+          const today = new Date();
+          const year = today.getFullYear();
+          const month = String(today.getMonth() + 1).padStart(2, '0');
+          const day = String(today.getDate()).padStart(2, '0');
+          return `${year}-${month}-${day}`;
+      }
+  
+      // Establecer la fecha mínima para los campos de fecha
+      document.getElementById('checkinDate').setAttribute('min', getCurrentDate());
+  
+      // Actualizar la fecha mínima de check-out cada vez que se selecciona una fecha de check-in
+      document.getElementById('checkinDate').addEventListener('change', function() {
+          const checkinDate = new Date(this.value);
+          const nextDay = new Date(checkinDate);
+          nextDay.setDate(checkinDate.getDate() + 1); // Añadir un día
+  
+          // Formatear la fecha en formato yyyy-mm-dd
+          const nextDayFormatted = nextDay.toISOString().split('T')[0];
+  
+          document.getElementById('checkoutDate').setAttribute('min', nextDayFormatted);
+      });
+</script>
+
 
 
 </body>
