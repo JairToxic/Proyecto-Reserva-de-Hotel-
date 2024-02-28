@@ -67,3 +67,38 @@ function cancelarReserva($cod_reserva) {
     }
 }
 ?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
+
+        .mensaje-contenedor {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
+        }
+
+        .mensaje img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
+    <title>Copo de Nieve</title>
+</head>
+<body>
+    <div class="mensaje-contenedor">
+        <div class="mensaje">
+            <img src="../styles/logo1.PNG" alt="Copo de nieve">
+        </div>
+    </div>
+</body>
+</html>
