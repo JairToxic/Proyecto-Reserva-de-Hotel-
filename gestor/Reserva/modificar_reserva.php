@@ -21,6 +21,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Calcula la diferencia en días entre la fecha actual y la fecha de check-in
     $diferenciaDias = $fechaActual->diff($fechaCheckin)->days;
+    
+
+    $fechaCheckinMod = new DateTime($fechaInicio);
+    // Calcula la diferencia en días entre la fecha actual y la fecha de check-in
+    $diferenciaDiasMod = $fechaActual->diff($fechaCheckin)->days;
+
+    // Verifica si faltan menos de dos días para la reserva
+    
+    if ($diferenciaDiasMod < 2) {
+        echo "<script>
+                    setTimeout(function() {
+                        alert('Falta menos de 2 dias para el check-in de la nueva reserva. No esta disponible');
+                        window.location.href = '../logger.php';
+                    }, 1000);
+                  </script>";
+        exit();
+    }
 
     // Verifica si faltan menos de dos días para la reserva
     if ($diferenciaDias < 2) {
@@ -78,7 +95,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         echo "<script>
                     setTimeout(function() {
-                        alert('La habitación asociada a esta reserva no está disponible en las fechas seleccionadas.');
+                        alert('No puede reservar más o menos de días que los que ya reservo en la reserva original');
                         window.location.href = '../logger.php';
                     }, 1000);
                   </script>";
