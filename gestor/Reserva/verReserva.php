@@ -1,4 +1,3 @@
-verReserva
 <?php
 // basedatos.php
 include '../../basedatos/basedatos.php';
@@ -12,12 +11,11 @@ if (isset($_GET['email']) && isset($_GET['cod_reserva'])) {
     // Manejo de error si los parámetros no están presentes
     echo "Error: Parámetros faltantes.";
 }
+
 // Obtener todas las habitaciones disponibles
 $habitacionesReservadas = obtenerHabitacionesReservadas($email,$cod_reserva);
 
 $clienteDatos = obtenerDatosCliente($email,$cod_reserva);
-
-
 
 function obtenerDatosCliente($email,$cod_reserva){
     global $mysqli;
@@ -46,7 +44,7 @@ AND Reserva.ID_RESERVA = $cod_reserva;";
         // Manejar el error si la consulta no fue exitosa
         echo "Error en la consulta: " . $mysqli->error;
         return [];
-  }
+    }
 }
 
 // Función para obtener todas las habitaciones disponibles
@@ -80,6 +78,18 @@ function obtenerHabitacionesReservadas($email,$cod_reserva) {
     }
 }
 
+// Consulta para obtener el monto asociado a la reserva
+$queryMonto = "SELECT MONTO FROM pago WHERE ID_RESERVA = $cod_reserva";
+$resultMonto = $mysqli->query($queryMonto);
+
+// Verificar si la consulta fue exitosa y hay resultados
+if ($resultMonto && $resultMonto->num_rows > 0) {
+    // Obtener el monto
+    $monto = $resultMonto->fetch_assoc()['MONTO'];
+} else {
+    // Definir un valor por defecto en caso de no haber resultados
+    $monto = "No disponible";
+}
 ?>
 
 <!DOCTYPE html>
@@ -412,20 +422,27 @@ label {
         foreach ($clienteDatos as $row) {
             echo "<p>ID Reserva: " . $row['ID_RESERVA'] . "</p>";
             echo "<p>ID Cliente: " . $row['ID_CLIENTE'] . "</p>";
+             // Mostrar el monto asociado a la reserva
+            echo "<p>Pago: $" . $monto . "</p>";
             echo "<p>Check in: " . $row['FECHACHECKIN'] . "</p>";
             echo "<p>Check out: " . $row['FECHACHECKOUT'] . "</p>";
             echo "<p>Nombre: " . $row['NOMBRE'] . "  " . $row['APELLIDO'] . "</p>";
             echo "<p>Email: " . $row['EMAIL'] . "</p>";
         }
+       
         echo "</div>"; // Cierre de la clase 'columnas'
         echo "</div>"; // Cierre de la clase 'contenedorDatos'
-        echo "<button id='boton_cancelar' onclick=\"window.location.href='cancelar_reserva.php?cod_reserva=" . $id_res . "'\">Cancelar Reserva</button>";
+        echo "<button id='boton_cancelar' onclick=\"window.location.href='cancelar_reserva.php?cod_reserva=" . $id_res . "&email=" . urlencode($email) . "'\">Cancelar Reserva</button>";
+
+
+
 
     } else {
         echo "<p>No se encontraron datos para mostrar.</p>";
     }
     ?>
 </div>
+
 
 
 <div id="habitaciones-container">
@@ -498,6 +515,8 @@ echo "<br><br>";
         <button type="submit" class="btn btn-primary">Modificar Reserva</button>
     </form>
 </div>
+
+
 
 <!-- Script para establecer la fecha mínima para los campos de fecha -->
 <script>
